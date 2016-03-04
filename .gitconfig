@@ -1,0 +1,24 @@
+[user]
+	name = Jay Nair
+	email = jayakrishnan.v@dynactionize.com
+[core]
+	editor = nvim
+	excludesfile = ~/.cvsignore
+[url "https://github.com/"]
+	insteadOf = git://github.com/
+[alias]
+	hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	co = checkout
+	ci = commit -m
+	a = add . -A
+	cm = commit -m
+	d = diff
+	rb = rebase
+	b = branch
+	pl = pull
+	ps = push
+	h = !git --no-pager log --abbrev-commit --pretty=oneline
+	br = branch
+	l = log
+[push]
+	default = current
