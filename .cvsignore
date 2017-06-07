@@ -10,3 +10,5 @@ tags
 testfile*
 *.bak
 TODO
+__pycache__
+*.pyc

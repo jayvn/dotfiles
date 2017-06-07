@@ -1,8 +1,9 @@
 " vim - plug
 call plug#begin('~/.vim/plugged')
 
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
 Plug 'itchyny/vim-cursorword'
-Plug 'chrisbra/NrrwRgn'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'godlygeek/tabular', { 'on':  'Tab' }
 Plug 'vim-scripts/peaksea'
@@ -11,7 +12,7 @@ Plug 'benmills/vimux'
 Plug 'Numkil/ag.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Raimondi/delimitMate'
-Plug 'JuliaLang/julia-vim'
+Plug 'JuliaEditorSupport/julia-vim'
 Plug 'mhinz/vim-startify'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-repeat'
@@ -20,7 +21,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'simnalamburt/vim-mundo'
 Plug 'tmhedberg/SimpylFold'
 Plug 'noscript/vim-wipeout'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neosnippet'
@@ -29,8 +30,11 @@ Plug 'gregsexton/gitv'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 Plug 'ivalkeen/vim-ctrlp-tjump'
+Plug 'chrisbra/csv.vim'
+Plug 'christoomey/vim-tmux-navigator'
+" Plug 'JuliaEditorSupport/deoplete-julia'
 
 "Plug 'yegappan/mru'
 "Plug 'Shougo/neosnippet-snippets'
@@ -45,6 +49,7 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 "Plug 'vale1410/vim-minizinc'
 "Plug 'jalvesaq/vimcmdline'
 "Plug 'vim-scripts/taglist.vim'
+" Plug 'chrisbra/NrrwRgn'
 
 " Colorschemes
 Plug 'KabbAmine/yowish.vim'
@@ -64,6 +69,7 @@ Plug 'tpope/vim-vividchalk'
 Plug 'w0ng/vim-hybrid'
 Plug 'whatyouhide/vim-gotham'
 Plug 'junegunn/seoul256.vim'
+
 " seoul256 (dark):
 ""   Range:   233 (darkest) ~ 239 (lightest)
 "let g:seoul256_background = 236
@@ -81,9 +87,10 @@ else
     " colorscheme solarized
     " let g:solarized_termcolors=256
     " let g:solarized_bold = 1
-    "colo
-    set bg=dark
+    " set bg=dark
     colo seoul256
+    " colo gotham
+    " let g:airline_theme='gotham'
     let g:seoul256_background = 234
 endif
 
@@ -152,7 +159,6 @@ set list
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
 set title                " change the terminal's title
-set pastetoggle=<F2>
 set wildmenu
 set cursorline
 set wrap
@@ -160,7 +166,7 @@ set lazyredraw
 set fdm=indent
 set foldlevelstart=12
 
-set ignorecase
+"set ignorecase
 set smartcase
 
 " Vimux Configuration
@@ -177,7 +183,7 @@ set smartcase
 
     " Select current paragraph and send it to tmux
     nmap <LocalLeader>jl vipK<CR>
-    nmap K VK<CR>
+    nmap K VK
 
     "let g:VimuxUseNearest=0
 " }
@@ -207,9 +213,9 @@ set hidden
 
 "nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-L>', 'n') ==# ''
-nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
-endif
+" if maparg('<C-L>', 'n') ==# ''
+" nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+" endif
 
 if !exists('g:loaded_matchit')
     runtime macros/matchit.vim
@@ -304,7 +310,7 @@ endfunction
 " CtrlP {
 " Open file menu
 let g:ctrlp_by_filename=0
-let g:ctrlp_cmd='CtrlPMRU'
+let g:ctrlp_cmd='CtrlPMixed' " 'CtrlPMRU'
 " Open buffer menu
 nnoremap <Leader>b :CtrlPBuffer<CR>
 " Open most recently used files
@@ -324,10 +330,11 @@ let g:vim_markdown_folding_disabled=1
 "nmap <CR> li<CR><esc>k$
 
 "ctags stuff
-" nmap <Leader>tf :call CtagsFind(expand('<cword>'))<CR>
+ nmap <Leader>tf :call CtagsFind(expand('<cword>'))<CR>
 " use <C-]> instead
-" com! -nargs=+ Tf :call CtagsFind("<args>")
+ com! -nargs=+ Tf :call CtagsFind("<args>")
 " split window and search for tag
+
 nmap <Leader>ts :exe('stj '.expand('<cword>'))<CR>
 
 let cmdline_follow_colorscheme = 1
@@ -337,10 +344,11 @@ fun! CtagsFind(keyword)
     tabe
     exe "tj ".a:keyword
 endfunction
-nmap <Leader>id :r! date "+\%Y-\%m-\%d \%H:\%M:\%S"<CR>
+nmap <Leader>id o<Esc>:r! date "+\%Y-\%m-\%d"<CR>kJA** [jayakrishnan.v]<Esc>I- **<Esc>A Initial Version<Esc>
 noremap <expr> n (v:searchforward ? 'n' : 'N')
 noremap <expr> N (v:searchforward ? 'N' : 'n')
-nnoremap <Leader>f :call StripTrailingWhitespace()<CR> :w<CR>
+" nnoremap <Leader>f :call StripTrailingWhitespace()<CR>:retab<CR> :up<CR> :nohlsearch<CR>
+nnoremap <Leader>f :call StripTrailingWhitespace()<CR>:retab<CR> :nohlsearch<CR>:redraw!<CR>
 tnoremap <Esc> <C-\><C-n>
 nnoremap <C-n> :FZF<CR>
 
@@ -350,21 +358,21 @@ let g:tagbar_type_julia = {
     \ }
 
 function! s:tags_sink(line)
-  let parts = split(a:line, '\t\zs')
-  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-  execute 'silent e' parts[1][:-2]
-  let [magic, &magic] = [&magic, 0]
-  execute excmd
-  let &magic = magic
+    let parts = split(a:line, '\t\zs')
+    let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+    execute 'silent e' parts[1][:-2]
+    let [magic, &magic] = [&magic, 0]
+    execute excmd
+    let &magic = magic
 endfunction
 
 function! s:tags()
-  if empty(tagfiles())
-    echohl WarningMsg
-    echom 'Preparing tags'
-    echohl None
-    call system('ctags -R')
-  endif
+    if empty(tagfiles())
+        echohl WarningMsg
+        echom 'Preparing tags'
+        echohl None
+        call system('ctags -R')
+    endif
 
   call fzf#run({
   \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
@@ -384,3 +392,35 @@ vnoremap <c-]> :CtrlPtjumpVisual<cr>
 let g:ctrlp_tjump_only_silent = 1
 " Reload file
 nmap <Leader>rl :e<CR>
+
+"nnoremap <Leader>d iprintln(@__LINE__, " CtrlPTag<CR>
+
+" set pastetoggle=<F2>
+" Read somewhere that this can be used to avoid pastetoggle -
+set mouse=a
+
+" function! WrapForTmux(s)
+"   if !exists('$TMUX')
+"     return a:s
+"   endif
+"
+"   let tmux_start = "\<Esc>Ptmux;"
+"   let tmux_end = "\<Esc>\\"
+"
+"   return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+" endfunction
+"
+" let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+" let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+"
+" function! XTermPasteBegin()
+"   set pastetoggle=<Esc>[201~
+"   set paste
+"   return ""
+" endfunction
+"
+" inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+let g:session_autoload = 'no'
+let g:session_autosave = 'no'
+let g:startify_change_to_dir = 0
