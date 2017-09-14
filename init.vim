@@ -34,8 +34,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
 " Plug 'JuliaEditorSupport/deoplete-julia'
-
+Plug 'jalvesaq/Nvim-R'
+Plug 'romainl/vim-cool'
 "Plug 'yegappan/mru'
 "Plug 'Shougo/neosnippet-snippets'
 "Plug 'Shougo/unite.nvim'
@@ -52,6 +54,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'chrisbra/NrrwRgn'
 
 " Colorschemes
+Plug 'vim-airline/vim-airline-themes' " Airline
 Plug 'KabbAmine/yowish.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/vim-tomorrow-theme'
@@ -71,7 +74,7 @@ Plug 'whatyouhide/vim-gotham'
 Plug 'junegunn/seoul256.vim'
 
 " seoul256 (dark):
-""   Range:   233 (darkest) ~ 239 (lightest)
+"   Range:   233 (darkest) ~ 239 (lightest)
 "let g:seoul256_background = 236
 "colo seoul256
 call plug#end()
@@ -88,10 +91,11 @@ else
     " let g:solarized_termcolors=256
     " let g:solarized_bold = 1
     " set bg=dark
-    colo seoul256
-    " colo gotham
+    " colo gruvbox
+    colo molokai
+    " let g:rehash256 = 1
     " let g:airline_theme='gotham'
-    let g:seoul256_background = 234
+    " let g:seoul256_background = 234
 endif
 
 let mapleader="\<Space>"
@@ -145,12 +149,12 @@ set expandtab
 filetype plugin indent on
 syntax enable
 set nowrap        " don't wrap lines
-set tabstop=4     " a tab is four spaces
+set tabstop=2     " a tab is four spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
 set number        " always show line numbers
-set shiftwidth=4  " number of spaces to use for autoindenting
+set shiftwidth=2  " number of spaces to use for autoindenting
 "set matchtime=1
 set showmatch     " set show matching parenthesis
 set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
@@ -168,25 +172,6 @@ set foldlevelstart=12
 
 "set ignorecase
 set smartcase
-
-" Vimux Configuration
-" {
-    "map <Leader>jl :call VimuxRunCommand("clear; julia " . bufname("%"))<CR>
-    map <LocalLeader>o :call VimuxRunCommand("clear; julia")<CR>
-    function! VimuxSlime()
-        call VimuxSendText(@v)
-        call VimuxSendKeys("Enter")
-    endfunction
-
-    " If text is selected, save it in the v buffer and send that buffer it to tmux
-    vmap K "vy :call VimuxSlime()<CR>
-
-    " Select current paragraph and send it to tmux
-    nmap <LocalLeader>jl vipK<CR>
-    nmap K VK
-
-    "let g:VimuxUseNearest=0
-" }
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :tabe $MYVIMRC<CR>
@@ -305,7 +290,7 @@ endfunction
     let g:airline_left_alt_sep = '|'
     let g:airline_right_sep = ' '
     let g:airline_right_alt_sep = '|'
-    "let g:airline_theme= 'serene'
+    " let g:airline_theme= 'serene'
 " }
 " CtrlP {
 " Open file menu
@@ -423,4 +408,28 @@ set mouse=a
 
 let g:session_autoload = 'no'
 let g:session_autosave = 'no'
-let g:startify_change_to_dir = 0
+" let g:startify_change_to_dir = 0
+
+" R script settings
+" let maplocalleader = ","
+
+vmap K <Plug>RDSendSelection
+nmap K <Plug>RDSendLine
+let vimrplugin_vsplit=1
+let R_assign = 0
+
+" nnoremap <leader>va :VtrAttachToPane<cr>
+" nnoremap <leader>ror :VtrReorientRunner<cr>
+nnoremap <leader>sc :VtrSendCommandToRunner<cr>
+nnoremap <CR> :VtrSendLinesToRunner<cr>j
+vnoremap <CR> :VtrSendLinesToRunner<cr>
+nnoremap <leader>o :VtrOpenRunner<cr>
+" nnoremap <leader>kr :VtrKillRunner<cr>
+" nnoremap <leader>fr :VtrFocusRunner<cr>
+" nnoremap <leader>dr :VtrDetachRunner<cr>
+" nnoremap <leader>cr :VtrClearRunner<cr>
+" nnoremap <leader>fc :VtrFlushCommand<cr>
+nnoremap <leader>sf :VtrSendFile<cr>
+
+" Block insert
+vnoremap <C-c> <Esc>

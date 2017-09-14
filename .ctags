@@ -11,3 +11,9 @@
 
 --regex-julia=/^[ \t]*(@defstruct)[ \t]+([^ \t({[]+).*$/\2/t,type/
 --regex-julia=/^[ \t]*(@defimmutable)[ \t]+([^ \t({[]+).*$/\2/i,immutable/
+
+--langdef=R
+--langmap=r:.R.r
+--regex-R=/^[ \t]*"?([.A-Za-z][.A-Za-z0-9_]*)"?[ \t]*<-[ \t]function/\1/f,Functions/
+--regex-R=/^"?([.A-Za-z][.A-Za-z0-9_]*)"?[ \t]*<-[ \t][^f][^u][^n][^c][^t][^i][^o][^n]/\1/g,GlobalVars/
+--regex-R=/[ \t]"?([.A-Za-z][.A-Za-z0-9_]*)"?[ \t]*<-[ \t][^f][^u][^n][^c][^t][^i][^o][^n]/\1/v,FunctionVariables/

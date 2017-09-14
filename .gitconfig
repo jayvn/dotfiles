@@ -1,6 +1,6 @@
 [user]
-    name = Jay Nair
-    email = jayakrishnan.v@dynactionize.com
+	name = Jayakrishnan Nair
+    email = jayakrishnan.nair@valustat.co
 [core]
     editor = nvim
     excludesfile = ~/.cvsignore

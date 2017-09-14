@@ -1,5 +1,5 @@
-sudo apt install cmake clang curl tmux tree nfs-common nfs-kernel-server libzmq-dev ctags\
-                 python3-pip silversearcher-ag
+sudo apt install cmake clang curl tmux tree nfs-common nfs-kernel-server ctags\
+                 python3-pip silversearcher-ag xclip
 
 sudo -H pip3 install plumbum neovim
 

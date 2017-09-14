@@ -12,3 +12,7 @@ testfile*
 TODO
 __pycache__
 *.pyc
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata

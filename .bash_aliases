@@ -1,6 +1,5 @@
 alias rm="rm -i"
 
-alias ap=ansible-playbook
 alias g=git
 alias gs="git branch -a && git status"
 alias ga="git add . -A"
@@ -13,7 +12,7 @@ alias sa="sudo apt"
 alias j="julia -q"
 alias v=nvim
 alias vi=nvim
-alias wd="cd /media/disk2/"
+# alias wd="cd ~/ev/"
 alias py=python3
 alias vpn=/opt/cisco/anyconnect/bin/vpn
 
@@ -83,10 +82,11 @@ udate()
     time sudo apt -y full-upgrade
     source ~/.oh-my-zsh/tools/upgrade.sh
     julia -e "Pkg.update()"
+    # R -e "update.packages()"
     sudo -H pip3 install --upgrade neovim
     nvim -c "PlugUpdate | PlugUpgrade"
 
-    cd ~/dev
+    # cd ~/dev
 }
 
 export TERM=screen-256color
@@ -110,3 +110,4 @@ mostused() {
 
 alias tgz='tar -zxvf'
 alias tbz='tar -jxvf'
+export JULIA_HOME=/home/jay/julia/bin
