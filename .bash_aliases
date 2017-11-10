@@ -14,7 +14,7 @@ alias v=nvim
 alias vi=nvim
 # alias wd="cd ~/ev/"
 alias py=python3
-alias vpn=/opt/cisco/anyconnect/bin/vpn
+# alias vpn=/opt/cisco/anyconnect/bin/vpn
 
 gitclean() {
     git branch --merged master | grep -v master | xargs -n 1 git branch -d
@@ -81,12 +81,13 @@ udate()
     # ugits
     time sudo apt -y full-upgrade
     source ~/.oh-my-zsh/tools/upgrade.sh
-    julia -e "Pkg.update()"
     # R -e "update.packages()"
     sudo -H pip3 install --upgrade neovim
     nvim -c "PlugUpdate | PlugUpgrade"
 
-    # cd ~/dev
+    # Probably should be last because this can fail
+    # julia -e "Pkg.update()"
+    julia -e "emerge()"
 }
 
 export TERM=screen-256color
@@ -111,3 +112,7 @@ mostused() {
 alias tgz='tar -zxvf'
 alias tbz='tar -jxvf'
 export JULIA_HOME=/home/jay/julia/bin
+
+# export LD_LIBRARY_PATH=$PATH
+export CUDA_HOME="/usr/lib/R/lib:/usr/lib/x86_64-linux-gnu:/usr/lib:/home/jay/R/x86_64-pc-linux-gnu-library/3.4/PerformanceAnalytics/libs/"
+export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}

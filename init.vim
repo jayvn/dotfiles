@@ -35,7 +35,7 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
-" Plug 'JuliaEditorSupport/deoplete-julia'
+" Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 Plug 'jalvesaq/Nvim-R'
 Plug 'romainl/vim-cool'
 "Plug 'yegappan/mru'
@@ -433,3 +433,5 @@ nnoremap <leader>sf :VtrSendFile<cr>
 
 " Block insert
 vnoremap <C-c> <Esc>
+" Mainly for vim-commentary
+autocmd FileType julia setlocal commentstring=#\ %s

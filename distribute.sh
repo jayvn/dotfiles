@@ -8,6 +8,7 @@ vim-tmux-open.zsh
 .tmux.conf
 .ctags
 .zshrc
+.juliarc.jl
 .gitconfig)
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
