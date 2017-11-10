@@ -86,6 +86,8 @@ udate()
     sudo -H pip3 install --upgrade neovim
     nvim -c "PlugUpdate | PlugUpgrade"
 
+    # Probably should be last because this will likely fail
+    julia -e "recompile_packages()"  
     # cd ~/dev
 }
 
