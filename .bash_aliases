@@ -87,7 +87,7 @@ udate()
     nvim -c "PlugUpdate | PlugUpgrade"
 
     # Probably should be last because this will likely fail
-    julia -e "recompile_packages()"  
+    julia -e "recompile_packages()"
     # cd ~/dev
 }
 
@@ -113,3 +113,7 @@ mostused() {
 alias tgz='tar -zxvf'
 alias tbz='tar -jxvf'
 export JULIA_HOME=/home/jay/julia/bin
+
+# export LD_LIBRARY_PATH=$PATH
+export CUDA_HOME="/usr/lib/R/lib:/usr/lib/x86_64-linux-gnu:/usr/lib:/home/jay/R/x86_64-pc-linux-gnu-library/3.4/PerformanceAnalytics/libs/"
+export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}

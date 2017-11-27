@@ -1,8 +1,0 @@
-Pkg.add("FactCheck")
-Pkg.add("JSON")
-Pkg.add("HttpServer")
-Pkg.add("Requests")
-Pkg.add("ArgParse")
-Pkg.add("FactCheck")
-Pkg.add("PyCall")
-Pkg.clone("https://github.com/ScottPJones/StringUtils.jl.git")
