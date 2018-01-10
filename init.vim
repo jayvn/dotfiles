@@ -4,9 +4,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'itchyny/vim-cursorword'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'godlygeek/tabular', { 'on':  'Tab' }
-Plug 'vim-scripts/peaksea'
 Plug 'tpope/vim-commentary'
 Plug 'benmills/vimux'
 Plug 'Numkil/ag.nvim'
@@ -14,7 +13,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Raimondi/delimitMate'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'mhinz/vim-startify'
-Plug 'jistr/vim-nerdtree-tabs'
+"Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -22,7 +21,7 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'tmhedberg/SimpylFold'
 Plug 'noscript/vim-wipeout'
 Plug 'vim-airline/vim-airline'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neosnippet'
 Plug 'honza/vim-snippets'
@@ -38,23 +37,23 @@ Plug 'christoomey/vim-tmux-runner'
 " Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 Plug 'jalvesaq/Nvim-R'
 Plug 'romainl/vim-cool'
-"Plug 'yegappan/mru'
-"Plug 'Shougo/neosnippet-snippets'
-"Plug 'Shougo/unite.nvim'
-"Plug 'jayvn/vim-endwise'
-"Plug 'godlygeek/csapprox'
-"Plug 'critiqjo/lldb.nvim'
-"Plug 'nathanaelkane/vim-indent-guides'
-"Plug 'scrooloose/nerdcommenter'
-"Plug 'james9909/stackanswers.vim'
-"Plug 'plasticboy/vim-markdown'
-"Plug 'vale1410/vim-minizinc'
-"Plug 'jalvesaq/vimcmdline'
-"Plug 'vim-scripts/taglist.vim'
+" Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/unite.nvim'
+" Plug 'jayvn/vim-endwise'
+" Plug 'godlygeek/csapprox'
+" Plug 'critiqjo/lldb.nvim'
+" Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'scrooloose/nerdcommenter'
+" Plug 'james9909/stackanswers.vim'
+" Plug 'plasticboy/vim-markdown'
+" Plug 'vale1410/vim-minizinc'
+" Plug 'jalvesaq/vimcmdline'
+" Plug 'vim-scripts/taglist.vim'
 " Plug 'chrisbra/NrrwRgn'
 
-" Colorschemes
-Plug 'vim-airline/vim-airline-themes' " Airline
+" Colorschemes and stuff
+Plug 'vim-airline/vim-airline-themes' " Airline themes
+Plug 'vim-scripts/peaksea'
 Plug 'KabbAmine/yowish.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/vim-tomorrow-theme'
@@ -72,6 +71,11 @@ Plug 'tpope/vim-vividchalk'
 Plug 'w0ng/vim-hybrid'
 Plug 'whatyouhide/vim-gotham'
 Plug 'junegunn/seoul256.vim'
+Plug 'romainl/Apprentice'
+Plug 'chriskempson/base16-vim'
+Plug 'joshdick/onedark.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim'
 
 " seoul256 (dark):
 "   Range:   233 (darkest) ~ 239 (lightest)
@@ -91,8 +95,13 @@ else
     " let g:solarized_termcolors=256
     " let g:solarized_bold = 1
     " set bg=dark
+    " colo badwolf
     " colo gruvbox
-    colo molokai
+    colo apprentice
+    " colo codeblocks-dark
+    " colo gotham
+    " colo seoul256
+    " colo molokai
     " let g:rehash256 = 1
     " let g:airline_theme='gotham'
     " let g:seoul256_background = 234
@@ -384,28 +393,6 @@ nmap <Leader>rl :e<CR>
 " Read somewhere that this can be used to avoid pastetoggle -
 set mouse=a
 
-" function! WrapForTmux(s)
-"   if !exists('$TMUX')
-"     return a:s
-"   endif
-"
-"   let tmux_start = "\<Esc>Ptmux;"
-"   let tmux_end = "\<Esc>\\"
-"
-"   return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-" endfunction
-"
-" let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-" let &t_EI .= WrapForTmux("\<Esc>[?2004l")
-"
-" function! XTermPasteBegin()
-"   set pastetoggle=<Esc>[201~
-"   set paste
-"   return ""
-" endfunction
-"
-" inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
 let g:session_autoload = 'no'
 let g:session_autosave = 'no'
 " let g:startify_change_to_dir = 0
@@ -435,3 +422,19 @@ nnoremap <leader>sf :VtrSendFile<cr>
 vnoremap <C-c> <Esc>
 " Mainly for vim-commentary
 autocmd FileType julia setlocal commentstring=#\ %s
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
