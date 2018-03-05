@@ -53,10 +53,11 @@ function recompile()
     end
 end
 
+#=
 @schedule begin
     sleep(0.1)
     @eval using Revise
 end
-
+=#
 # push!(LOAD_PATH, "/home/jay/ev/StatsBase.jl")
 # push!(LOAD_PATH, "/home/jay/ev/")

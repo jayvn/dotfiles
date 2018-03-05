@@ -21,7 +21,6 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'tmhedberg/SimpylFold'
 Plug 'noscript/vim-wipeout'
 Plug 'vim-airline/vim-airline'
-" Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neosnippet'
 Plug 'honza/vim-snippets'
@@ -29,14 +28,15 @@ Plug 'gregsexton/gitv'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'majutsushi/tagbar'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
-" Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 Plug 'jalvesaq/Nvim-R'
 Plug 'romainl/vim-cool'
+" Plug 'ervandew/supertab'
+Plug 'majutsushi/tagbar'
+" Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 " Plug 'Shougo/neosnippet-snippets'
 " Plug 'Shougo/unite.nvim'
 " Plug 'jayvn/vim-endwise'
@@ -46,7 +46,6 @@ Plug 'romainl/vim-cool'
 " Plug 'scrooloose/nerdcommenter'
 " Plug 'james9909/stackanswers.vim'
 " Plug 'plasticboy/vim-markdown'
-" Plug 'vale1410/vim-minizinc'
 " Plug 'jalvesaq/vimcmdline'
 " Plug 'vim-scripts/taglist.vim'
 " Plug 'chrisbra/NrrwRgn'
@@ -100,6 +99,7 @@ else
     colo apprentice
     " colo codeblocks-dark
     " colo gotham
+    " colo onedark
     " colo seoul256
     " colo molokai
     " let g:rehash256 = 1
@@ -204,12 +204,6 @@ set formatoptions+=w
 set formatoptions+=o
 set tw=100
 set hidden
-
-"nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
-" Use <C-L> to clear the highlighting of :set hlsearch.
-" if maparg('<C-L>', 'n') ==# ''
-" nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
-" endif
 
 if !exists('g:loaded_matchit')
     runtime macros/matchit.vim
@@ -319,8 +313,6 @@ set ff=unix
 
 let g:vim_markdown_folding_disabled=1
 
-"autocmd! BufWritePost * Neomake
-
 "nmap <CR> li<CR><esc>k$
 
 "ctags stuff
@@ -411,7 +403,6 @@ nnoremap <leader>sc :VtrSendCommandToRunner<cr>
 nnoremap <CR> :VtrSendLinesToRunner<cr>j
 vnoremap <CR> :VtrSendLinesToRunner<cr>
 nnoremap <leader>o :VtrOpenRunner<cr>
-" nnoremap <leader>kr :VtrKillRunner<cr>
 " nnoremap <leader>fr :VtrFocusRunner<cr>
 " nnoremap <leader>dr :VtrDetachRunner<cr>
 " nnoremap <leader>cr :VtrClearRunner<cr>

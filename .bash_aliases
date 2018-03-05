@@ -30,12 +30,6 @@ cm() {
     git commit -m "$*";
 }
 
-cmps() {
-    git add $(gittop) -A
-    git commit -m "$*";
-    git push
-}
-
 replaceword() {
     ag -lsw $1 | xargs sed -ri -e "s/\\<$1\\>/$2/g"
 }
@@ -44,34 +38,34 @@ replacetext() {
     ag -ls $1 | xargs sed -ri -e "s/$1/$2/g"
 }
 
-ugits() {
-    # store the current dir
-    CUR_DIR=$(pwd)
-
-    # Let the person running the script know what's going on.
-    echo "\n\033[1mPulling in latest changes for all repositories...\033[0m\n"
-
-    # Find all git repositories and update it to the master latest revision
-    for i in $(find . -name ".git" | cut -c 3-); do
-        echo "";
-        echo "\033[33m"+$i+"\033[0m";
-
-        # We have to go to the .git parent directory to call the pull command
-        cd "$i";
-        cd ..;
-
-        # finally pull
-        git pull origin master;
-        gitclean # clean merged branches
-        # Also update the tags
-        ctags -R
-
-        # lets get back to the CUR_DIR
-        cd $CUR_DIR
-    done
-
-    echo "\n\033[32mComplete!\033[0m\n"
-}
+# ugits() {
+#     # store the current dir
+#     CUR_DIR=$(pwd)
+#
+#     # Let the person running the script know what's going on.
+#     echo "\n\033[1mPulling in latest changes for all repositories...\033[0m\n"
+#
+#     # Find all git repositories and update it to the master latest revision
+#     for i in $(find . -name ".git" | cut -c 3-); do
+#         echo "";
+#         echo "\033[33m"+$i+"\033[0m";
+#
+#         # We have to go to the .git parent directory to call the pull command
+#         cd "$i";
+#         cd ..;
+#
+#         # finally pull
+#         git pull origin master;
+#         gitclean # clean merged branches
+#         # Also update the tags
+#         ctags -R
+#
+#         # lets get back to the CUR_DIR
+#         cd $CUR_DIR
+#     done
+#
+#     echo "\n\033[32mComplete!\033[0m\n"
+# }
 
 # Update the date and pull from all repos
 udate()
@@ -82,37 +76,31 @@ udate()
     time sudo apt -y full-upgrade
     source ~/.oh-my-zsh/tools/upgrade.sh
     # R -e "update.packages()"
-    sudo -H pip3 install --upgrade neovim
+    # pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U --user
+
     nvim -c "PlugUpdate | PlugUpgrade"
 
     # Probably should be last because this can fail
-    # julia -e "Pkg.update()"
-    julia -e "emerge()"
+    julia -e "Pkg.update()"
+    # julia -e "emerge()"
 }
 
-export TERM=screen-256color
-# Set capslock to ctrl
-# setxkbmap -option caps:ctrl_modifier
-# setxkbmap -option ctrl:nocaps
-# xcape -e 'Control_L=Escape'
-
-set -o vi
-
-ts() {
-    # if [ -f .git ]; then
-    # cd $(gittop)
-    # fi
-    ./testfile.sh
-}
-
-mostused() {
-  history | awk '{print $2}' | sort | uniq -c | sort -nr | head
-}
+# set -o vi
+# mostused() {
+#   history | awk '{print $2}' | sort | uniq -c | sort -nr | head
+# }
 
 alias tgz='tar -zxvf'
 alias tbz='tar -jxvf'
 export JULIA_HOME=/home/jay/julia/bin
 
 # export LD_LIBRARY_PATH=$PATH
-export CUDA_HOME="/usr/lib/R/lib:/usr/lib/x86_64-linux-gnu:/usr/lib:/home/jay/R/x86_64-pc-linux-gnu-library/3.4/PerformanceAnalytics/libs/"
-export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}
+# export CUDA_HOME="/usr/lib/R/lib:/usr/lib/x86_64-linux-gnu:/usr/lib:/home/jay/R/x86_64-pc-linux-gnu-library/3.4/PerformanceAnalytics/libs/"
+# export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper_lazy.sh
+
+# export CLASSPATH=/home/jay/mysql_connectors/mysql-connector-java-5.1.45-bin.jar:$CLASSPATH
