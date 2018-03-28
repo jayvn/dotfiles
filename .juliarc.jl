@@ -1,56 +1,40 @@
-# Keybindings
-# Should define repoloc in juliarc
-include(joinpath(repoloc, "set_loadpath.jl"))
-# include(joinpath(dirname(JULIA_HOME),"share","julia","build_sysimg.jl")); build_sysimg(force=true)
+SEPARATOR = "\n"
+function recompile_packages()
+  for pkg in keys(Pkg.installed())
+    try
+      info("Compiling: $pkg")
+      eval(Expr(:toplevel, Expr(:using, Symbol(pkg))))
+      println(SEPARATOR)
+    catch err
+      warn("Unable to precompile: $pkg")
+      warn(err)
+      println(SEPARATOR)
+    end
+  end
+end
 
-import Base: LineEdit, REPL
+emerge() = (Pkg.update(); Pkg.build(); recompile_packages())
 
 #=
-function dbg(dat...)
-    str = join(dat, " ")
-    open(joinpath(repoloc,".snipdbgfile.jl"), "a") do f
-        write(f, sprint(println, Dates.format(now(),"HH:MM:SS"), " >  ", str))
+Why does this segfault
+function recompile2()
+  for pkg in Pkg.available()
+    println(pkg)
+    try
+      pkgsym = Symbol(pkg)
+      eval(:(using $pkgsym))
+    catch
     end
+  end
 end
 =#
-const mykeys = Dict{Any,Any}(
-  # Up Arrow - k
-  # "^[k" => (s,o...)->(LineEdit.edit_move_up(s) || LineEdit.enter_prefix_search(s, LineEdit.mode(s).hist, true)),
-  #"^[k" => (s,data,c)->(LineEdit.history_prev_prefix(s, LineEdit.mode(s).hist)),
-  #"^[k" => (s,o...)->(LineEdit.edit_move_up(s) || LineEdit.history_prev_prefix(s, LineEdit.mode(s).hist)),
-  # )"\e[5~" => (s,o...)->(LineEdit.history_prev_prefix(s, LineEdit.mode(s).hist)),
-
-  # Down Arrow - j
-  "^[k" => (s,o...)->(LineEdit.edit_move_up(s) || LineEdit.history_prev(s, LineEdit.mode(s).hist)),
-  "^[j" => (s,o...)->(LineEdit.edit_move_up(s) || LineEdit.history_next(s, LineEdit.mode(s).hist))
-)
-
-function customize_keys(repl)
-  repl.interface = REPL.setup_interface(repl; extra_repl_keymap = mykeys)
-end
-
-atreplinit(customize_keys)
-
-# global const NOPC = true
-
-SEPARATOR = "\n"
-
-emerge() = (Pkg.update(); Pkg.build(); recompile())
 
 function recompile()
-    for pkg in Pkg.available()
-        try
-            info("Compiling: $pkg")
-            pkgsym = Symbol(pkg)
-            eval(:(using $pkgsym))
-            # eval(Expr(:toplevel, Expr(:using, Symbol(pkg))))
-            println(SEPARATOR)
-        catch err
-            warn("Unable to precompile: $pkg")
-            warn(err)
-            println(SEPARATOR)
-        end
-    end
+  for pkg in keys(Pkg.installed())
+    println("Compiling ", pkg)
+    pkgsym = Symbol(pkg)
+    eval(:(using $pkgsym))
+  end
 end
 
 #=
@@ -59,5 +43,6 @@ end
     @eval using Revise
 end
 =#
-# push!(LOAD_PATH, "/home/jay/ev/StatsBase.jl")
-# push!(LOAD_PATH, "/home/jay/ev/")
+
+push!(LOAD_PATH, "/home/jay/ev/QuantMod2")
+push!(LOAD_PATH, "/home/jay/ev/")

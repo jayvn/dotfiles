@@ -1,7 +1,7 @@
 alias rm="rm -i"
 
 alias g=git
-alias gs="git branch -a && git status"
+alias gs="git branch -a | cat && git status"
 alias ga="git add . -A"
 alias gdH="git diff --color-words=\"[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+\" HEAD"
 alias gd="git diff --color-words "
@@ -9,6 +9,7 @@ alias grb="g rb --root -i"
 
 alias t="tree"
 alias sa="sudo apt"
+alias jl="julia -q"
 alias j="julia -q"
 alias v=nvim
 alias vi=nvim
@@ -82,7 +83,7 @@ udate()
 
     # Probably should be last because this can fail
     julia -e "Pkg.update()"
-    # julia -e "emerge()"
+    julia -e "recompile()"
 }
 
 # set -o vi
