@@ -11,7 +11,6 @@ Plug 'benmills/vimux'
 Plug 'Numkil/ag.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Raimondi/delimitMate'
-Plug 'JuliaEditorSupport/julia-vim'
 "Plug 'mhinz/vim-startify'
 "Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-repeat'
@@ -33,11 +32,16 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'chrisbra/csv.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
+
 Plug 'jalvesaq/Nvim-R'
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'pangloss/vim-javascript'
+" Plug 'bfredl/nvim-ipy'
+" Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
+
 Plug 'romainl/vim-cool'
 " Plug 'ervandew/supertab'
 " Plug 'majutsushi/tagbar'
-" Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 " Plug 'Shougo/neosnippet-snippets'
 " Plug 'Shougo/unite.nvim'
 " Plug 'jayvn/vim-endwise'
@@ -430,3 +434,4 @@ if (empty($TMUX))
     set termguicolors
   endif
 endif
+" let g:nvim_ipy_perform_mappings = 0
