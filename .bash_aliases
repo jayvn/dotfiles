@@ -10,7 +10,8 @@ alias grb="g rb --root -i"
 alias t="tree"
 alias sa="sudo apt"
 alias jl="julia --color=yes -q"
-alias j="julia -q"
+alias j=/home/jay/julia/bin/julia
+alias j2=/home/jay/ev/julia/julia
 alias v=nvim
 alias vi=nvim
 # alias wd="cd ~/ev/"
@@ -93,15 +94,16 @@ udate()
 
 alias tgz='tar -zxvf'
 alias tbz='tar -jxvf'
-export JULIA_HOME=/home/jay/julia/bin
+unset JULIA_HOME
+# export JULIA_HOME=/home/jay/julia/bin
 export PATH=$PATH:~/.local/bin  # For pip installations
 
 # export LD_LIBRARY_PATH=$PATH
 # export CUDA_HOME="/usr/lib/R/lib:/usr/lib/x86_64-linux-gnu:/usr/lib:/home/jay/R/x86_64-pc-linux-gnu-library/3.4/PerformanceAnalytics/libs/"
 # export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-source /usr/local/bin/virtualenvwrapper_lazy.sh
+# export WORKON_HOME=$HOME/.virtualenvs
+# export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+# source /usr/local/bin/virtualenvwrapper_lazy.sh
 # export CLASSPATH=/home/jay/mysql_connectors/mysql-connector-java-5.1.45-bin.jar:$CLASSPATH
