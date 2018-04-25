@@ -10,7 +10,7 @@ alias grb="g rb --root -i"
 alias t="tree"
 alias sa="sudo apt"
 alias jl="julia --color=yes -q"
-alias j=/home/jay/julia/bin/julia
+alias j="/home/jay/julia/bin/julia -q"
 alias j2=/home/jay/ev/julia/julia
 alias v=nvim
 alias vi=nvim
@@ -103,7 +103,34 @@ export PATH=$PATH:~/.local/bin  # For pip installations
 # export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 
-# export WORKON_HOME=$HOME/.virtualenvs
-# export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-# source /usr/local/bin/virtualenvwrapper_lazy.sh
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper_lazy.sh
 # export CLASSPATH=/home/jay/mysql_connectors/mysql-connector-java-5.1.45-bin.jar:$CLASSPATH
+
+# lazyload nvm
+# all props goes to http://broken-by.me/lazy-load-nvm/
+# grabbed from reddit @ https://www.reddit.com/r/node/comments/4tg5jg/lazy_load_nvm_for_faster_shell_start/
+
+# NVM stuff
+# https://gist.github.com/fl0w/07ce79bd44788f647deab307c94d6922
+lazynvm() {
+    unset -f nvm node npm
+    export NVM_DIR=~/.nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+}
+
+nvm() {
+    lazynvm
+    nvm $@
+}
+
+node() {
+    lazynvm
+    node $@
+}
+
+npm() {
+    lazynvm
+    npm $@
+}
