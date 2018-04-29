@@ -4,16 +4,9 @@ call plug#begin('~/.vim/plugged')
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'itchyny/vim-cursorword'
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'godlygeek/tabular', { 'on':  'Tab' }
 Plug 'tpope/vim-commentary'
-Plug 'benmills/vimux'
-Plug 'Numkil/ag.nvim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'Raimondi/delimitMate'
-Plug 'JuliaEditorSupport/julia-vim'
-"Plug 'mhinz/vim-startify'
-"Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -22,22 +15,36 @@ Plug 'tmhedberg/SimpylFold'
 Plug 'noscript/vim-wipeout'
 Plug 'vim-airline/vim-airline'
 Plug 'Shougo/deoplete.nvim'
-" Plug 'Shougo/neosnippet'
-" Plug 'honza/vim-snippets'
-" Plug 'gregsexton/gitv'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-" Plug 'mhinz/vim-signify'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
-Plug 'chrisbra/csv.vim'
+" Plug 'Chiel92/vim-autoformat'
+" Plug 'Shougo/neosnippet'
+" Plug 'honza/vim-snippets'
+" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'mhinz/vim-startify'
+" Plug 'jistr/vim-nerdtree-tabs'
+
+" External tool support plugins
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
+Plug 'tpope/vim-fugitive'
+Plug 'Numkil/ag.nvim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'airblade/vim-gitgutter'
+" Plug 'benmills/vimux'
+" Plug 'mhinz/vim-signify'
+
+" Language support plugins
 Plug 'jalvesaq/Nvim-R'
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'chrisbra/csv.vim'
+" Plug 'bfredl/nvim-ipy'
+" Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
+
 Plug 'romainl/vim-cool'
 " Plug 'ervandew/supertab'
 " Plug 'majutsushi/tagbar'
-" Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 " Plug 'Shougo/neosnippet-snippets'
 " Plug 'Shougo/unite.nvim'
 " Plug 'jayvn/vim-endwise'
@@ -153,18 +160,16 @@ let g:neosnippet#disable_runtime_snippets = {
 "" }
 
 let g:deoplete#enable_at_startup = 1
-set autoindent
-set shiftwidth=4
 set expandtab
 filetype plugin indent on
 syntax enable
 set nowrap        " don't wrap lines
-set tabstop=2     " a tab is four spaces
+set tabstop=4     " a tab is four spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
 set number        " always show line numbers
-set shiftwidth=2  " number of spaces to use for autoindenting
+set shiftwidth=4  " number of spaces to use for autoindenting
 "set matchtime=1
 set showmatch     " set show matching parenthesis
 set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
@@ -430,3 +435,4 @@ if (empty($TMUX))
     set termguicolors
   endif
 endif
+" let g:nvim_ipy_perform_mappings = 0

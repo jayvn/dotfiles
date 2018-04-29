@@ -5,8 +5,8 @@ export ZSH=~/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-# ZSH_THEME="dogenpunk",Soliah
-ZSH_THEME="awesomepanda"
+# ZSH_THEME="dogenpunk","Soliah","awesomepanda","agnoster","amuse"
+ZSH_THEME="amuse"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -137,4 +137,8 @@ export MZN_STDLIB_DIR=/media/disk2/MiniZincIDE-2.0.9-bundle-linux-x86_64/share/m
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-[[ -n $TMUX ]] && alias vi="zsh ~/vim-tmux-open.zsh"
+# [[ -n $TMUX ]] && alias vi="zsh ~/vim-tmux-open.zsh"
+
+export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -31,6 +31,7 @@ end
 
 function recompile()
   for pkg in keys(Pkg.installed())
+    pkg == "Gtk" && continue
     println("Compiling ", pkg)
     pkgsym = Symbol(pkg)
     eval(:(using $pkgsym))
