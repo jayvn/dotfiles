@@ -14,24 +14,30 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'tmhedberg/SimpylFold'
 Plug 'noscript/vim-wipeout'
 Plug 'vim-airline/vim-airline'
-Plug 'Shougo/deoplete.nvim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 " Plug 'Chiel92/vim-autoformat'
-" Plug 'Shougo/neosnippet'
 " Plug 'honza/vim-snippets'
 " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'mhinz/vim-startify'
 " Plug 'jistr/vim-nerdtree-tabs'
 
+" Completion etc
+" Plug 'ajh17/VimCompletesMe'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'sheerun/vim-polyglot'
+
 " External tool support plugins
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
-Plug 'tpope/vim-fugitive'
+" Plug 'urbainvaes/vim-tmux-pilot'
 Plug 'Numkil/ag.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Git support
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 Plug 'airblade/vim-gitgutter'
-" Plug 'benmills/vimux'
 " Plug 'mhinz/vim-signify'
 
 " Language support plugins
@@ -43,10 +49,11 @@ Plug 'chrisbra/csv.vim'
 " Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 
 Plug 'romainl/vim-cool'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'Shougo/neosnippet.vim'
 " Plug 'ervandew/supertab'
 " Plug 'majutsushi/tagbar'
-" Plug 'Shougo/neosnippet-snippets'
-" Plug 'Shougo/unite.nvim'
+" Plug 'Shougo/denite.nvim'
 " Plug 'jayvn/vim-endwise'
 " Plug 'godlygeek/csapprox'
 " Plug 'critiqjo/lldb.nvim'
@@ -63,6 +70,8 @@ Plug 'vim-airline/vim-airline-themes' " Airline themes
 Plug 'vim-scripts/peaksea'
 Plug 'KabbAmine/yowish.vim'
 Plug 'altercation/vim-colors-solarized'
+
+Plug 'ajh17/Spacegray.vim'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'jnurmine/Zenburn'
 Plug 'jonathanfilip/vim-lucius'
@@ -104,7 +113,9 @@ else
     " set bg=dark
     " colo badwolf
     " colo gruvbox
+    " colo apprentice
     colo apprentice
+    " colo spacegray
     " colo codeblocks-dark
     " colo gotham
     " colo onedark
@@ -121,10 +132,29 @@ let mapleader="\<Space>"
 set undofile
 set undodir=~/.vim/undo
 
-let g:neosnippet#disable_runtime_snippets = {
-\   '_' : 1,
-\ }
+" let g:neosnippet#disable_runtime_snippets = {
+" \   '_' : 1,
+" \ }
 
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 "" Tell Neosnippet about the other snippets
 "let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 "" Snippets {
@@ -211,10 +241,6 @@ set formatoptions+=o
 set tw=100
 set hidden
 
-if !exists('g:loaded_matchit')
-    runtime macros/matchit.vim
-endif
-
 "plugin stuff:
 
 " The Silver Searcher
@@ -247,16 +273,6 @@ function! StripTrailingWhitespace()
 endfunction
 
 " GUI Options {
-
-  " Relative numbering
-  function! NumberToggle()
-    if(&relativenumber == 1)
-      set nornu
-      set number
-    else
-      set rnu
-    endif
-  endfunc
 
   " Toggle between normal and relative numbering.
   nnoremap <leader>rn :call NumberToggle()<cr>
@@ -295,12 +311,14 @@ endfunction
     let g:airline#extensions#tabline#left_alt_sep = '|'
     let g:airline#extensions#tabline#right_sep = ' '
     let g:airline#extensions#tabline#right_alt_sep = '|'
-    let g:airline_left_sep = ' '
-    let g:airline_left_alt_sep = '|'
-    let g:airline_right_sep = ' '
-    let g:airline_right_alt_sep = '|'
+
+    let g:airline_right_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_left_alt_sep= ''
+    let g:airline_left_sep = ''
     " let g:airline_theme= 'serene'
-" }
+    " }
+
 " CtrlP {
 " Open file menu
 let g:ctrlp_by_filename=0
@@ -308,13 +326,9 @@ let g:ctrlp_cmd='CtrlPMixed' " 'CtrlPMRU'
 " Open buffer menu
 nnoremap <Leader>b :CtrlPBuffer<CR>
 " Open most recently used files
-"nnoremap <Leader>f :CtrlPMRUFiles<CR>
+nnoremap <Leader>m :CtrlPMRUFiles<CR>
 " }
-"let g:nerdtree_tabs_open_on_console_startup=1
 
-"set statusline += % #warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline += % *
 set ff=unix
 
 let g:vim_markdown_folding_disabled=1
@@ -322,9 +336,9 @@ let g:vim_markdown_folding_disabled=1
 "nmap <CR> li<CR><esc>k$
 
 "ctags stuff
- nmap <Leader>tf :call CtagsFind(expand('<cword>'))<CR>
+nmap <Leader>tf :call CtagsFind(expand('<cword>'))<CR>
 " use <C-]> instead
- com! -nargs=+ Tf :call CtagsFind("<args>")
+com! -nargs=+ Tf :call CtagsFind("<args>")
 " split window and search for tag
 
 nmap <Leader>ts :exe('stj '.expand('<cword>'))<CR>
@@ -419,20 +433,3 @@ nnoremap <leader>sf :VtrSendFile<cr>
 vnoremap <C-c> <Esc>
 " Mainly for vim-commentary
 autocmd FileType julia setlocal commentstring=#\ %s
-
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
-  if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
-endif
-" let g:nvim_ipy_perform_mappings = 0

@@ -22,7 +22,7 @@
     l = log --graph
 
 [push]
-    default = current
+	default = current
 # la=!git config -l | grep alias | cut -c 7-
 # list-alias=!git la
 # rv=checkout --
@@ -77,3 +77,16 @@
 # outgoing=!(git fetch --quiet && git log --pretty=format:'%C(yellow)%h %C(white)- %C(red)%an 
 # %C(white)- %C(cyan)%d%Creset %s %C(white)- %ar%Creset' $(git rev-parse -abbrev-ref 
 # -symbolic-full-name @{u})..)))'"
+[diff "jupyternotebook"]
+	command = git-nbdiffdriver diff
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false
