@@ -130,8 +130,6 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-export MZN_STDLIB_DIR=/media/disk2/MiniZincIDE-2.0.9-bundle-linux-x86_64/share/minizinc/
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # [[ -n $TMUX ]] && alias vi="zsh ~/vim-tmux-open.zsh"
