@@ -95,7 +95,7 @@ udate()
 
 alias tgz='tar -zxvf'
 alias tbz='tar -jxvf'
-export PATH=$PATH:~/.local/bin  # For pip installations
+export PATH=$PATH:~/.local/bin  # For pip installed packages
 
 unset JULIA_HOME
 # export JULIA_HOME=/home/jay/julia/bin
