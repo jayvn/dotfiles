@@ -45,5 +45,5 @@ end
 end
 =#
 
-push!(LOAD_PATH, "/home/jay/ev/QuantMod2")
+# push!(LOAD_PATH, "/home/jay/ev/QuantMod2")
 push!(LOAD_PATH, "/home/jay/ev/")

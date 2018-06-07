@@ -103,11 +103,6 @@ unset JULIA_HOME
 # export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}
 # export CLASSPATH=/home/jay/mysql_connectors/mysql-connector-java-5.1.45-bin.jar:$CLASSPATH
 
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-source /usr/local/bin/virtualenvwrapper_lazy.sh
-
 # lazyload nvm
 # all props goes to http://broken-by.me/lazy-load-nvm/
 # grabbed from reddit @ https://www.reddit.com/r/node/comments/4tg5jg/lazy_load_nvm_for_faster_shell_start/
@@ -134,3 +129,6 @@ npm() {
     lazynvm
     npm $@
 }
+
+alias iju='jupyter console --ZMQTerminalInteractiveShell.editing_mode=vi \
+           --kernel=julia-0.6'

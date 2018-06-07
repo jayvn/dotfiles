@@ -52,7 +52,7 @@ ZSH_THEME="amuse"
 # Add wisely, as too many plugins slow down shell startup.
 # history-substring-search
 
-plugins=(history-substring-search z)
+plugins=(history-substring-search z virtualenvwrapper)
 
 # User configuration
 

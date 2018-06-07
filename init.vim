@@ -198,7 +198,8 @@ set tabstop=4     " a tab is four spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
-set number        " always show line numbers
+" set number        " always show line numbers
+set nu | set rnu
 set shiftwidth=4  " number of spaces to use for autoindenting
 "set matchtime=1
 set showmatch     " set show matching parenthesis
@@ -433,3 +434,7 @@ nnoremap <leader>sf :VtrSendFile<cr>
 vnoremap <C-c> <Esc>
 " Mainly for vim-commentary
 autocmd FileType julia setlocal commentstring=#\ %s
+
+"Performance improvements
+set synmaxcol=200 "Don't bother highlighting anything over 200 chars
+let did_install_default_menus = 1 "No point loading gvim menu stuff
