@@ -436,3 +436,4 @@ if (empty($TMUX))
   endif
 endif
 " let g:nvim_ipy_perform_mappings = 0
+set inccommand=nosplit
