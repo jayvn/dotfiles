@@ -36,23 +36,28 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Git support
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
+" Plug 'junegunn/gv.vim'
 Plug 'airblade/vim-gitgutter'
 " Plug 'mhinz/vim-signify'
 
 " Language support plugins
 Plug 'jalvesaq/Nvim-R'
 Plug 'JuliaEditorSupport/julia-vim'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 Plug 'chrisbra/csv.vim'
 " Plug 'bfredl/nvim-ipy'
 " Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
+
+" Tags
+Plug 'ludovicchabant/vim-gutentags'
+" Plug 'majutsushi/tagbar'
+" Plug 'vim-scripts/taglist.vim'
 
 Plug 'romainl/vim-cool'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 " Plug 'ervandew/supertab'
-" Plug 'majutsushi/tagbar'
+
 " Plug 'Shougo/denite.nvim'
 " Plug 'jayvn/vim-endwise'
 " Plug 'godlygeek/csapprox'
@@ -62,7 +67,6 @@ Plug 'Shougo/neosnippet.vim'
 " Plug 'james9909/stackanswers.vim'
 " Plug 'plasticboy/vim-markdown'
 " Plug 'jalvesaq/vimcmdline'
-" Plug 'vim-scripts/taglist.vim'
 " Plug 'chrisbra/NrrwRgn'
 
 " Colorschemes and stuff
@@ -441,3 +445,4 @@ let did_install_default_menus = 1 "No point loading gvim menu stuff
 
 " let g:nvim_ipy_perform_mappings = 0
 set inccommand=nosplit
+set termguicolors
