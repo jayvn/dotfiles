@@ -438,3 +438,6 @@ autocmd FileType julia setlocal commentstring=#\ %s
 "Performance improvements
 set synmaxcol=200 "Don't bother highlighting anything over 200 chars
 let did_install_default_menus = 1 "No point loading gvim menu stuff
+
+" let g:nvim_ipy_perform_mappings = 0
+set inccommand=nosplit
