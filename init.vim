@@ -7,8 +7,8 @@ Plug 'itchyny/vim-cursorword'
 Plug 'godlygeek/tabular', { 'on':  'Tab' }
 Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
+Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-unimpaired'
 Plug 'simnalamburt/vim-mundo'
 Plug 'tmhedberg/SimpylFold'
@@ -17,11 +17,12 @@ Plug 'vim-airline/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 " Plug 'Chiel92/vim-autoformat'
-" Plug 'honza/vim-snippets'
 " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'mhinz/vim-startify'
 " Plug 'jistr/vim-nerdtree-tabs'
 
+" Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/limelight.vim'
 " Completion etc
 " Plug 'ajh17/VimCompletesMe'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -54,8 +55,12 @@ Plug 'ludovicchabant/vim-gutentags'
 " Plug 'vim-scripts/taglist.vim'
 
 Plug 'romainl/vim-cool'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/neosnippet.vim'
+
+" Snippets
+" Plug 'honza/vim-snippets'
+" Plug 'andreyorst/SimpleSnippets.vim'
+" Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet.vim'
 " Plug 'ervandew/supertab'
 
 " Plug 'Shougo/denite.nvim'
@@ -64,7 +69,6 @@ Plug 'Shougo/neosnippet.vim'
 " Plug 'critiqjo/lldb.nvim'
 " Plug 'nathanaelkane/vim-indent-guides'
 " Plug 'scrooloose/nerdcommenter'
-" Plug 'james9909/stackanswers.vim'
 " Plug 'plasticboy/vim-markdown'
 " Plug 'jalvesaq/vimcmdline'
 " Plug 'chrisbra/NrrwRgn'
@@ -446,3 +450,8 @@ let did_install_default_menus = 1 "No point loading gvim menu stuff
 " let g:nvim_ipy_perform_mappings = 0
 set inccommand=nosplit
 set termguicolors
+
+let g:highlightedyank_highlight_duration = 300
+
+" use surround.vim keymap for vim-sandwich
+runtime macros/sandwich/keymap/surround.vim

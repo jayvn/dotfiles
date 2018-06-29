@@ -11,7 +11,7 @@ alias t="tree"
 alias sa="sudo apt"
 alias jl="julia --color=yes -q"
 alias j="/home/jay/julia/bin/julia -q"
-alias j2=/home/jay/ev/julia/julia
+alias j2="/home/jay/ev/julia/julia -q"
 alias v=nvim
 alias vi=nvim
 # alias wd="cd ~/ev/"
