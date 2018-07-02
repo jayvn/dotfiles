@@ -16,8 +16,7 @@ Plug 'noscript/vim-wipeout'
 Plug 'vim-airline/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
-" Plug 'justinmk/vim-sneak'
-" Plug 'unblevable/quick-scope'
+Plug 'unblevable/quick-scope'
 
 " For ssh editing
 " Plug 'justinmk/vim-dirvish'
