@@ -19,6 +19,7 @@ alias py=python3
 # alias vpn=/opt/cisco/anyconnect/bin/vpn
 
 gitclean() {
+    git checkout master
     git prune
     git branch --merged master | grep -v master | xargs -n 1 git branch -d
     git branch -r --merged master | grep -v master | sed 's/origin\///' | xargs -n 1 git push --delete origin
@@ -104,33 +105,3 @@ unset JULIA_HOME
 # export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}
 # export CLASSPATH=/home/jay/mysql_connectors/mysql-connector-java-5.1.45-bin.jar:$CLASSPATH
 # export MZN_STDLIB_DIR=/media/disk2/MiniZincIDE-2.0.9-bundle-linux-x86_64/share/minizinc/
-
-# lazyload nvm
-# all props goes to http://broken-by.me/lazy-load-nvm/
-# grabbed from reddit @ https://www.reddit.com/r/node/comments/4tg5jg/lazy_load_nvm_for_faster_shell_start/
-
-# NVM stuff
-# https://gist.github.com/fl0w/07ce79bd44788f647deab307c94d6922
-lazynvm() {
-    unset -f nvm node npm
-    export NVM_DIR=~/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-}
-
-nvm() {
-    lazynvm
-    nvm $@
-}
-
-node() {
-    lazynvm
-    node $@
-}
-
-npm() {
-    lazynvm
-    npm $@
-}
-
-alias iju='jupyter console --ZMQTerminalInteractiveShell.editing_mode=vi \
-           --kernel=julia-0.6'

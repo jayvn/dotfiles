@@ -16,6 +16,13 @@ Plug 'noscript/vim-wipeout'
 Plug 'vim-airline/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
+" Plug 'justinmk/vim-sneak'
+" Plug 'unblevable/quick-scope'
+
+" For ssh editing
+" Plug 'justinmk/vim-dirvish'
+" Plug 'bounceme/remote-viewer'
+" Plug 'tommcdo/vim-lion'
 " Plug 'Chiel92/vim-autoformat'
 " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'mhinz/vim-startify'
@@ -74,30 +81,30 @@ Plug 'romainl/vim-cool'
 " Plug 'chrisbra/NrrwRgn'
 
 " Colorschemes and stuff
-Plug 'vim-airline/vim-airline-themes' " Airline themes
-Plug 'vim-scripts/peaksea'
-Plug 'KabbAmine/yowish.vim'
-Plug 'altercation/vim-colors-solarized'
+" Plug 'vim-airline/vim-airline-themes' " Airline themes
+" Plug 'vim-scripts/peaksea'
+" Plug 'KabbAmine/yowish.vim'
+" Plug 'altercation/vim-colors-solarized'
 
-Plug 'ajh17/Spacegray.vim'
-Plug 'chriskempson/vim-tomorrow-theme'
+" Plug 'ajh17/Spacegray.vim'
+" Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'jnurmine/Zenburn'
-Plug 'jonathanfilip/vim-lucius'
-Plug 'jpo/vim-railscasts-theme'
-Plug 'mhinz/vim-janah'
-Plug 'morhetz/gruvbox'
+" Plug 'jonathanfilip/vim-lucius'
+" Plug 'jpo/vim-railscasts-theme'
+" Plug 'mhinz/vim-janah'
+" Plug 'morhetz/gruvbox'
 Plug 'nanotech/jellybeans.vim'
-Plug 'noscript/codeblocks-dark.vim'
-Plug 'romainl/flattened'
+" Plug 'noscript/codeblocks-dark.vim'
+" Plug 'romainl/flattened'
 Plug 'sjl/badwolf'
 Plug 'tomasr/molokai'
-Plug 'tpope/vim-vividchalk'
-Plug 'w0ng/vim-hybrid'
+" Plug 'tpope/vim-vividchalk'
+" Plug 'w0ng/vim-hybrid'
 Plug 'whatyouhide/vim-gotham'
-Plug 'junegunn/seoul256.vim'
+" Plug 'junegunn/seoul256.vim'
 Plug 'romainl/Apprentice'
-Plug 'chriskempson/base16-vim'
-Plug 'joshdick/onedark.vim'
+" Plug 'chriskempson/base16-vim'
+" Plug 'joshdick/onedark.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'dracula/vim'
 
@@ -122,7 +129,7 @@ else
     " colo badwolf
     " colo gruvbox
     " colo apprentice
-    colo apprentice
+    colo molokai
     " colo spacegray
     " colo codeblocks-dark
     " colo gotham
@@ -451,7 +458,7 @@ let did_install_default_menus = 1 "No point loading gvim menu stuff
 set inccommand=nosplit
 set termguicolors
 
-let g:highlightedyank_highlight_duration = 300
+let g:highlightedyank_highlight_duration = 200
 
 " use surround.vim keymap for vim-sandwich
 runtime macros/sandwich/keymap/surround.vim

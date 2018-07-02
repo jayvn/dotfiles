@@ -52,7 +52,8 @@ ZSH_THEME="amuse"
 # Add wisely, as too many plugins slow down shell startup.
 # history-substring-search
 
-plugins=(history-substring-search z virtualenvwrapper common-aliases)
+export NVM_LAZY_LOAD=true # Lazy load zsh-nvm
+plugins=(history-substring-search z virtualenvwrapper common-aliases zsh-nvm)
 
 # User configuration
 
@@ -98,7 +99,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -halF'
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -134,6 +135,6 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 # [[ -n $TMUX ]] && alias vi="zsh ~/vim-tmux-open.zsh"
 
-export NVM_DIR="$HOME/.nvm"
+# export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
