@@ -39,7 +39,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " External tool support plugins
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'christoomey/vim-tmux-runner' { 'on':  'VtrAttachToPane' }
+Plug 'christoomey/vim-tmux-runner', { 'on':  'VtrAttachToPane' }
 " Plug 'urbainvaes/vim-tmux-pilot'
 Plug 'Numkil/ag.nvim', { 'on':  'Ag' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
