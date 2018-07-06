@@ -2,7 +2,7 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
+Plug 'xolox/vim-session' ", { 'on':  'SaveSession' }
 Plug 'itchyny/vim-cursorword'
 Plug 'godlygeek/tabular', { 'on':  'Tab' }
 Plug 'tpope/vim-commentary'
@@ -10,13 +10,16 @@ Plug 'Raimondi/delimitMate'
 Plug 'machakann/vim-sandwich'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-unimpaired'
-Plug 'simnalamburt/vim-mundo'
+Plug 'simnalamburt/vim-mundo', { 'on':  'MundoShow'}
 Plug 'tmhedberg/SimpylFold'
-Plug 'noscript/vim-wipeout'
+Plug 'noscript/vim-wipeout', { 'on':  'Wipeout' }
 Plug 'vim-airline/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'unblevable/quick-scope'
+
+Plug 'junegunn/goyo.vim', { 'on':  'Goyo' }
+Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 
 " For ssh editing
 " Plug 'justinmk/vim-dirvish'
@@ -36,9 +39,9 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " External tool support plugins
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'christoomey/vim-tmux-runner'
+Plug 'christoomey/vim-tmux-runner' { 'on':  'VtrAttachToPane' }
 " Plug 'urbainvaes/vim-tmux-pilot'
-Plug 'Numkil/ag.nvim'
+Plug 'Numkil/ag.nvim', { 'on':  'Ag' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Git support
@@ -50,7 +53,7 @@ Plug 'airblade/vim-gitgutter'
 " Language support plugins
 Plug 'jalvesaq/Nvim-R'
 Plug 'JuliaEditorSupport/julia-vim'
-" Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 Plug 'chrisbra/csv.vim'
 " Plug 'bfredl/nvim-ipy'
 " Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
@@ -110,6 +113,7 @@ Plug 'dracula/vim'
 " seoul256 (dark):
 "   Range:   233 (darkest) ~ 239 (lightest)
 "let g:seoul256_background = 236
+
 "colo seoul256
 call plug#end()
 
@@ -136,7 +140,7 @@ else
     " colo seoul256
     " colo molokai
     " let g:rehash256 = 1
-    " let g:airline_theme='gotham'
+    let g:airline_theme='gotham'
     " let g:seoul256_background = 234
 endif
 
@@ -461,3 +465,6 @@ let g:highlightedyank_highlight_duration = 200
 
 " use surround.vim keymap for vim-sandwich
 runtime macros/sandwich/keymap/surround.vim
+
+" Ignore node modules in tag generation
+let g:gutentags_ctags_exclude_wildignore= ['node_modules']
