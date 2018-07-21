@@ -20,7 +20,7 @@ alias py=python3
 
 gitclean() {
     git checkout master
-    git prune
+    git remote prune origin
     git branch --merged master | grep -v master | xargs -n 1 git branch -d
     git branch -r --merged master | grep -v master | sed 's/origin\///' | xargs -n 1 git push --delete origin
 }

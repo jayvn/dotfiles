@@ -18,6 +18,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'unblevable/quick-scope'
 
+Plug 'AndrewRadev/linediff.vim', { 'on':  'Linediff' }
 Plug 'junegunn/goyo.vim', { 'on':  'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 
@@ -30,8 +31,6 @@ Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 " Plug 'mhinz/vim-startify'
 " Plug 'jistr/vim-nerdtree-tabs'
 
-" Plug 'junegunn/goyo.vim'
-" Plug 'junegunn/limelight.vim'
 " Completion etc
 " Plug 'ajh17/VimCompletesMe'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -51,9 +50,10 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'mhinz/vim-signify'
 
 " Language support plugins
-Plug 'jalvesaq/Nvim-R'
+" Plug 'jalvesaq/Nvim-R'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'chrisbra/csv.vim'
 " Plug 'bfredl/nvim-ipy'
 " Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
@@ -106,7 +106,7 @@ Plug 'whatyouhide/vim-gotham'
 " Plug 'junegunn/seoul256.vim'
 Plug 'romainl/Apprentice'
 " Plug 'chriskempson/base16-vim'
-" Plug 'joshdick/onedark.vim'
+Plug 'joshdick/onedark.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'dracula/vim'
 
@@ -129,18 +129,10 @@ else
     " let g:solarized_termcolors=256
     " let g:solarized_bold = 1
     " set bg=dark
-    " colo badwolf
-    " colo gruvbox
-    " colo apprentice
+    " colo badwolf gruvbox apprentice spacegray codeblocks-dark gotham onedark seoul256 molokai
     colo molokai
-    " colo spacegray
-    " colo codeblocks-dark
-    " colo gotham
-    " colo onedark
-    " colo seoul256
-    " colo molokai
     " let g:rehash256 = 1
-    let g:airline_theme='gotham'
+    let g:airline_theme='onedark' " 'gotham'
     " let g:seoul256_background = 234
 endif
 
@@ -249,7 +241,8 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nmap <leader>q :q<CR>
 
 nnoremap ; :
-inoremap kj <esc>:up<CR>l
+" inoremap kj <esc>:up<CR>l
+inoremap kj <esc>
 
 nmap H gT
 nmap L gt
@@ -466,5 +459,9 @@ let g:highlightedyank_highlight_duration = 200
 " use surround.vim keymap for vim-sandwich
 runtime macros/sandwich/keymap/surround.vim
 
-" Ignore node modules in tag generation
-let g:gutentags_ctags_exclude_wildignore= ['node_modules']
+" Ignore node_modules during tag generation
+let g:gutentags_ctags_exclude = ['node_modules']
+
+" GitGutter settings
+let g:updatetime= 500 " vim swap file write interval and gitgutter update time
+autocmd BufWritePost * GitGutter " Refresh signs when saved
