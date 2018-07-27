@@ -44,7 +44,3 @@ end
     @eval using Revise
 end
 =#
-
-# push!(LOAD_PATH, "/home/jay/ev/QuantMod2")
-push!(LOAD_PATH, "/home/jay/ev/")
-push!(LOAD_PATH, "/home/jay/ev/search_server/src/")

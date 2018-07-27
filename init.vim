@@ -55,6 +55,7 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'chrisbra/csv.vim'
+Plug 'editorconfig/editorconfig-vim'
 " Plug 'bfredl/nvim-ipy'
 " Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 
@@ -445,6 +446,7 @@ nnoremap <leader>sf :VtrSendFile<cr>
 vnoremap <C-c> <Esc>
 " Mainly for vim-commentary
 autocmd FileType julia setlocal commentstring=#\ %s
+" autocmd FileType javascript.jsx setlocal commentstring={/*\ %s \ /*}
 
 "Performance improvements
 set synmaxcol=200 "Don't bother highlighting anything over 200 chars
