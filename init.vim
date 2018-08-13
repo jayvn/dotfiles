@@ -247,7 +247,7 @@ inoremap kj <esc>
 
 nmap H gT
 nmap L gt
-set so=999
+set scrolloff=999
 
 set formatoptions+=w
 set formatoptions+=o
@@ -467,3 +467,7 @@ let g:gutentags_ctags_exclude = ['node_modules']
 " GitGutter settings
 let g:updatetime= 500 " vim swap file write interval and gitgutter update time
 autocmd BufWritePost * GitGutter " Refresh signs when saved
+
+vmap <silent> <Leader>h :s/\(\S\)\([\+\-/\*><]\)\(\S\)/\1 \2 \3/g<CR>
+
+" !jq '.'
