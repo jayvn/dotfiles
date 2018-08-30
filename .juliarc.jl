@@ -44,3 +44,7 @@ end
     @eval using Revise
 end
 =#
+
+gen_coll(f, itr) = [ f(x) for x in itr ]
+
+using OhMyREPL

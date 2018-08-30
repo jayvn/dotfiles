@@ -12,12 +12,14 @@ alias sa="sudo apt"
 alias jl="julia --color=yes -q"
 alias j="/home/jay/julia/bin/julia -q"
 alias j2="/home/jay/ev/julia/julia -q"
+alias j1="/home/jay/julia-1.0.0/bin/julia -q"
 alias v=nvim
 alias vi=nvim
 # alias wd="cd ~/ev/"
 alias py=python3
 # alias vpn=/opt/cisco/anyconnect/bin/vpn
-
+# alias iju='jupyter console --ZMQTerminalInteractiveShell.editing_mode=vi \
+#            --kernel=julia-0.6'
 gitclean() {
     git checkout master
     git remote prune origin
