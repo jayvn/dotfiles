@@ -13,7 +13,7 @@ alias jl="julia --color=yes -q"
 alias j="/home/jay/julia/bin/julia -q"
 alias j2="/home/jay/ev/julia/julia -q"
 alias j1="/home/jay/julia-1.0.0/bin/julia -q"
-alias R=rtichoke
+alias r2=rtichoke
 alias v=nvim
 alias vi=nvim
 # alias wd="cd ~/ev/"
