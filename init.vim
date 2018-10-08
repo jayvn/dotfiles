@@ -245,8 +245,11 @@ nnoremap ; :
 " inoremap kj <esc>:up<CR>l
 inoremap kj <esc>
 
+" nmap <C-Tab> gt
+" nmap <C-S-Tab> gT
 nmap H gT
 nmap L gt
+
 set scrolloff=999
 
 set formatoptions+=w
@@ -469,5 +472,6 @@ let g:updatetime= 500 " vim swap file write interval and gitgutter update time
 autocmd BufWritePost * GitGutter " Refresh signs when saved
 
 vmap <silent> <Leader>h :s/\(\S\)\([\+\-/\*><]\)\(\S\)/\1 \2 \3/g<CR>
-
+" No ex mode. Use it to repeat macro
+nnoremap Q @@
 " !jq '.'
