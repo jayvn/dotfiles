@@ -472,6 +472,7 @@ let g:updatetime= 500 " vim swap file write interval and gitgutter update time
 autocmd BufWritePost * GitGutter " Refresh signs when saved
 
 vmap <silent> <Leader>h :s/\(\S\)\([\+\-/\*><]\)\(\S\)/\1 \2 \3/g<CR>
+nmap <silent> <Leader>h :s/\(\S\)\([\+\-/\*><]\)\(\S\)/\1 \2 \3/g<CR>
 " No ex mode. Use it to repeat macro
 nnoremap Q @@
 " !jq '.'

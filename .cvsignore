@@ -18,3 +18,4 @@ __pycache__
 .Ruserdata
 *.jldws
 node_modules/*
+.ipynb_checkpoints/

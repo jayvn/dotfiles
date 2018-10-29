@@ -53,7 +53,16 @@ COMPLETION_WAITING_DOTS="true"
 # history-substring-search
 
 export NVM_LAZY_LOAD=true # Lazy load zsh-nvm
-plugins=(history-substring-search z virtualenvwrapper zsh-nvm git-flow vi-mode)
+plugins=(
+         history-substring-search
+         z
+         virtualenvwrapper
+         # zsh-syntax-highlighting
+         # zsh-nvm
+         # colorize
+         # git-flow
+         # vi-mode
+         )
 
 # User configuration
 

@@ -108,3 +108,4 @@ unset JULIA_HOME
 # export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}
 # export CLASSPATH=/home/jay/mysql_connectors/mysql-connector-java-5.1.45-bin.jar:$CLASSPATH
 # export MZN_STDLIB_DIR=/media/disk2/MiniZincIDE-2.0.9-bundle-linux-x86_64/share/minizinc/
+export PLOTS_DEFAULT_BACKEND=PyPlot
