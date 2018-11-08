@@ -58,7 +58,7 @@ plugins=(
          z
          virtualenvwrapper
          # zsh-syntax-highlighting
-         # zsh-nvm
+         zsh-nvm
          # colorize
          # git-flow
          # vi-mode

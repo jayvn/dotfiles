@@ -51,3 +51,4 @@ nPr(n, r) = factorial(n, n-r)
 gen_coll(f, itr) = [ f(x) for x in itr ]
 
 using OhMyREPL
+# ENV["PLOTS_DEFAULT_BACKEND"] = pyplot

@@ -34,13 +34,18 @@ Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 " Completion etc
 " Plug 'ajh17/VimCompletesMe'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 "Plug 'sheerun/vim-polyglot'
 
 " External tool support plugins
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner', { 'on':  'VtrAttachToPane' }
 " Plug 'urbainvaes/vim-tmux-pilot'
-Plug 'Numkil/ag.nvim', { 'on':  'Ag' }
+Plug 'mileszs/ack.vim', { 'on':  ['Ack', 'Ack!'] }
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Git support
@@ -475,4 +480,7 @@ vmap <silent> <Leader>h :s/\(\S\)\([\+\-/\*><]\)\(\S\)/\1 \2 \3/g<CR>
 nmap <silent> <Leader>h :s/\(\S\)\([\+\-/\*><]\)\(\S\)/\1 \2 \3/g<CR>
 " No ex mode. Use it to repeat macro
 nnoremap Q @@
-" !jq '.'
+
+" !jq '.' For formatting
+" Save two keystrokes :)
+cnoreabbrev ag Ack!
