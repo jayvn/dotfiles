@@ -34,7 +34,8 @@ Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 " Completion etc
 " Plug 'ajh17/VimCompletesMe'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+Plug 'zxqfl/tabnine-vim'
+" Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 "Plug 'sheerun/vim-polyglot'
 
 " External tool support plugins
@@ -45,7 +46,6 @@ Plug 'mileszs/ack.vim', { 'on':  ['Ack', 'Ack!'] }
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Git support
@@ -480,6 +480,10 @@ vmap <silent> <Leader>h :s/\(\S\)\([\+\-/\*><]\)\(\S\)/\1 \2 \3/g<CR>
 nmap <silent> <Leader>h :s/\(\S\)\([\+\-/\*><]\)\(\S\)/\1 \2 \3/g<CR>
 " No ex mode. Use it to repeat macro
 nnoremap Q @@
+
+" yy is easy enough combination to yank full line.
+" Remap Y to yank till the end
+nmap Y y$
 
 " !jq '.' For formatting
 " Save two keystrokes :)

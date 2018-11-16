@@ -1,54 +1,23 @@
-SEPARATOR = "\n"
-function recompile_packages()
-  for pkg in keys(Pkg.installed())
-    try
-      info("Compiling: $pkg")
-      eval(Expr(:toplevel, Expr(:using, Symbol(pkg))))
-      println(SEPARATOR)
-    catch err
-      warn("Unable to precompile: $pkg")
-      warn(err)
-      println(SEPARATOR)
-    end
-  end
-end
-
-emerge() = (Pkg.update(); Pkg.build(); recompile_packages())
-
-#=
-Why does this segfault
-function recompile2()
-  for pkg in Pkg.available()
-    println(pkg)
-    try
-      pkgsym = Symbol(pkg)
-      eval(:(using $pkgsym))
-    catch
-    end
-  end
-end
-=#
-
 function recompile()
-  for pkg in keys(Pkg.installed())
-    pkg == "Gtk" && continue
-    println("Compiling ", pkg)
-    pkgsym = Symbol(pkg)
-    eval(:(using $pkgsym))
-  end
+    @eval using Pkg
+    for pkg in keys(Pkg.installed())
+        println("Compiling ", pkg)
+        @eval using $(Symbol(pkg))
+    end
 end
-
-#=
-@schedule begin
-    sleep(0.1)
-    @eval using Revise
-end
-=#
 
 const nCr = binomial
 nPr(n, r) = factorial(n, n-r)
 
-gen_coll(f, itr) = [ f(x) for x in itr ]
+@async begin
+    sleep(0.1)
+    @eval using Revise
+end
 
-using OhMyREPL
+# using OhMyREPL
+
+const nCr = binomial
+nPr(n, r) = n == r + 1 ? r + 1 : n * nPr(n-1, r)
+
 # ENV["PLOTS_DEFAULT_BACKEND"] = pyplot
+#
