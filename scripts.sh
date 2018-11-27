@@ -1,4 +1,5 @@
-sudo apt install cmake clang curl tmux tree nfs-common nfs-kernel-server ctags python3-pip silversearcher-ag
+sudo apt install cmake clang curl tmux tree ctags python3-pip silversearcher-ag htop
+# nfs-common nfs-kernel-server 
 
 pip3 install --user neovim rtichoke
 
