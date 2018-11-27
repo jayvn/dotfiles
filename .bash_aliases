@@ -89,7 +89,7 @@ udate()
     nvim -c "PlugUpdate | PlugUpgrade"
 
     # Probably should be last because this can fail
-    julia -e "Pkg.update()"
+    julia -e "using Pkg; Pkg.update()"
     julia -e "recompile()"
 }
 
