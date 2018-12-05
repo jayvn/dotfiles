@@ -22,6 +22,8 @@ Plug 'AndrewRadev/linediff.vim', { 'on':  'Linediff' }
 Plug 'junegunn/goyo.vim', { 'on':  'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 
+Plug 'szymonmaszke/vimpyter' 
+
 " For ssh editing
 " Plug 'justinmk/vim-dirvish'
 " Plug 'bounceme/remote-viewer'
