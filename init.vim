@@ -22,7 +22,7 @@ Plug 'AndrewRadev/linediff.vim', { 'on':  'Linediff' }
 Plug 'junegunn/goyo.vim', { 'on':  'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 
-Plug 'szymonmaszke/vimpyter' 
+" Plug 'szymonmaszke/vimpyter' 
 
 " For ssh editing
 " Plug 'justinmk/vim-dirvish'
