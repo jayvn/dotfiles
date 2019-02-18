@@ -22,7 +22,7 @@ Plug 'AndrewRadev/linediff.vim', { 'on':  'Linediff' }
 " Plug 'junegunn/goyo.vim', { 'on':  'Goyo' }
 " Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 
-" Plug 'szymonmaszke/vimpyter' 
+" Plug 'szymonmaszke/vimpyter'
 
 " For ssh editing
 " Plug 'justinmk/vim-dirvish'
@@ -48,7 +48,7 @@ Plug 'mileszs/ack.vim', { 'on':  ['Ack', 'Ack!'] }
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Git support
 Plug 'tpope/vim-fugitive'
@@ -318,12 +318,14 @@ endfunction
     "nnoremap <Leader>w :call StripTrailingWhitespace()<CR> :w<CR>
     nnoremap <Leader>w :up<CR>
     "Copy and paste from system clipboard
-    vmap <Leader>y "+y
-    vmap <Leader>d "+d
-    nmap <Leader>p "+p
-    nmap <Leader>P "+P
-    vmap <Leader>p "+p
-    vmap <Leader>P "+P
+    "Disabled because we use system clipboard by default
+    " vmap <Leader>y "+y
+    " vmap <Leader>d "+d
+    " nmap <Leader>p "+p
+    " nmap <Leader>P "+P
+    " vmap <Leader>p "+p
+    " vmap <Leader>P "+P
+
 " }
 
 " Airline {
@@ -379,7 +381,8 @@ noremap <expr> N (v:searchforward ? 'N' : 'n')
 " nnoremap <Leader>f :call StripTrailingWhitespace()<CR>:retab<CR> :up<CR> :nohlsearch<CR>
 nnoremap <Leader>f :call StripTrailingWhitespace()<CR>:retab<CR> :nohlsearch<CR>:redraw!<CR>
 tnoremap <Esc> <C-\><C-n>
-nnoremap <C-n> :FZF<CR>
+" nnoremap <C-n> :FZF<CR>
+nnoremap <C-n> :CtrlP<CR>
 
 let g:tagbar_type_julia = {
     \ 'ctagstype' : 'julia',
@@ -403,12 +406,12 @@ function! s:tags()
         call system('ctags -R')
     endif
 
-  call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-  \            '| grep -v ^!',
-  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-  \ 'down':    '40%',
-  \ 'sink':    function('s:tags_sink')})
+  " call fzf#run({
+  " \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  " \            '| grep -v ^!',
+  " \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+  " \ 'down':    '40%',
+  " \ 'sink':    function('s:tags_sink')})
 endfunction
 
 command! Tags call s:tags()
