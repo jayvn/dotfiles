@@ -43,6 +43,7 @@ replaceword() {
 }
 
 replacetext() {
+    # rpl
     ag -ls $1 | xargs sed -ri -e "s/$1/$2/g"
 }
 
