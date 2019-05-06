@@ -495,3 +495,18 @@ nmap Y y$
 cnoreabbrev ag Ack!
 " Always use system clipboard
 set clipboard=unnamedplus
+
+" Make this working to prevent duplicate tabs buffers when tab jumping
+" function! ReturnTagFileUnderCursor()
+"    try
+"       let tag = expand('<cword>')
+"       let tagString = split(execute("tselect ".tag), "\n")[1]
+"       let tagString = matchstr(tagString, '[^/\\]*$')
+"       return tagString
+"    catch /^Vim\%((\a\+)\)\=:E426/
+"       echohl ERROR
+"       echo \"Tag not found!\"
+"       echohl NORMAL
+"       return ""
+"    endtry
+" endfunction
