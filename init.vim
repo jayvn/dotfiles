@@ -70,8 +70,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'ludovicchabant/vim-gutentags'
 " Plug 'majutsushi/tagbar'
 " Plug 'vim-scripts/taglist.vim'
-
 Plug 'romainl/vim-cool'
+
+Plug 'sbdchd/neoformat'
 
 " Snippets
 " Plug 'honza/vim-snippets'
