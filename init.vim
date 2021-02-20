@@ -511,3 +511,9 @@ set clipboard=unnamedplus
 "       return ""
 "    endtry
 " endfunction
+
+" Windows like Ctrl-S behaviour
+imap <C-s>     <Esc>:w<CR><Esc>
+nnoremap <C-s>     :w<CR>
+imap <A><S>L <CR>
+nmap <Alt-e> :VtrSendLinesToRunner<CR>

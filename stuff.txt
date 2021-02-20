@@ -10,3 +10,9 @@ sudo apt install asciinema neovim
 
 vi -p ~/.byobu/keybindings.tmux ~/.tmux.conf
 # f9 to set c-b as esc seq
+
+# Map Caps Lock to Ctrl
+
+Keyboard Preferences dialog ( System -> Preferences -> Keyboard ).
+On the layout tab, click the Options... button. 
+Expand the Ctrl key position section
