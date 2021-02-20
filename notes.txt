@@ -16,3 +16,7 @@ vi -p ~/.byobu/keybindings.tmux ~/.tmux.conf
 Keyboard Preferences dialog ( System -> Preferences -> Keyboard ).
 On the layout tab, click the Options... button. 
 Expand the Ctrl key position section
+
+# Juliarc location:
+
+~/.julia/config/startup.jl

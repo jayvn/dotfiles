@@ -17,7 +17,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'unblevable/quick-scope'
-
+Plug 'kdheepak/JuliaFormatter.vim'
 Plug 'AndrewRadev/linediff.vim', { 'on':  'Linediff' }
 " Plug 'junegunn/goyo.vim', { 'on':  'Goyo' }
 " Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
