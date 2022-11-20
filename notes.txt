@@ -19,4 +19,5 @@ Expand the Ctrl key position section
 
 # Juliarc location:
 
-~/.julia/config/startup.jl
+ln -s ~/dotfiles/.juliarc.jl ~/.julia/config/startup.jl
+

@@ -6,8 +6,6 @@ function recompile()
     end
 end
 
-const nCr = binomial
-nPr(n, r) = factorial(n, n-r)
 
 @async begin
     sleep(0.1)
@@ -17,7 +15,8 @@ end
 # using OhMyREPL
 
 const nCr = binomial
-nPr(n, r) = n == r + 1 ? r + 1 : n * nPr(n-1, r)
+# nPr(n, r) = n == r + 1 ? r + 1 : n * nPr(n-1, r)
+nPr(n, r) = factorial(n) / factorial(r)
 
 # ENV["PLOTS_DEFAULT_BACKEND"] = pyplot
 #

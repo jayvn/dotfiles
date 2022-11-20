@@ -1,7 +1,8 @@
 " vim - plug
 call plug#begin('~/.vim/plugged')
 
-Plug 'xolox/vim-misc'
+Plug 'github/copilot.vim'
+" Plug 'Golox/vim-misc'
 Plug 'xolox/vim-session' ", { 'on':  'SaveSession' }
 Plug 'itchyny/vim-cursorword'
 Plug 'godlygeek/tabular', { 'on':  'Tab' }
@@ -19,6 +20,7 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'unblevable/quick-scope'
 Plug 'kdheepak/JuliaFormatter.vim'
 Plug 'AndrewRadev/linediff.vim', { 'on':  'Linediff' }
+Plug 'rhysd/vim-clang-format'
 " Plug 'junegunn/goyo.vim', { 'on':  'Goyo' }
 " Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 
@@ -36,6 +38,7 @@ Plug 'AndrewRadev/linediff.vim', { 'on':  'Linediff' }
 " Completion etc
 " Plug 'ajh17/VimCompletesMe'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deoplete-plugins/deoplete-jedi'
 " Plug 'zxqfl/tabnine-vim'
 " Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 "Plug 'sheerun/vim-polyglot'
@@ -380,7 +383,7 @@ nmap <Leader>id o<Esc>:r! date "+\%Y-\%m-\%d"<CR>kJA** [jayakrishnan.v]<Esc>I- *
 noremap <expr> n (v:searchforward ? 'n' : 'N')
 noremap <expr> N (v:searchforward ? 'N' : 'n')
 " nnoremap <Leader>f :call StripTrailingWhitespace()<CR>:retab<CR> :up<CR> :nohlsearch<CR>
-nnoremap <Leader>f :call StripTrailingWhitespace()<CR>:retab<CR> :nohlsearch<CR>:redraw!<CR>
+nnoremap <Leader>f :call StripTrailingWhitespace()<CR>:retab<CR> :nohlsearch<CR>:redraw!<CR> gg=G<C-o>
 tnoremap <Esc> <C-\><C-n>
 " nnoremap <C-n> :FZF<CR>
 nnoremap <C-n> :CtrlP<CR>
@@ -439,8 +442,10 @@ let g:session_autosave = 'no'
 " R script settings
 " let maplocalleader = ","
 
-vmap K <Plug>RDSendSelection
-nmap K <Plug>RDSendLine
+" NVIM-R plugin settings
+" vmap K <Plug>RDSendSelection
+" nmap K <Plug>RDSendLine
+
 let vimrplugin_vsplit=1
 let R_assign = 0
 

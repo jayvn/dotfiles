@@ -32,3 +32,5 @@ done
 
 # Under System Preferences > Keyboard Layout > Options... > Ctrl key position, I checked 'Caps Lock as Ctrl'.
 # xcape -e 'Control_L=Escape'
+
+pip3 -U install virtualenvwrapper

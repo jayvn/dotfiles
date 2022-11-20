@@ -7,7 +7,7 @@ alias gdH="git diff --color-words=\"[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+\" HE
 alias gd="git diff --color-words "
 alias grb="g rb --root -i"
 
-alias mysql=mycli
+# alias mysql=mycli
 alias t="tree"
 alias sa="sudo apt"
 alias jl="julia --color=yes -q"

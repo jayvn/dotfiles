@@ -141,6 +141,8 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+bindkey "^R" history-incremental-search-backward
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # [[ -n $TMUX ]] && alias vi="zsh ~/vim-tmux-open.zsh"
@@ -148,3 +150,4 @@ bindkey -M vicmd 'j' history-substring-search-down
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#
