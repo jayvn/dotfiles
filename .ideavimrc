@@ -1,0 +1,64 @@
+Plug 'easymotion/vim-easymotion'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-commentary'
+
+let mapleader = ' '
+
+set surround
+set commentary
+set clipboard+=unnamed
+set highlightedyank
+nnoremap g; :action JumpToLastChange<Enter>
+nnoremap g, :action JumpToNextChange<Enter>
+nnoremap gn :action GotoNextError<CR>
+nnoremap gp :action GotoPreviousError<CR>
+
+nnoremap [c :action VcsShowPrevChangeMarker<cr>
+nnoremap ]c :action VcsShowNextChangeMarker<cr>
+
+
+" built-in navigation to navigated items works better
+nnoremap <c-o> :action Back<cr>
+nnoremap <c-i> :action Forward<cr>
+
+" easy window navigation
+nnoremap <c-h> :NERDTree<cr>
+nnoremap <c-n> :NERDTree<cr>
+" nnoremap <c-j> <c-w>j
+" nnoremap <c-k> <c-w>k
+
+" code refactoring
+nnoremap cR :action RenameElement<cr>
+"nnoremap cS :action ChangeSignature<cr>
+" nnoremap cts :action ChangeTypeSignature<cr>
+
+" Open vimrc with <leader>f
+nnoremap <leader>r :e C:/Users/jay.nair/.ideavimrc<CR>
+nnoremap <leader>R :source C:/Users/jay.nair/.ideavimrc<CR>
+
+" debugger
+" nnoremap i :ForceStepInto
+" nnoremap o :ForceStepOver
+" nnoremap p :Stepout
+" nnoremap n :action ToggleLineBreakpoint<CR>
+" nnoremap m :action ToggleMethodBreakpoint<CR>
+" nnoremap <CR> :action Resume<CR>
+" nnoremap p :action ShowExecutionPoint<CR>
+
+map [[ :action EditorCodeBlockStart<CR>
+map ][ :action EditorCodeBlockEnd<CR>
+
+nnoremap [m :action MethodUp<cr>
+nnoremap ]m :action MethodDown<cr>
+
+map <leader>k :action Vcs.QuickListPopupAction<CR>
+map <leader>v :action VimVisualToggleBlockMode<CR>
+map <leader>p :action ParameterInfo<CR>
+map <leader>e :action RecentFiles<CR>
+map <leader>c :action ActivateCommitToolWindow<CR>
+map <leader>g :action Generate<CR>
+map <leader>t :action Rerun<CR>
+nnoremap <leader>a :action ShowIntentionActions<CR>
+"map <leader>f :action Find<CR>
