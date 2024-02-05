@@ -61,4 +61,9 @@ map <leader>c :action ActivateCommitToolWindow<CR>
 map <leader>g :action Generate<CR>
 map <leader>t :action Rerun<CR>
 nnoremap <leader>a :action ShowIntentionActions<CR>
+"
 "map <leader>f :action Find<CR>
+nnoremap :tabe :action NewFile<CR>
+
+" Useful actions
+" :action RunConsole

@@ -2,7 +2,7 @@
 export ZSH=~/.oh-my-zsh
 # If  the PATH export and sourcing bash_aliases aren't placeed on top virtualenvwrapper.sh not found error is shown
 
-export PATH="/home/jay/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$HOME/.nvm/versions/node/v20.9.0/bin:$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$PATH"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -151,3 +151,5 @@ bindkey "^R" history-incremental-search-backward
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 #
+# source /usr/share/nvm/init-nvm.sh
+

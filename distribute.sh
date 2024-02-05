@@ -3,7 +3,7 @@ loc=`pwd`
 filelocs=(
 .cvsignore
 vim-tmux-open.zsh
-.muttrc
+# .muttrc
 .bash_aliases
 .tmux.conf
 .ctags
@@ -23,8 +23,8 @@ ln -sf ${loc}/init.vim ~/.vimrc
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
 # Add zsh-nvm
-git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
+# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 for i in ${filelocs[@]}; do
     ln -sf ${loc}/$i ~/$i

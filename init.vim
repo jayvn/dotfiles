@@ -3,7 +3,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'github/copilot.vim'
 " Plug 'Golox/vim-misc'
-Plug 'xolox/vim-session' ", { 'on':  'SaveSession' }
+" Plug 'xolox/vim-session' ", { 'on':  'SaveSession' }
 Plug 'itchyny/vim-cursorword'
 Plug 'godlygeek/tabular', { 'on':  'Tab' }
 Plug 'tpope/vim-commentary'
@@ -13,7 +13,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-unimpaired'
 Plug 'simnalamburt/vim-mundo', { 'on':  'MundoShow'}
 Plug 'tmhedberg/SimpylFold'
-Plug 'noscript/vim-wipeout', { 'on':  'Wipeout' }
+" Plug 'noscript/vim-wipeout', { 'on':  'Wipeout' }
 Plug 'vim-airline/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ivalkeen/vim-ctrlp-tjump'
@@ -21,6 +21,7 @@ Plug 'unblevable/quick-scope'
 Plug 'kdheepak/JuliaFormatter.vim'
 Plug 'AndrewRadev/linediff.vim', { 'on':  'Linediff' }
 Plug 'rhysd/vim-clang-format'
+Plug 'github/copilot.vim'
 " Plug 'junegunn/goyo.vim', { 'on':  'Goyo' }
 " Plug 'junegunn/limelight.vim', { 'on':  'Limelight' }
 
@@ -37,8 +38,8 @@ Plug 'rhysd/vim-clang-format'
 
 " Completion etc
 " Plug 'ajh17/VimCompletesMe'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-jedi'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'deoplete-plugins/deoplete-jedi'
 " Plug 'zxqfl/tabnine-vim'
 " Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 "Plug 'sheerun/vim-polyglot'
@@ -522,3 +523,5 @@ imap <C-s>     <Esc>:w<CR><Esc>
 nnoremap <C-s>     :w<CR>
 imap <A><S>L <CR>
 nmap <Alt-e> :VtrSendLinesToRunner<CR>
+
+let g:copilot_ui_side = "right"
