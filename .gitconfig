@@ -22,7 +22,7 @@
     l = log --graph
 
 [push]
-	default = current
+	default = simple
 # la=!git config -l | grep alias | cut -c 7-
 # list-alias=!git la
 # rv=checkout --
@@ -90,3 +90,5 @@
 	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
 	prompt = false
+[pull]
+	rebase = false
