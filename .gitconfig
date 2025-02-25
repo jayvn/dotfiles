@@ -1,28 +1,76 @@
 [user]
-	name = Jay Nair
-    email = jayakrishnan.nair@valustat.co
-[core]
-    editor = nvim
-    excludesfile = ~/.cvsignore
-[url "https://github.com/"]
-    insteadOf = git://github.com/
-[alias]
-    hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    co = checkout
-    ci = commit -m
-    a = add . -A
-    cm = commit -m
-    d = diff
-    rb = rebase
-    b = branch
-    pl = pull
-    ps = push
-    h = !git --no-pager log --abbrev-commit --pretty=oneline --max-count=10
-    br = branch
-    l = log --graph
+        name = Jay Nair
 
+[core]
+        editor = nvim
+        excludesfile = ~/.gitignore_global
+[alias]
+        hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+        l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+        co = checkout
+        ci = commit -m
+        a = add . -A
+        cm = commit -m
+        d = diff
+        rb = rebase
+        b = branch
+        pl = pull
+        ps = push
+        h = !git --no-pager log --abbrev-commit --pretty=oneline --max-count=10
+        br = branch
+        bl=log --remotes=origin --graph --decorate --oneline --simplify-by-decoration
+        who=shortlog -sn --
+[column]
+        ui = auto
+[branch]
+        sort = -committerdate
+[tag]
+        sort = version:refname
+[init]
+        defaultBranch = main
+[diff]
+        algorithm = histogram
+        colorMoved = plain
+        mnemonicPrefix = true
+        renames = true
 [push]
-	default = simple
+        default = simple
+        autoSetupRemote = true
+        followTags = true
+[fetch]
+        prune = true
+        pruneTags = true
+        all = true
+[diff "jupyternotebook"]
+	command = git-nbdiffdriver diff
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false
+[pull]
+	rebase = true
+[help]
+        autocorrect = prompt
+[commit]
+        verbose = true
+[rerere]
+        enabled = true
+        autoupdate = true
+[rebase]
+        autoSquash = true
+        autoStash = true
+        updateRefs = true
+[merge]
+        conflictstyle = zdiff3 
+
+# Other aliases 
 # la=!git config -l | grep alias | cut -c 7-
 # list-alias=!git la
 # rv=checkout --
@@ -30,7 +78,6 @@
 # fp=push --force
 # force-push=push -- force
 # um=!sh -c 'git checkout master && git fetch origin && git pull origin master'
-# bl=log --remotes=origin --graph --decorate --oneline --simplify-by-decoration
 # branch-log=!git bl
 # mywork=!sh -c 'git log --since ""$1" day ago" --oneline --author "Maarten Heremans"' -
 # worklog=!sh -c 'git log --since ""$1" day ago" --oneline --author "$2"' -
@@ -66,8 +113,6 @@
 # show-origin=!git so
 # prune-all=!git remote | xargs -n 1 git remote prune
 # whois=!sh -c 'git log -i -l --pretty="format:%an <%ae>
-# whatis=show -s --pretty='tformat:%h (%s, %ad)' --date=short
-# who=shortlog -sn --
 # unpushed=log --branches --not --remotes --color --graph --pretty=format:'%Cred%h%Creset 
 # -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%Creset' --abbrev-commit
 # fullfetch=fetch  --all --prune --tags --recurse-submodules --progress
@@ -77,18 +122,3 @@
 # outgoing=!(git fetch --quiet && git log --pretty=format:'%C(yellow)%h %C(white)- %C(red)%an 
 # %C(white)- %C(cyan)%d%Creset %s %C(white)- %ar%Creset' $(git rev-parse -abbrev-ref 
 # -symbolic-full-name @{u})..)))'"
-[diff "jupyternotebook"]
-	command = git-nbdiffdriver diff
-[merge "jupyternotebook"]
-	driver = git-nbmergedriver merge %O %A %B %L %P
-	name = jupyter notebook merge driver
-[difftool "nbdime"]
-	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\"
-[difftool]
-	prompt = false
-[mergetool "nbdime"]
-	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
-[mergetool]
-	prompt = false
-[pull]
-	rebase = false
