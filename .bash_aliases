@@ -10,11 +10,6 @@ alias grb="g rb --root -i"
 # alias mysql=mycli
 alias t="tree"
 alias sa="sudo apt"
-alias jl="julia --color=yes -q"
-alias j="/home/jay/julia/bin/julia -q"
-alias j1="/home/jay/julia/bin/julia -q"
-alias j2="/home/jay/ev/julia/julia -q"
-alias j6="/home/jay/julia/bin/julia -q"
 alias r2=radian
 # alias nvim="flatpak run io.neovim.nvim"
 # alias v=nvim
@@ -107,32 +102,26 @@ udate()
 alias tgz='tar -zxvf'
 alias tbz='tar -jxvf'
 export PATH=$PATH:~/.local/bin  # For pip installed packages
+export PATH=$PATH:/usr/bin  # For pip installed packages
 
-unset JULIA_HOME
-# export JULIA_HOME=/home/jay/julia/bin
-# export LD_LIBRARY_PATH=$PATH
-# export CUDA_HOME="/usr/lib/R/lib:/usr/lib/x86_64-linux-gnu:/usr/lib:/home/jay/R/x86_64-pc-linux-gnu-library/3.4/PerformanceAnalytics/libs/"
-# export LD_LIBRARY_PATH=${CUDA_HOME}:${LD_LIBRARY_PATH}
-# export CLASSPATH=/home/jay/mysql_connectors/mysql-connector-java-5.1.45-bin.jar:$CLASSPATH
-# export MZN_STDLIB_DIR=/media/disk2/MiniZincIDE-2.0.9-bundle-linux-x86_64/share/minizinc/
 export PLOTS_DEFAULT_BACKEND=PyPlot
 
 
 # Add every binary that requires nvm, npm or node to run to an array of node globals
-NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
-NODE_GLOBALS+=("node")
-NODE_GLOBALS+=("nvm")
-
-# Lazy-loading nvm + npm on node globals call
-load_nvm () {
-  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-}
-
-# Making node global trigger the lazy loading
-for cmd in "${NODE_GLOBALS[@]}"; do
-  eval "${cmd}(){ unset -f ${NODE_GLOBALS}; load_nvm; ${cmd} \$@ }"
-done
+# NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+# NODE_GLOBALS+=("node")
+# NODE_GLOBALS+=("nvm")
+# 
+# # Lazy-loading nvm + npm on node globals call
+# load_nvm () {
+#   export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+#   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# }
+# 
+# # Making node global trigger the lazy loading
+# for cmd in "${NODE_GLOBALS[@]}"; do
+#   eval "${cmd}(){ unset -f ${NODE_GLOBALS}; load_nvm; ${cmd} \$@ }"
+# done
 
 
 source /usr/share/bash-completion/completions/flatpak

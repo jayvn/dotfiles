@@ -1,8 +1,15 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 # If  the PATH export and sourcing bash_aliases aren't placeed on top virtualenvwrapper.sh not found error is shown
 
-export PATH="$HOME/.nvm/versions/node/v20.9.0/bin:$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$PATH"
+# export PATH="$HOME/.nvm/versions/node/v20.9.0/bin:$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$PATH"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -16,8 +23,8 @@ fi
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-# ZSH_THEME="dogenpunk","Soliah","awesomepanda","agnoster","amuse"
-ZSH_THEME="fino"
+# ZSH_THEME="dogenpunk","Soliah","awesomepanda","agnoster","amuse", "fino"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -67,12 +74,13 @@ export NVM_LAZY_LOAD=true # Lazy load zsh-nvm
 plugins=(
          history-substring-search
          z
-         virtualenvwrapper
+         # virtualenvwrapper
          # zsh-syntax-highlighting
          # zsh-nvm
-         # colorize
-         # git-flow
-         # vi-mode
+         zsh-autosuggestions
+         zsh-syntax-highlighting
+         colorize
+         zsh-vi-mode
          )
 
 # User configuration
@@ -104,7 +112,6 @@ export EDITOR='nvim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-#Added by Jay
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -153,3 +160,38 @@ bindkey "^R" history-incremental-search-backward
 #
 # source /usr/share/nvm/init-nvm.sh
 
+lazy_conda_aliases=('python' 'conda')
+
+load_conda() {
+  for lazy_conda_alias in $lazy_conda_aliases
+  do
+    unalias $lazy_conda_alias
+  done
+
+  __conda_prefix="$HOME/.miniconda3" # Set your conda Location
+
+  # >>> conda initialize >>>
+  __conda_setup="$("$__conda_prefix/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "$__conda_prefix/etc/profile.d/conda.sh" ]; then
+          . "$__conda_prefix/etc/profile.d/conda.sh"
+      else
+          export PATH="$__conda_prefix/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
+  # <<< conda initialize <<<
+
+  unset __conda_prefix
+  unfunction load_conda
+}
+
+for lazy_conda_alias in $lazy_conda_aliases
+do
+  alias $lazy_conda_alias="load_conda && $lazy_conda_alias"
+done
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

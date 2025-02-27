@@ -8,7 +8,6 @@ vim-tmux-open.zsh
 .tmux.conf
 .ctags
 .zshrc
-.juliarc.jl
 .gitconfig)
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -29,9 +28,12 @@ ln -sf ${loc}/init.vim ~/.vimrc
 
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
-# Add zsh-nvm
-# git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
+# Add zsh plugins
 # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 for i in ${filelocs[@]}; do
     ln -sf ${loc}/$i ~/$i
