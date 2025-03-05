@@ -107,6 +107,7 @@ export PATH=$PATH:/usr/bin  # For pip installed packages
 export PLOTS_DEFAULT_BACKEND=PyPlot
 
 
+## Node stuff
 # Add every binary that requires nvm, npm or node to run to an array of node globals
 # NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
 # NODE_GLOBALS+=("node")

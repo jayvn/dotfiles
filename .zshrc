@@ -80,7 +80,7 @@ plugins=(
          zsh-autosuggestions
          zsh-syntax-highlighting
          colorize
-         zsh-vi-mode
+         # zsh-vi-mode
          )
 
 # User configuration
