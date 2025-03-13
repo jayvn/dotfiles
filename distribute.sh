@@ -1,17 +1,19 @@
 #!/bin/bash
 loc=`pwd`
 filelocs=(
-.cvsignore
-vim-tmux-open.zsh
-# .muttrc
-.bash_aliases
-.tmux.conf
-.ctags
-.zshrc
-.gitconfig)
+    .cvsignore
+    vim-tmux-open.zsh
+    # .muttrc
+    .bash_aliases
+    .tmux.conf
+    .p10k.zsh
+    .ctags
+    .zshrc
+    .gitconfig)
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 #===
 # steam deck flatpak nvim
 flatpak install neovim
@@ -25,6 +27,8 @@ mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 ln -sf ~/.vim $XDG_CONFIG_HOME/nvim
 ln -sf ${loc}/init.vim $XDG_CONFIG_HOME/nvim/init.vim
 ln -sf ${loc}/init.vim ~/.vimrc
+
+ln -s ${loc}/user.lua $XDG_CONFIG_HOME/nvim/lua/plugins/user.lua
 
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
