@@ -85,20 +85,17 @@ require("lazy").setup({
         require("mason-lspconfig").setup()
       end,
     },
-    { 'mfussenegger/nvim-dap', cmd = { "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" } }, -- Load on DAP commands
-    { 'jay-babu/mason-nvim-dap.nvim', dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap' } }, -- Needs mason and dap
+    { 'mfussenegger/nvim-dap', cmd = { "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" } }, 
+    { 'jay-babu/mason-nvim-dap.nvim', dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap' } }, 
 
-    -- Treesitter (Syntax Highlighting, etc.)
     {
       'nvim-treesitter/nvim-treesitter',
       event = { "BufReadPost", "BufNewFile" },
-      build = ":TSUpdate", -- Command to install/update parsers
+      build = ":TSUpdate", 
       config = function()
-        -- Basic Treesitter setup
         require('nvim-treesitter.configs').setup {
           highlight = { enable = true },
           indent = { enable = true },
-          -- Other modules can be added here if needed later
         }
       end,
     },
@@ -107,13 +104,13 @@ require("lazy").setup({
     { 'godlygeek/tabular', cmd = { "Tabularize", "Tab" } },
     { 'tpope/vim-surround', event = "VeryLazy" },
     { 'tpope/vim-commentary', event = "VeryLazy" },
-    { 'tpope/vim-fugitive', event = "VeryLazy", cmd = "Git" }, -- Load on command or later
+    { 'romainl/vim-cool', event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
+    { 'tpope/vim-fugitive', event = "VeryLazy", cmd = "Git" },
     {
       'mhinz/vim-signify',
-      event = { "BufReadPost", "BufNewFile" }, -- Git diff signs, load on file open/create
-      -- Rely on default behavior and events to enable signify
+      event = { "BufReadPost", "BufNewFile" }, 
     },
-    { 'jalvesaq/Nvim-R', ft = { "r", "rmd", "quarto" } }, -- Load on R related filetypes
+    { 'jalvesaq/Nvim-R', ft = { "r", "rmd", "quarto" } }
     { 'idbrii/vim-mergetool', cmd = "Mergetool" },
 
     -- Completion Engine (nvim-cmp) and Snippets (LuaSnip)
