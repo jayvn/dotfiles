@@ -13,7 +13,6 @@ filelocs=(
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 #===
 # steam deck flatpak nvim
 flatpak install neovim
@@ -21,6 +20,11 @@ curl -fLo ~/.var/app/io.neovim.nvim/config/nvim/autoload/plug.vim --create-dirs 
 ln -s ~/.vimrc ~/.var/app/io.neovim.nvim/config/nvim/init.vim
 ln -s ${loc}/nvim ${loc}/.local/bin/nvim
 #===
+
+# --- Sometimes you have conda installed stuff that just isn't picked up by other tools (neovim in these cases)
+ln -s /home/jay/miniconda/bin/radian /home/jay/.local/bin/
+ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/
+# ---
 
 #TODO: If .vim does not exist, create it
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
