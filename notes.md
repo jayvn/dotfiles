@@ -17,12 +17,16 @@ Keyboard Preferences dialog ( System -> Preferences -> Keyboard ).
 On the layout tab, click the Options... button. 
 Expand the Ctrl key position section
 
-# Juliarc location:
+### Juliarc location:
 
 ln -s ~/dotfiles/.juliarc.jl ~/.julia/config/startup.jl
 
 
-# For steam dec
+### For steam dec
 curl -fLo ~/.var/app/io.neovim.nvim/config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ln -s ~/.vimrc ~/.var/app/io.neovim.nvim/config/nvim/init.vim
 
+
+### Within vim, i can do 
+: LspInstall pyright r_language_server
+: MasonInstall black
