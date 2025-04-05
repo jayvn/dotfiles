@@ -162,8 +162,6 @@ require("lazy").setup({
 
     -- UI
 
-
-
     {
       "folke/persistence.nvim",
       event = "BufReadPre", -- Load session management early
@@ -172,7 +170,6 @@ require("lazy").setup({
       },
       config = true -- Explicitly run setup with opts
     },
-    { "folke/flash.nvim", event = "VeryLazy", opts = {} }, -- Enhanced jump motions
     {
       'goolord/alpha-nvim',
       event = 'VimEnter',
@@ -205,18 +202,11 @@ require("lazy").setup({
 
       end,
     },
-    {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
-      config = function()
-        require("which-key").setup({}) -- Add setup call if needed later
-      end,
-    },
+    { "folke/which-key.nvim", event = "VeryLazy" },
 
     -- File Explorer
     {
       "nvim-neo-tree/neo-tree.nvim",
-      branch = "v3.x",
       dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons", -- Recommended for icons
@@ -262,20 +252,12 @@ require("lazy").setup({
 -- Set the colorscheme after lazy setup
 vim.cmd([[colorscheme dracula]]) -- Set Dracula theme
 
--- Alias LspInstall to MasonInstall for convenience
-vim.api.nvim_create_user_command('LspInstall', 'MasonInstall', {})
 
--- Keymaps can be defined here or in separate files
--- vim.defer_fn(function() ... end, 0) -- Removed Telescope keymaps previously added for default alpha
-
--- Neo-tree toggle keymap
 vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = "Explorer NeoTree", noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>ev', function()
   vim.cmd.edit(vim.fn.stdpath('config') .. '/init.lua')
 end, { desc = 'Edit Neovim config (init.lua)' })
-
-vim.keymap.set('n', '<leader>R', '<cmd>source $MYVIMRC<CR>', { desc = 'Reload Neovim config', noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>S', function()
   require('persistence').load()
