@@ -41,7 +41,7 @@ vim.opt.incsearch = true -- Show search matches incrementally as you type
 vim.opt.smartcase = true -- Override ignorecase if search pattern has uppercase letters
 
 -- Smoother Scrolling
-vim.opt.scrolloff = 8 -- Keep 8 lines visible above/below cursor when scrolling
+vim.opt.scrolloff = 999 -- Keep cursor centered vertically when possible
 vim.opt.sidescrolloff = 8 -- Keep 8 columns visible left/right of cursor when scrolling horizontally
 
 -- Persistent Undo
@@ -110,7 +110,7 @@ require("lazy").setup({
       'mhinz/vim-signify',
       event = { "BufReadPost", "BufNewFile" }, 
     },
-    { 'jalvesaq/Nvim-R', ft = { "r", "rmd", "quarto" } }
+    { 'jalvesaq/Nvim-R', ft = { "r", "rmd", "quarto" } },
     { 'idbrii/vim-mergetool', cmd = "Mergetool" },
 
     -- Completion Engine (nvim-cmp) and Snippets (LuaSnip)
@@ -190,7 +190,7 @@ require("lazy").setup({
     },
     {
       'nvim-telescope/telescope.nvim',
-      event = "VimEnter", -- Load Telescope at startup
+      event = "VimEnter", 
       dependencies = { 'nvim-lua/plenary.nvim' },
       config = function()
         -- Add Telescope keymaps
@@ -198,7 +198,8 @@ require("lazy").setup({
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
         vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-        vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Telescope recent files (MRU)' }) -- Added recent/MRU files
+        vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Telescope recent files (MRU)' }) 
+        vim.keymap.set('n', '<leader>fg', builtin.tags, { desc = 'Telescope tags' }) 
 
       end,
     },
@@ -266,6 +267,14 @@ end, { desc = 'Load last session' })
 -- Buffer navigation shortcuts
 vim.keymap.set('n', ']b', ':bnext<CR>', { desc = 'Next buffer', silent = true })
 vim.keymap.set('n', '[b', ':bprevious<CR>', { desc = 'Previous buffer', silent = true })
+
+-- Keep search direction consistent (n forward, N backward)
+vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap = true, silent = true, desc = 'Next search result (always forward)' })
+vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
+
+-- LSP Rename
+vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { desc = 'LSP Rename symbol under cursor', noremap = true, silent = true })
+
 vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = "Explorer NeoTree", noremap = true, silent = true })
 
 -- Highlight on yank
