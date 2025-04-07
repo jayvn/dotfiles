@@ -199,7 +199,7 @@ require("lazy").setup({
         vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
         vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Telescope recent files (MRU)' }) 
-        vim.keymap.set('n', '<leader>fg', builtin.tags, { desc = 'Telescope tags' }) 
+        vim.keymap.set('n', '<leader>ft', builtin.tags, { desc = 'Telescope tags' }) 
 
       end,
     },
