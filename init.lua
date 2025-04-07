@@ -157,16 +157,25 @@ require("lazy").setup({
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons", -- Recommended for icons
         "MunifTanjim/nui.nvim",
-      }
+      },
+      config = function()
+        require("neo-tree").setup({
+          filesystem = {
+            follow_current_file = { 
+              enabled = true,
+            },
+          },
+        })
+      end,
     },
 
     -- UI
 
     {
       "folke/persistence.nvim",
-      event = "BufReadPre", -- Load session management early
-      opts = { -- Options for session saving
-        options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals" }
+      event = "VimEnter", -- Load plugin on startup
+      opts = { -- Add options for autosaving
+        autosave = { save_on_quit = true }
       },
       config = true -- Explicitly run setup with opts
     },
@@ -185,7 +194,18 @@ require("lazy").setup({
       event = "VeryLazy",
       dependencies = { 'nvim-tree/nvim-web-devicons' },
       config = function()
-        require('lualine').setup()
+        require('lualine').setup({
+          sections = {
+            lualine_c = {{'filename', path = 1}}, -- Set path = 1 for relative path
+          },
+          inactive_sections = {
+            lualine_c = {{'filename', path = 1}}, -- Also show relative path in inactive windows
+          },
+          tabline = {
+             lualine_a = {'buffers'},
+          },
+          extensions = {'neo-tree', 'trouble'} 
+        })
       end,
     },
     {
@@ -215,6 +235,7 @@ require("lazy").setup({
       }
     },
 
+    { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {}, event = "VeryLazy" }, -- TODO/WARN highlight
     -- Diagnostics / Trouble
     {
       "folke/trouble.nvim",
@@ -261,8 +282,7 @@ vim.keymap.set('n', '<leader>ev', function()
 end, { desc = 'Edit Neovim config (init.lua)' })
 
 vim.keymap.set('n', '<leader>S', function()
-  require('persistence').load()
-end, { desc = 'Load last session' })
+end, { desc = 'Edit Neovim config (init.lua)' })
 
 -- Buffer navigation shortcuts
 vim.keymap.set('n', ']b', ':bnext<CR>', { desc = 'Next buffer', silent = true })
@@ -286,3 +306,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+-- Automatically load session on startup if no file arguments are given
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  pattern = "*",
+  nested = true,
+  callback = function()
+    -- Only load if started without arguments
+    if vim.fn.argc() == 0 then
+      require("persistence").load()
+    end
+  end,
+})
+
+-- TODO: 
+-- The  tree explorer window should list changed files in git and list open buffers also as diffferent tabs
