@@ -105,6 +105,24 @@ require("lazy").setup({
         local lspconfig = require('lspconfig')
         local capabilities = require('cmp_nvim_lsp').default_capabilities() -- Get capabilities from nvim-cmp
 
+        -- Helper function for smart Ctrl+] behavior
+        local function smart_definition_or_references()
+          local start_buf = vim.fn.bufnr('%')
+          local start_lnum = vim.fn.line('.')
+          -- Try to go to definition first
+          vim.lsp.buf.definition()
+          -- Use defer_fn to wait briefly for potential cursor movement
+          vim.defer_fn(function()
+            local end_buf = vim.fn.bufnr('%')
+            local end_lnum = vim.fn.line('.')
+            -- If buffer and line number haven't changed, assume we were on the definition
+            -- and show references instead.
+            if start_buf == end_buf and start_lnum == end_lnum then
+              vim.lsp.buf.references()
+            end
+          end, 50) -- Wait 50ms
+        end
+
         -- Define a common on_attach function for LSP keybindings
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -141,6 +159,24 @@ require("lazy").setup({
         lspconfig.r_language_server.setup({
           capabilities = capabilities,
           on_attach = on_attach,
+          settings = {
+            r = {
+              lsp = {
+                debug = false,
+                log_level = "error",
+                rich_documentation = true,
+              },
+              rpath = {
+                vim.fn.expand("$PWD/packages"),
+              },
+              source = {
+                global_source = vim.fn.expand("$PWD/globals.R"),
+              },
+            },
+          },
+          flags = {
+            debounce_text_changes = 150,
+          },
         })
 
       end,
