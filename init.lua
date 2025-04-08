@@ -81,13 +81,70 @@ require("lazy").setup({
     {
       'williamboman/mason-lspconfig.nvim',
       dependencies = { 'williamboman/mason.nvim' },
-      config = function()
-        require("mason-lspconfig").setup()
+      opts = {
+        -- Ensure these LSP servers are installed
+        ensure_installed = {
+          "pyright",
+          "r_language_server", -- Corrected name
+        },
+      },
+      config = function(_, opts)
+        require("mason-lspconfig").setup(opts)
       end,
     },
     { 'mfussenegger/nvim-dap', cmd = { "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" } }, 
-    { 'jay-babu/mason-nvim-dap.nvim', dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap' } }, 
+    { 'jay-babu/mason-nvim-dap.nvim', dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap' } },
+    {
+      -- LSP Configuration
+      'neovim/nvim-lspconfig',
+      dependencies = {
+        'williamboman/mason.nvim', -- Ensure mason is loaded first
+        'williamboman/mason-lspconfig.nvim',
+      },
+      config = function()
+        local lspconfig = require('lspconfig')
+        local capabilities = require('cmp_nvim_lsp').default_capabilities() -- Get capabilities from nvim-cmp
 
+        -- Define a common on_attach function for LSP keybindings
+        local on_attach = function(client, bufnr)
+          local bufopts = { noremap=true, silent=true, buffer=bufnr }
+          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
+          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
+          vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('keep', bufopts, { desc = 'LSP Signature Help' }))
+          vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, vim.tbl_extend('keep', bufopts, { desc = 'LSP Add Workspace Folder' }))
+          vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, vim.tbl_extend('keep', bufopts, { desc = 'LSP Remove Workspace Folder' }))
+          vim.keymap.set('n', '<leader>wl', function()
+            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+          end, vim.tbl_extend('keep', bufopts, { desc = 'LSP List Workspace Folders' }))
+          vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Type Definition' }))
+          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, vim.tbl_extend('keep', bufopts, { desc = 'LSP Rename Symbol' }))
+          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('keep', bufopts, { desc = 'LSP Code Action' }))
+          vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to References' }))
+          vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, vim.tbl_extend('keep', bufopts, { desc = 'LSP Format Buffer' }))
+
+          -- Add completion capabilities if nvim-cmp is used
+          if client.server_capabilities.completionProvider then
+            bufopts.desc = "Trigger completion"
+            vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, bufopts)
+          end
+        end
+
+        -- Setup Python LSP (pyright)
+        lspconfig.pyright.setup({
+          capabilities = capabilities,
+          on_attach = on_attach,
+        })
+
+        -- Setup R LSP (r_language_server)
+        lspconfig.r_language_server.setup({
+          capabilities = capabilities,
+          on_attach = on_attach,
+        })
+
+      end,
+    },
     {
       'nvim-treesitter/nvim-treesitter',
       event = { "BufReadPost", "BufNewFile" },
@@ -292,8 +349,6 @@ vim.keymap.set('n', '[b', ':bprevious<CR>', { desc = 'Previous buffer', silent =
 vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap = true, silent = true, desc = 'Next search result (always forward)' })
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
 
--- LSP Rename
-vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { desc = 'LSP Rename symbol under cursor', noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = "Explorer NeoTree", noremap = true, silent = true })
 
