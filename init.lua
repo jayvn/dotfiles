@@ -109,7 +109,7 @@ require("lazy").setup({
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
           -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
-          -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
           -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
           -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
           vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('keep', bufopts, { desc = 'LSP Signature Help' }))
@@ -245,6 +245,25 @@ require("lazy").setup({
         })
       end,
     },
+    {
+
+      'mechatroner/rainbow_csv',
+      ft = {
+        'csv',
+        'tsv',
+        'csv_semicolon',
+        'csv_whitespace',
+        'csv_pipe',
+        'rfc_csv',
+        'rfc_semicolon'
+      },
+      cmd = {
+        'RainbowDelim',
+        'RainbowDelimSimple',
+        'RainbowDelimQuoted',
+        'RainbowMultiDelim'
+      }
+    },
 
     -- UI
 
@@ -316,8 +335,7 @@ require("lazy").setup({
     -- Diagnostics / Trouble
     {
       "folke/trouble.nvim",
-      dependencies = { "nvim-tree/nvim-web-devicons" }, -- Trouble uses icons
-      opts = {}, -- for default options, refer to the configuration section for custom setup.
+      dependencies = { "nvim-tree/nvim-web-devicons" }, 
       cmd = "Trouble",
       keys = {
         {
@@ -338,7 +356,6 @@ require("lazy").setup({
       },
     }, -- Added missing comma here
   },
-  -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   -- install = { colorscheme = { "dracula" } },
   -- automatically check for plugin updates
@@ -349,7 +366,7 @@ require("lazy").setup({
 })
 
 -- Set the colorscheme after lazy setup
-vim.cmd([[colorscheme dracula]]) -- Set Dracula theme
+vim.cmd([[colorscheme dracula]])
 
 
 vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = "Explorer NeoTree", noremap = true, silent = true })
@@ -372,6 +389,7 @@ vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap =
 
 vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = "Explorer NeoTree", noremap = true, silent = true })
 
+-- buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
