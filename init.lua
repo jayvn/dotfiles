@@ -92,8 +92,41 @@ require("lazy").setup({
         require("mason-lspconfig").setup(opts)
       end,
     },
-    { 'mfussenegger/nvim-dap', cmd = { "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" } }, 
+    { 'mfussenegger/nvim-dap', cmd = { "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" } },
     { 'jay-babu/mason-nvim-dap.nvim', dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap' } },
+    {
+      'jayp0521/mason-null-ls.nvim',
+      dependencies = { 'williamboman/mason.nvim', 'nvimtools/none-ls.nvim' },
+      opts = {
+        ensure_installed = { "pylint" }, -- Ensure pylint is installed by Mason
+      },
+      config = function(_, opts)
+        require("mason-null-ls").setup(opts)
+      end,
+    },
+    {
+      -- Linter/Formatter setup (using none-ls)
+      'nvimtools/none-ls.nvim',
+      dependencies = { 'jayp0521/mason-null-ls.nvim' }, -- Ensure mason-null-ls runs first
+      config = function()
+        local null_ls = require("null-ls")
+        null_ls.setup({
+          sources = {
+            null_ls.builtins.diagnostics.pylint,
+            -- Add other linters/formatters here if needed
+          },
+        })
+      end,
+    },
+    { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() require("lsp-inlayhints").setup() end }, -- Added lsp-inlayhints
+                       buf_set_keymap("n", "<leader>lh", ":lua vim.lsp.buf.hover()<CR>", opts)       --> information about the symbol under the cursos in a floating window
+            --            buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)      --> lists all the implementations for the symbol under the cursor in the quickfix window
+                       buf_set_keymap("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>", opts) --> selects a code action available at the current cursor position
+            --            buf_set_keymap("n", "<leader>ld", ":lua vim.diagnostic.open_float()<CR>", opts)
+            --            buf_set_keymap("n", "[d", ":lua vim.diagnostic.goto_prev()<CR>", opts)
+            --            buf_set_keymap("n", "]d", ":lua vim.diagnostic.goto_next()<CR>", opts)
+            --            buf_set_keymap("n", "<leader>lq", ":lua vim.diagnostic.setloclist()<CR>", opts)
+                       buf_set_keymap("n", "<leader>lf", ":lua vim.lsp.buf.format()<CR>", opts) 
     {
       -- LSP Configuration
       'neovim/nvim-lspconfig',
@@ -109,7 +142,7 @@ require("lazy").setup({
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
           -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
+          -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
           -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
           -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
           vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('keep', bufopts, { desc = 'LSP Signature Help' }))
@@ -132,14 +165,30 @@ require("lazy").setup({
           end
         end
 
+        -- Autocommand to attach inlay hints
+        vim.api.nvim_create_augroup("LspAttach_inlayhints", { clear = true })
+        vim.api.nvim_create_autocmd("LspAttach", {
+          group = "LspAttach_inlayhints",
+          callback = function(args)
+            if not (args.data and args.data.client_id) then
+              return
+            end
+            local bufnr = args.buf
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            -- Check if inlay hints are supported by the client and the plugin is available
+            -- Ensure the plugin is actually loaded by lazy.nvim before trying to require it
+            local inlayhints_plugin = require("lazy.core.config").plugins["lsp-inlayhints.nvim"]
+            if client and client.supports_method("textDocument/inlayHint") and inlayhints_plugin and inlayhints_plugin.loaded then
+              pcall(require("lsp-inlayhints").on_attach, client, bufnr)
+            end
+          end,
+        })
 
-        -- Setup Python LSP (pyright)
         lspconfig.pyright.setup({
           capabilities = capabilities,
           on_attach = on_attach,
         })
 
-        -- Setup R LSP (r_language_server)
         lspconfig.r_language_server.setup({
           capabilities = capabilities,
           on_attach = on_attach,
