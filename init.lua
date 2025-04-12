@@ -98,7 +98,11 @@ require("lazy").setup({
       'jayp0521/mason-null-ls.nvim',
       dependencies = { 'williamboman/mason.nvim', 'nvimtools/none-ls.nvim' },
       opts = {
-        ensure_installed = { "pylint" ,"air","styler"}, -- Ensure pylint is installed by Mason
+        ensure_installed = {
+          "pylint", -- Python linter
+          "luacheck", -- Lua linter
+          "stylua", -- Lua formatter
+        },
       },
       config = function(_, opts)
         require("mason-null-ls").setup(opts)
@@ -112,34 +116,33 @@ require("lazy").setup({
         local null_ls = require("null-ls")
         null_ls.setup({
           sources = {
+            -- Python
             null_ls.builtins.diagnostics.pylint,
-            null_ls.builtins.diagnostics.air,
-            -- Add other linters/formatters here if needed
+            -- Lua
+            null_ls.builtins.diagnostics.luacheck,
+            null_ls.builtins.formatting.stylua,
           },
         })
       end,
     },
     { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() require("lsp-inlayhints").setup() end }, -- Added lsp-inlayhints
-                       vim.keymap.set("n", "<leader>lh", ":lua vim.lsp.buf.hover()<CR>", opts),      --> information about the symbol under the cursos in a floating window
-                       vim.keymap.set("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>", opts),--> selects a code action available at the current cursor position
-                       vim.keymap.set("n", "<leader>lf", ":lua vim.lsp.buf.format()<CR>", opts),
     {
       -- LSP Configuration
       'neovim/nvim-lspconfig',
       dependencies = {
-        'williamboman/mason.nvim', 
+        'williamboman/mason.nvim', -- Ensure mason is loaded first
         'williamboman/mason-lspconfig.nvim',
       },
       config = function()
         local lspconfig = require('lspconfig')
-        local capabilities = require('cmp_nvim_lsp').default_capabilities() 
+        local capabilities = require('cmp_nvim_lsp').default_capabilities() -- Get capabilities from nvim-cmp
 
         -- Define a common on_attach function for LSP keybindings
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
           -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
           -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
-          vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
+          -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
           -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
           vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('keep', bufopts, { desc = 'LSP Signature Help' }))
           vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, vim.tbl_extend('keep', bufopts, { desc = 'LSP Add Workspace Folder' }))
@@ -149,12 +152,17 @@ require("lazy").setup({
           end, vim.tbl_extend('keep', bufopts, { desc = 'LSP List Workspace Folders' }))
           vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Type Definition' }))
           vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, vim.tbl_extend('keep', bufopts, { desc = 'LSP Rename Symbol' }))
-          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('keep', bufopts, { desc = 'LSP Code Action' }))
+          vim.keymap.set({'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('keep', bufopts, { desc = 'LSP Code Action' }))
           vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to References' })) -- Keep explicit references mapping
           -- vim.keymap.set('n', '<C-]>', smart_definition_or_references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Smart Definition/References' })) -- Use new smart function
-          vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, vim.tbl_extend('keep', bufopts, { desc = 'LSP Format Buffer' }))
+          vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, vim.tbl_extend('keep', bufopts, { desc = 'LSP Format Buffer' }))
+          vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
+          --            buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)      --> lists all the implementations for the symbol under the cursor in the quickfix window
+          --            buf_set_keymap("n", "<leader>ld", ":lua vim.diagnostic.open_float()<CR>", opts)
+          --            buf_set_keymap("n", "[d", ":lua vim.diagnostic.goto_prev()<CR>", opts)
+          --            buf_set_keymap("n", "]d", ":lua vim.diagnostic.goto_next()<CR>", opts)
+          --            buf_set_keymap("n", "<leader>lq", ":lua vim.diagnostic.setloclist()<CR>", opts)
 
-          -- Add completion capabilities if nvim-cmp is used
           if client.server_capabilities.completionProvider then
             bufopts.desc = "Trigger completion"
             vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, bufopts)
@@ -238,10 +246,10 @@ require("lazy").setup({
       'hrsh7th/nvim-cmp',
       event = "InsertEnter",
       dependencies = {
-        'hrsh7th/cmp-nvim-lsp', -- Source for LSP
-        'hrsh7th/cmp-buffer', -- Source for buffer words
-        'L3MON4D3/LuaSnip', -- Snippet engine
-        'saadparwaiz1/cmp_luasnip', -- Source for snippets
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'L3MON4D3/LuaSnip', 
+        'saadparwaiz1/cmp_luasnip', 
       },
       config = function()
         local cmp = require('cmp')
@@ -257,15 +265,6 @@ require("lazy").setup({
             { name = 'luasnip' },
             { name = 'buffer' },
           }),
-          -- Add keybindings for completion here if desired
-          -- Example:
-          -- mapping = cmp.mapping.preset.insert({
-          --   ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          --   ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          --   ['<C-Space>'] = cmp.mapping.complete(),
-          --   ['<C-e>'] = cmp.mapping.abort(),
-          --   ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          -- }),
         })
       end,
     },
@@ -275,7 +274,7 @@ require("lazy").setup({
       branch = "v3.x",
       dependencies = {
         "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons", -- Recommended for icons
+        "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
       },
       config = function()
@@ -312,24 +311,11 @@ require("lazy").setup({
 
     {
       "folke/persistence.nvim",
-      event = "VimEnter",
-      opts = {
+      event = "VimEnter", -- Load plugin on startup
+      opts = { -- Add options for autosaving
         autosave = { save_on_quit = true }
       },
-      config = function(_, opts)
-        require("persistence").setup(opts)
-        -- Automatically load session on startup if no file arguments are given
-        vim.api.nvim_create_autocmd({ "VimEnter" }, {
-          pattern = "*",
-          nested = true,
-          callback = function()
-            -- Only load if started without arguments
-            if vim.fn.argc() == 0 and vim.fn.argc(-1) == -1 then -- Check for no file args and not in quickfix list
-              require("persistence").load()
-            end
-          end,
-        })
-      end,
+      config = true -- Explicitly run setup with opts
     },
     {
       'goolord/alpha-nvim',
@@ -456,5 +442,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- TODO:
+-- Automatically load session on startup if no file arguments are given
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  pattern = "*",
+  nested = true,
+  callback = function()
+    -- Only load if started without arguments
+    if vim.fn.argc() == 0 then
+      require("persistence").load()
+    end
+  end,
+})
+
+-- TODO: 
 -- The  tree explorer window should list changed files in git and list open buffers also as diffferent tabs
