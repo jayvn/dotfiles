@@ -15,15 +15,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- Set editor options
-vim.opt.number = true -- Show line numbers
-vim.opt.relativenumber = true -- Show relative line numbers
+vim.opt.number = true 
 vim.opt.clipboard = 'unnamedplus' -- Use system clipboard for yank/paste
 vim.opt.tabstop = 2       -- Number of visual spaces per TAB
 vim.opt.softtabstop = 2   -- Number of spaces TAB counts for in insert mode
@@ -37,7 +34,7 @@ vim.opt.expandtab = true  -- Use spaces instead of tabs
 -- Enhanced Searching
 vim.opt.hlsearch = true -- Highlight all search matches
 vim.opt.incsearch = true -- Show search matches incrementally as you type
--- vim.opt.ignorecase = true -- Ignore case when searching
+vim.opt.ignorecase = true 
 vim.opt.smartcase = true -- Override ignorecase if search pattern has uppercase letters
 
 -- Smoother Scrolling
@@ -47,9 +44,9 @@ vim.opt.sidescrolloff = 8 -- Keep 8 columns visible left/right of cursor when sc
 -- Persistent Undo
 vim.opt.undofile = true -- Enable persistent undo
 local undodir = vim.fn.stdpath('data') .. '/undodir'
--- Ensure the directory exists
+
 if vim.fn.isdirectory(undodir) == 0 then
-  vim.fn.mkdir(undodir, 'p') -- Create parent directories if needed
+  vim.fn.mkdir(undodir, 'p') 
 end
 vim.opt.undodir = undodir -- Set the undo directory
 
@@ -64,10 +61,10 @@ vim.opt.showmode = false -- Hide default mode indicator (status line usually sho
 -- Setup lazy.nvim
 require("lazy").setup({
   -- add your plugins here
-  -- 'folke/tokyonight.nvim',
 
   spec = {
     -- Theme
+  -- 'folke/tokyonight.nvim',
     { "Mofiqul/dracula.nvim", name = "dracula", priority = 1000 },
 
     -- LSP / Mason / DAP
@@ -82,10 +79,9 @@ require("lazy").setup({
       'williamboman/mason-lspconfig.nvim',
       dependencies = { 'williamboman/mason.nvim' },
       opts = {
-        -- Ensure these LSP servers are installed
         ensure_installed = {
           "pyright",
-          "r_language_server", -- Corrected name
+          "r_language_server", 
         },
       },
       config = function(_, opts)
@@ -99,9 +95,9 @@ require("lazy").setup({
       dependencies = { 'williamboman/mason.nvim', 'nvimtools/none-ls.nvim' },
       opts = {
         ensure_installed = {
-          "pylint", -- Python linter
-          "luacheck", -- Lua linter
-          "stylua", -- Lua formatter
+          "pylint", 
+          "luacheck", 
+          "stylua", 
         },
       },
       config = function(_, opts)
@@ -111,7 +107,7 @@ require("lazy").setup({
     {
       -- Linter/Formatter setup (using none-ls)
       'nvimtools/none-ls.nvim',
-      dependencies = { 'jayp0521/mason-null-ls.nvim' }, -- Ensure mason-null-ls runs first
+      dependencies = { 'jayp0521/mason-null-ls.nvim' }, 
       config = function()
         local null_ls = require("null-ls")
         null_ls.setup({
@@ -125,24 +121,24 @@ require("lazy").setup({
         })
       end,
     },
-    { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() require("lsp-inlayhints").setup() end }, -- Added lsp-inlayhints
+    { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() require("lsp-inlayhints").setup() end },
     {
       -- LSP Configuration
       'neovim/nvim-lspconfig',
       dependencies = {
-        'williamboman/mason.nvim', -- Ensure mason is loaded first
+        'williamboman/mason.nvim', 
         'williamboman/mason-lspconfig.nvim',
       },
       config = function()
         local lspconfig = require('lspconfig')
-        local capabilities = require('cmp_nvim_lsp').default_capabilities() -- Get capabilities from nvim-cmp
+        local capabilities = require('cmp_nvim_lsp').default_capabilities() 
 
         -- Define a common on_attach function for LSP keybindings
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
           -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
           -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
-          -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
           -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
           vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('keep', bufopts, { desc = 'LSP Signature Help' }))
           vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, vim.tbl_extend('keep', bufopts, { desc = 'LSP Add Workspace Folder' }))
@@ -156,12 +152,7 @@ require("lazy").setup({
           vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to References' })) -- Keep explicit references mapping
           -- vim.keymap.set('n', '<C-]>', smart_definition_or_references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Smart Definition/References' })) -- Use new smart function
           vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, vim.tbl_extend('keep', bufopts, { desc = 'LSP Format Buffer' }))
-          vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
           --            buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)      --> lists all the implementations for the symbol under the cursor in the quickfix window
-          --            buf_set_keymap("n", "<leader>ld", ":lua vim.diagnostic.open_float()<CR>", opts)
-          --            buf_set_keymap("n", "[d", ":lua vim.diagnostic.goto_prev()<CR>", opts)
-          --            buf_set_keymap("n", "]d", ":lua vim.diagnostic.goto_next()<CR>", opts)
-          --            buf_set_keymap("n", "<leader>lq", ":lua vim.diagnostic.setloclist()<CR>", opts)
 
           if client.server_capabilities.completionProvider then
             bufopts.desc = "Trigger completion"
@@ -400,15 +391,11 @@ require("lazy").setup({
           desc = "LSP Definitions / references / ... (Trouble)",
         },
       },
-    }, -- Added missing comma here
+    }, 
   },
-  -- colorscheme that will be used when installing plugins.
-  -- install = { colorscheme = { "dracula" } },
+  install = { colorscheme = { "dracula" } }, 
   -- automatically check for plugin updates
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "dracula" } }, -- Set install colorscheme
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+  -- checker = { enabled = true },
 })
 
 -- Set the colorscheme after lazy setup
