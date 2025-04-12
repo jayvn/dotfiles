@@ -236,7 +236,7 @@ require("lazy").setup({
     { 'tpope/vim-fugitive', event = "VeryLazy", cmd = "Git" },
     {
       'mhinz/vim-signify',
-      event = { "BufReadPost", "BufNewFile" }, 
+      -- event = { "BufReadPost", "BufNewFile" }, -- Removed event to load earlier
     },
     { 'jalvesaq/Nvim-R', ft = { "r", "rmd", "quarto" } },
     { 'idbrii/vim-mergetool', cmd = "Mergetool" },
@@ -362,16 +362,20 @@ require("lazy").setup({
       end,
     },
     { "folke/which-key.nvim", event = "VeryLazy" },
-
-    -- File Explorer
     {
-      "nvim-neo-tree/neo-tree.nvim",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons", -- Recommended for icons
-        "MunifTanjim/nui.nvim",
-      }
+      "oskarrrrrrr/symbols.nvim",
+      config = function()
+        local r = require("symbols.recipes")
+        require("symbols").setup(r.DefaultFilters, r.AsciiSymbols, {
+          -- custom settings here
+          -- e.g. hide_cursor = false
+        })
+        vim.keymap.set("n", ",s", ":Symbols<CR>", { desc = "Open Symbols Outline" })
+        vim.keymap.set("n", ",S", ":SymbolsClose<CR>", { desc = "Close Symbols Outline" })
+      end,
     },
+
+    -- Removed duplicate Neo-tree entry here
 
     { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {}, event = "VeryLazy" }, -- TODO/WARN highlight
     -- Diagnostics / Trouble
@@ -411,7 +415,9 @@ require("lazy").setup({
 vim.cmd([[colorscheme dracula]])
 
 
-vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = "Explorer NeoTree", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>el', ':Neotree filesystem toggle left<CR>', { desc = "Explorer NeoTree (Files)", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>eb', ':Neotree buffers toggle<CR>', { desc = "Explorer NeoTree (Buffers)", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>eg', ':Neotree git_status toggle<CR>', { desc = "Explorer NeoTree (Git Status)", noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>ev', function()
   vim.cmd.edit(vim.fn.stdpath('config') .. '/init.lua')
@@ -454,5 +460,3 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
   end,
 })
 
--- TODO: 
--- The  tree explorer window should list changed files in git and list open buffers also as diffferent tabs
