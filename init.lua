@@ -98,7 +98,7 @@ require("lazy").setup({
       'jayp0521/mason-null-ls.nvim',
       dependencies = { 'williamboman/mason.nvim', 'nvimtools/none-ls.nvim' },
       opts = {
-        ensure_installed = { "pylint" }, -- Ensure pylint is installed by Mason
+        ensure_installed = { "pylint" ,"air","styler"}, -- Ensure pylint is installed by Mason
       },
       config = function(_, opts)
         require("mason-null-ls").setup(opts)
@@ -113,37 +113,33 @@ require("lazy").setup({
         null_ls.setup({
           sources = {
             null_ls.builtins.diagnostics.pylint,
+            null_ls.builtins.diagnostics.air,
             -- Add other linters/formatters here if needed
           },
         })
       end,
     },
     { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() require("lsp-inlayhints").setup() end }, -- Added lsp-inlayhints
-                       buf_set_keymap("n", "<leader>lh", ":lua vim.lsp.buf.hover()<CR>", opts)       --> information about the symbol under the cursos in a floating window
-            --            buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)      --> lists all the implementations for the symbol under the cursor in the quickfix window
-                       buf_set_keymap("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>", opts) --> selects a code action available at the current cursor position
-            --            buf_set_keymap("n", "<leader>ld", ":lua vim.diagnostic.open_float()<CR>", opts)
-            --            buf_set_keymap("n", "[d", ":lua vim.diagnostic.goto_prev()<CR>", opts)
-            --            buf_set_keymap("n", "]d", ":lua vim.diagnostic.goto_next()<CR>", opts)
-            --            buf_set_keymap("n", "<leader>lq", ":lua vim.diagnostic.setloclist()<CR>", opts)
-                       buf_set_keymap("n", "<leader>lf", ":lua vim.lsp.buf.format()<CR>", opts) 
+                       vim.keymap.set("n", "<leader>lh", ":lua vim.lsp.buf.hover()<CR>", opts),      --> information about the symbol under the cursos in a floating window
+                       vim.keymap.set("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>", opts),--> selects a code action available at the current cursor position
+                       vim.keymap.set("n", "<leader>lf", ":lua vim.lsp.buf.format()<CR>", opts),
     {
       -- LSP Configuration
       'neovim/nvim-lspconfig',
       dependencies = {
-        'williamboman/mason.nvim', -- Ensure mason is loaded first
+        'williamboman/mason.nvim', 
         'williamboman/mason-lspconfig.nvim',
       },
       config = function()
         local lspconfig = require('lspconfig')
-        local capabilities = require('cmp_nvim_lsp').default_capabilities() -- Get capabilities from nvim-cmp
+        local capabilities = require('cmp_nvim_lsp').default_capabilities() 
 
         -- Define a common on_attach function for LSP keybindings
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
           -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
           -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
-          -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
           -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
           vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('keep', bufopts, { desc = 'LSP Signature Help' }))
           vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, vim.tbl_extend('keep', bufopts, { desc = 'LSP Add Workspace Folder' }))
@@ -175,8 +171,6 @@ require("lazy").setup({
             end
             local bufnr = args.buf
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            -- Check if inlay hints are supported by the client and the plugin is available
-            -- Ensure the plugin is actually loaded by lazy.nvim before trying to require it
             local inlayhints_plugin = require("lazy.core.config").plugins["lsp-inlayhints.nvim"]
             if client and client.supports_method("textDocument/inlayHint") and inlayhints_plugin and inlayhints_plugin.loaded then
               pcall(require("lsp-inlayhints").on_attach, client, bufnr)
@@ -318,11 +312,24 @@ require("lazy").setup({
 
     {
       "folke/persistence.nvim",
-      event = "VimEnter", -- Load plugin on startup
-      opts = { -- Add options for autosaving
+      event = "VimEnter",
+      opts = {
         autosave = { save_on_quit = true }
       },
-      config = true -- Explicitly run setup with opts
+      config = function(_, opts)
+        require("persistence").setup(opts)
+        -- Automatically load session on startup if no file arguments are given
+        vim.api.nvim_create_autocmd({ "VimEnter" }, {
+          pattern = "*",
+          nested = true,
+          callback = function()
+            -- Only load if started without arguments
+            if vim.fn.argc() == 0 and vim.fn.argc(-1) == -1 then -- Check for no file args and not in quickfix list
+              require("persistence").load()
+            end
+          end,
+        })
+      end,
     },
     {
       'goolord/alpha-nvim',
@@ -449,17 +456,5 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- Automatically load session on startup if no file arguments are given
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
-  pattern = "*",
-  nested = true,
-  callback = function()
-    -- Only load if started without arguments
-    if vim.fn.argc() == 0 then
-      require("persistence").load()
-    end
-  end,
-})
-
--- TODO: 
+-- TODO:
 -- The  tree explorer window should list changed files in git and list open buffers also as diffferent tabs
