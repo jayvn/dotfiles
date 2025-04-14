@@ -422,8 +422,6 @@ vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap =
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
 
 
-vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = "Explorer NeoTree", noremap = true, silent = true })
-
 -- buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
