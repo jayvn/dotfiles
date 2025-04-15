@@ -15,7 +15,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
@@ -60,7 +59,6 @@ vim.opt.showmode = false -- Hide default mode indicator (status line usually sho
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  -- add your plugins here
 
   spec = {
     -- Theme
