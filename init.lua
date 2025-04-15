@@ -363,7 +363,7 @@ require("lazy").setup({
         require'alpha'.setup(require'alpha.themes.dashboard'.config)
       end
     },
-    { 'rebelot/heirline.nvim', event = "VeryLazy", dependencies = { 'nvim-tree/nvim-web-devicons' } }, -- Load UI later
+    -- { 'rebelot/heirline.nvim', event = "VeryLazy", dependencies = { 'nvim-tree/nvim-web-devicons' } }, -- Load UI later
     {
       'nvim-lualine/lualine.nvim',
       event = "VeryLazy",
@@ -456,8 +456,6 @@ vim.keymap.set('n', '<leader>ev', function()
   vim.cmd.edit(vim.fn.stdpath('config') .. '/init.lua')
 end, { desc = 'Edit Neovim config (init.lua)' })
 
-vim.keymap.set('n', '<leader>S', function()
-end, { desc = 'Edit Neovim config (init.lua)' })
 
 -- Buffer navigation shortcuts
 vim.keymap.set('n', ']b', ':bnext<CR>', { desc = 'Next buffer', silent = true })
@@ -468,7 +466,7 @@ vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap =
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
 
 
--- buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
+vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
