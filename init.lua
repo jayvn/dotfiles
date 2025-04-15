@@ -64,7 +64,7 @@ require("lazy").setup({
 
   spec = {
     -- Theme
-  -- 'folke/tokyonight.nvim',
+    -- 'folke/tokyonight.nvim',
     { "Mofiqul/dracula.nvim", name = "dracula", priority = 1000 },
 
     -- LSP / Mason / DAP
@@ -222,6 +222,42 @@ require("lazy").setup({
         }
       end,
     },
+    {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      dependencies = { 'nvim-treesitter/nvim-treesitter' },
+      config = function()
+        require('nvim-treesitter.configs').setup {
+          textobjects = {
+            textobjects = {
+              select = {
+                enable = true,
+                lookahead = true,
+              },
+              move = {
+                enable = true,
+                set_jumps = true, -- whether to set jumps in the jumplist
+                goto_next_start = {
+                  ["]m"] = "@function.outer",
+                  ["]]"] = "@class.outer",
+                },
+                goto_next_end = {
+                  ["]M"] = "@function.outer",
+                  ["]["] = "@class.outer",
+                },
+                goto_previous_start = {
+                  ["[m"] = "@function.outer",
+                  ["[["] = "@class.outer",
+                },
+                goto_previous_end = {
+                  ["[M"] = "@function.outer",
+                  ["[]"] = "@class.outer",
+                },
+              },
+            },
+          },
+        }
+      end
+    },
 
     -- Utils / Tools
     { 'godlygeek/tabular', cmd = { "Tabularize", "Tab" } },
@@ -229,12 +265,10 @@ require("lazy").setup({
     { 'tpope/vim-commentary', event = "VeryLazy" },
     { 'romainl/vim-cool', event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
     { 'tpope/vim-fugitive', event = "VeryLazy", cmd = "Git" },
-    {
-      'mhinz/vim-signify',
-      -- event = { "BufReadPost", "BufNewFile" }, -- Removed event to load earlier
-    },
+    { 'mhinz/vim-signify'}, 
     { 'jalvesaq/Nvim-R', ft = { "r", "rmd", "quarto" } },
     { 'idbrii/vim-mergetool', cmd = "Mergetool" },
+    { 'f-person/git-blame.nvim', event = "BufReadPre", config = function() require('gitblame').setup { enabled = true } end },
 
     -- Completion Engine (nvim-cmp) and Snippets (LuaSnip)
     {
@@ -335,7 +369,7 @@ require("lazy").setup({
             lualine_c = {{'filename', path = 1}}, -- Also show relative path in inactive windows
           },
           tabline = {
-             lualine_a = {'buffers'},
+            lualine_a = {'buffers'},
           },
           extensions = {'neo-tree', 'trouble'} 
         })
