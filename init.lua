@@ -235,19 +235,15 @@ require("lazy").setup({
                 enable = true,
                 lookahead = true,
               },
-              keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-                -- Add more mappings based on language-specific captures
-                -- e.g., ["a="] = "@assignment.outer", ["i="] = "@assignment.inner" for Python
-                -- e.g., ["a:"] = "@property.outer", ["i:"] = "@property.inner" for Lua
-              },
+              -- keymaps = {
+              --   ["af"] = "@function.outer",
+              --   ["if"] = "@function.inner",
+              --   ["ac"] = "@class.outer",
+              --   ["ic"] = "@class.inner",
+              -- },
               move = {
                 enable = true,
-                set_jumps = true, -- whether to set jumps in the jumplist
+                set_jumps = true, 
                 goto_next_start = {
                   ["]m"] = "@function.outer",
                   ["]]"] = "@class.outer",
