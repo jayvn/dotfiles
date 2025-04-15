@@ -213,7 +213,7 @@ require("lazy").setup({
       build = ":TSUpdate", 
       config = function()
         require('nvim-treesitter.configs').setup {
-          ensure_installed = {"python", "lua", "vim", "r" ,"bash","yaml"," markdown"},
+          ensure_installed = {"python", "lua", "vim", "r" ,"bash", "yaml", "markdown"},
           highlight = {
             enable = true ,
             additional_vim_regex_highlighting = false,
@@ -222,6 +222,8 @@ require("lazy").setup({
         }
       end,
     },
+    { 'j-hui/fidget.nvim', event = "LspAttach" },
+    { 'onsails/lspkind.nvim', event = { "VimEnter" }, },
     {
       'nvim-treesitter/nvim-treesitter-textobjects',
       dependencies = { 'nvim-treesitter/nvim-treesitter' },
@@ -232,6 +234,16 @@ require("lazy").setup({
               select = {
                 enable = true,
                 lookahead = true,
+              },
+              keymaps = {
+                -- You can use the capture groups defined in textobjects.scm
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                -- Add more mappings based on language-specific captures
+                -- e.g., ["a="] = "@assignment.outer", ["i="] = "@assignment.inner" for Python
+                -- e.g., ["a:"] = "@property.outer", ["i:"] = "@property.inner" for Lua
               },
               move = {
                 enable = true,
