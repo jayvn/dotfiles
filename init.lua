@@ -353,16 +353,6 @@ require("lazy").setup({
       config = true -- Explicitly run setup with opts
     },
     {
-      'goolord/alpha-nvim',
-      event = 'VimEnter',
-      dependencies = { 'nvim-tree/nvim-web-devicons' }, -- Optional: for icons
-      config = function ()
-        -- Use default alpha dashboard theme
-        require'alpha'.setup(require'alpha.themes.dashboard'.config)
-      end
-    },
-    -- { 'rebelot/heirline.nvim', event = "VeryLazy", dependencies = { 'nvim-tree/nvim-web-devicons' } }, -- Load UI later
-    {
       'nvim-lualine/lualine.nvim',
       event = "VeryLazy",
       dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -391,8 +381,11 @@ require("lazy").setup({
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
         vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-        vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Telescope recent files (MRU)' }) 
-        vim.keymap.set('n', '<leader>ft', builtin.tags, { desc = 'Telescope tags' }) 
+        vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Telescope recent files (MRU)' })
+        vim.keymap.set('n', '<leader>ft', builtin.tags, { desc = 'Telescope tags' })
+        vim.keymap.set('n', '<leader>fsd', builtin.lsp_document_symbols, { desc = 'Telescope LSP document symbols' })
+        vim.keymap.set('n', '<leader>fsw', builtin.lsp_workspace_symbols, { desc = 'Telescope LSP workspace symbols' })
+        vim.keymap.set('n', '<leader>fst', builtin.treesitter, { desc = 'Telescope Treesitter symbols' })
 
       end,
     },
@@ -401,16 +394,11 @@ require("lazy").setup({
       "oskarrrrrrr/symbols.nvim",
       config = function()
         local r = require("symbols.recipes")
-        require("symbols").setup(r.DefaultFilters, r.AsciiSymbols, {
-          -- custom settings here
-          -- e.g. hide_cursor = false
-        })
         vim.keymap.set("n", ",s", ":Symbols<CR>", { desc = "Open Symbols Outline" })
         vim.keymap.set("n", ",S", ":SymbolsClose<CR>", { desc = "Close Symbols Outline" })
       end,
     },
 
-    -- Removed duplicate Neo-tree entry here
 
     { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {}, event = "VeryLazy" }, -- TODO/WARN highlight
     -- Diagnostics / Trouble
@@ -463,6 +451,8 @@ vim.keymap.set('n', '[b', ':bprevious<CR>', { desc = 'Previous buffer', silent =
 vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap = true, silent = true, desc = 'Next search result (always forward)' })
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
 
+
+vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end,  bufopts, { desc = 'LSP Format Buffer' })
 
 vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
 -- Highlight on yank
