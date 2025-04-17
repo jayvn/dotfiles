@@ -79,7 +79,9 @@ require("lazy").setup({
       opts = {
         ensure_installed = {
           "pyright",
-          "r_language_server", 
+          "r_language_server",
+          "yamlls",
+          "azure_pipelines_ls", -- Added Azure Pipelines Language Server
         },
       },
       config = function(_, opts)
@@ -93,9 +95,10 @@ require("lazy").setup({
       dependencies = { 'williamboman/mason.nvim', 'nvimtools/none-ls.nvim' },
       opts = {
         ensure_installed = {
-          "pylint", 
-          "luacheck", 
-          "stylua", 
+          "pylint",
+          "luacheck",
+          "stylua",
+          "yamllint", -- Added YAML linter
         },
       },
       config = function(_, opts)
@@ -201,6 +204,11 @@ require("lazy").setup({
           flags = {
             debounce_text_changes = 150,
           },
+        })
+
+        lspconfig.azure_pipelines_ls.setup({
+          capabilities = capabilities,
+          on_attach = on_attach,
         })
 
       end,
