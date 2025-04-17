@@ -81,7 +81,8 @@ require("lazy").setup({
           "pyright",
           "r_language_server",
           "yamlls",
-          "azure_pipelines_ls", -- Added Azure Pipelines Language Server
+          "azure_pipelines_ls",
+          "lua_ls", 
         },
       },
       config = function(_, opts)
@@ -138,7 +139,7 @@ require("lazy").setup({
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
           -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
-          -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' }))
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' })) -- Uncommented gd
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
           -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
           vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('keep', bufopts, { desc = 'LSP Signature Help' }))
@@ -460,9 +461,6 @@ vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap =
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
 
 
-vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end,  bufopts, { desc = 'LSP Format Buffer' })
-
-vim.keymap.set("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -472,7 +470,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
+-- gq - format
 -- Automatically load session on startup if no file arguments are given
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   pattern = "*",
