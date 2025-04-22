@@ -93,7 +93,6 @@ require("lazy").setup({
     { 'jay-babu/mason-nvim-dap.nvim', dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap' } },
     {
       'stevearc/conform.nvim',
-      event = 'BufWritePre', 
       event = "VeryLazy",
       cmd = { 'ConformInfo' },
       opts = {
@@ -136,7 +135,6 @@ require("lazy").setup({
           vim.keymap.set({'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('keep', bufopts, { desc = 'LSP Code Action' }))
           vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to References' })) -- Keep explicit references mapping
           -- vim.keymap.set('n', '<C-]>', smart_definition_or_references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Smart Definition/References' })) -- Use new smart function
-          vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, vim.tbl_extend('keep', bufopts, { desc = 'LSP Format Buffer' }))
           --            buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)      --> lists all the implementations for the symbol under the cursor in the quickfix window
 
           if client.server_capabilities.completionProvider then
@@ -443,7 +441,7 @@ vim.keymap.set('n', '[b', ':bprevious<CR>', { desc = 'Previous buffer', silent =
 vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap = true, silent = true, desc = 'Next search result (always forward)' })
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
 
-vim.keymap.set({ "n", "v" }, "<leader>f", function() require("conform").format({ async = true, lsp_fallback = true }) end, { desc = "Format file" })
+vim.keymap.set({ "n", "v" }, "<leader>fm", function() require("conform").format({ async = true, lsp_fallback = true }) end, { desc = "Format file" })
 
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
