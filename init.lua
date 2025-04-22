@@ -19,9 +19,9 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- Set editor options
-vim.opt.number = true 
+vim.opt.number = true
 vim.opt.clipboard = 'unnamedplus' -- Use system clipboard for yank/paste
-vim.opt.tabstop = 2       -- Number of visual spaces per TAB
+vim.opt.tabstop = 2         -- Number of visual spaces per TAB
 vim.opt.softtabstop = 2   -- Number of spaces TAB counts for in insert mode
 vim.opt.shiftwidth = 2    -- Number of spaces to use for autoindent
 vim.opt.expandtab = true  -- Use spaces instead of tabs
@@ -33,7 +33,7 @@ vim.opt.expandtab = true  -- Use spaces instead of tabs
 -- Enhanced Searching
 vim.opt.hlsearch = true -- Highlight all search matches
 vim.opt.incsearch = true -- Show search matches incrementally as you type
-vim.opt.ignorecase = true 
+vim.opt.ignorecase = true
 vim.opt.smartcase = true -- Override ignorecase if search pattern has uppercase letters
 
 -- Smoother Scrolling
@@ -45,7 +45,7 @@ vim.opt.undofile = true -- Enable persistent undo
 local undodir = vim.fn.stdpath('data') .. '/undodir'
 
 if vim.fn.isdirectory(undodir) == 0 then
-  vim.fn.mkdir(undodir, 'p') 
+  vim.fn.mkdir(undodir, 'p')
 end
 vim.opt.undodir = undodir -- Set the undo directory
 
@@ -82,7 +82,7 @@ require("lazy").setup({
           "r_language_server",
           "yamlls",
           "azure_pipelines_ls",
-          "lua_ls", 
+          "lua_ls",
         },
       },
       config = function(_, opts)
@@ -101,6 +101,17 @@ require("lazy").setup({
           r = { 'styler' },
           lua = { 'stylua' },
         },
+        -- format_on_save = false,
+      },
+      keys = {
+        {
+          '<leader>fm', 
+          function()
+            require('conform').format({ async = true, lsp_fallback = true })
+          end,
+          mode = '', 
+          desc = 'Format file (Conform)',
+        },
       },
     },
 
@@ -110,12 +121,12 @@ require("lazy").setup({
       -- LSP Configuration
       'neovim/nvim-lspconfig',
       dependencies = {
-        'williamboman/mason.nvim', 
+        'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
       },
       config = function()
         local lspconfig = require('lspconfig')
-        local capabilities = require('cmp_nvim_lsp').default_capabilities() 
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
         -- Define a common on_attach function for LSP keybindings
         local on_attach = function(client, bufnr)
@@ -134,9 +145,7 @@ require("lazy").setup({
           vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, vim.tbl_extend('keep', bufopts, { desc = 'LSP Rename Symbol' }))
           vim.keymap.set({'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('keep', bufopts, { desc = 'LSP Code Action' }))
           vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to References' })) -- Keep explicit references mapping
-          -- vim.keymap.set('n', '<C-]>', smart_definition_or_references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Smart Definition/References' })) -- Use new smart function
-          --            buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)      --> lists all the implementations for the symbol under the cursor in the quickfix window
-
+          --       buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)      --> lists all the implementations for the symbol under the cursor in the quickfix window
           if client.server_capabilities.completionProvider then
             bufopts.desc = "Trigger completion"
             vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, bufopts)
@@ -193,12 +202,27 @@ require("lazy").setup({
           on_attach = on_attach,
         })
 
+        lspconfig.lua_ls.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = {
+                Lua = {
+                    workspace = {
+                        checkThirdParty = false,
+                    },
+                    telemetry = {
+                        enable = false,
+                    },
+                },
+            },
+        })
+
       end,
     },
     {
       'nvim-treesitter/nvim-treesitter',
       event = { "BufReadPost", "BufNewFile" },
-      build = ":TSUpdate", 
+      build = ":TSUpdate",
       config = function()
         require('nvim-treesitter.configs').setup {
           ensure_installed = {"python", "lua", "vim", "r" ,"bash", "yaml", "markdown"},
@@ -231,7 +255,7 @@ require("lazy").setup({
               -- },
               move = {
                 enable = true,
-                set_jumps = true, 
+                set_jumps = true,
                 goto_next_start = {
                   ["]m"] = "@function.outer",
                   ["]]"] = "@class.outer",
@@ -261,7 +285,7 @@ require("lazy").setup({
     { 'tpope/vim-commentary', event = "VeryLazy" },
     { 'romainl/vim-cool', event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
     { 'tpope/vim-fugitive', event = "VeryLazy", cmd = "Git" },
-    { 'mhinz/vim-signify'}, 
+    { 'mhinz/vim-signify'},
     { 'jalvesaq/Nvim-R', ft = { "r", "rmd", "quarto" } },
     { 'idbrii/vim-mergetool', cmd = "Mergetool" },
     { 'f-person/git-blame.nvim', event = "BufReadPre", config = function() require('gitblame').setup { enabled = true } end },
@@ -273,8 +297,8 @@ require("lazy").setup({
       dependencies = {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
-        'L3MON4D3/LuaSnip', 
-        'saadparwaiz1/cmp_luasnip', 
+        'L3MON4D3/LuaSnip',
+        'saadparwaiz1/cmp_luasnip',
       },
       config = function()
         local cmp = require('cmp')
@@ -305,7 +329,7 @@ require("lazy").setup({
       config = function()
         require("neo-tree").setup({
           filesystem = {
-            follow_current_file = { 
+            follow_current_file = {
               enabled = true,
             },
           },
@@ -357,13 +381,13 @@ require("lazy").setup({
           tabline = {
             lualine_a = {'buffers'},
           },
-          extensions = {'neo-tree', 'trouble'} 
+          extensions = {'neo-tree', 'trouble'}
         })
       end,
     },
     {
       'nvim-telescope/telescope.nvim',
-      event = "VimEnter", 
+      event = "VimEnter",
       dependencies = { 'nvim-lua/plenary.nvim' },
       config = function()
         -- Add Telescope keymaps
@@ -394,7 +418,7 @@ require("lazy").setup({
     -- Diagnostics / Trouble
     {
       "folke/trouble.nvim",
-      dependencies = { "nvim-tree/nvim-web-devicons" }, 
+      dependencies = { "nvim-tree/nvim-web-devicons" },
       cmd = "Trouble",
       keys = {
         {
@@ -413,9 +437,9 @@ require("lazy").setup({
           desc = "LSP Definitions / references / ... (Trouble)",
         },
       },
-    }, 
+    },
   },
-  install = { colorscheme = { "dracula" } }, 
+  install = { colorscheme = { "dracula" } },
   -- automatically check for plugin updates
   -- checker = { enabled = true },
 })
@@ -440,8 +464,6 @@ vim.keymap.set('n', '[b', ':bprevious<CR>', { desc = 'Previous buffer', silent =
 -- Keep search direction consistent (n forward, N backward)
 vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap = true, silent = true, desc = 'Next search result (always forward)' })
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
-
-vim.keymap.set({ "n", "v" }, "<leader>fm", function() require("conform").format({ async = true, lsp_fallback = true }) end, { desc = "Format file" })
 
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
