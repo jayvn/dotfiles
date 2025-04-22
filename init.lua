@@ -89,8 +89,6 @@ require("lazy").setup({
         require("mason-lspconfig").setup(opts)
       end,
     },
-    { 'mfussenegger/nvim-dap', cmd = { "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" } },
-    { 'jay-babu/mason-nvim-dap.nvim', dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap' } },
     {
       'stevearc/conform.nvim',
       event = "VeryLazy",
@@ -212,9 +210,12 @@ require("lazy").setup({
                     },
                     telemetry = {
                         enable = false,
-                    },
-                },
+              },
+              diagnostics = { 
+                globals = { 'vim' } -- For init.lua file
+              }
             },
+          },
         })
 
       end,
@@ -290,29 +291,22 @@ require("lazy").setup({
     { 'idbrii/vim-mergetool', cmd = "Mergetool" },
     { 'f-person/git-blame.nvim', event = "BufReadPre", config = function() require('gitblame').setup { enabled = true } end },
 
-    -- Completion Engine (nvim-cmp) and Snippets (LuaSnip)
+    -- Completion Engine (nvim-cmp) 
     {
       'hrsh7th/nvim-cmp',
       event = "InsertEnter",
       dependencies = {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
-        'L3MON4D3/LuaSnip',
-        'saadparwaiz1/cmp_luasnip',
+        'hrsh7th/cmp-path'
       },
       config = function()
         local cmp = require('cmp')
-        local luasnip = require('luasnip')
         cmp.setup({
-          snippet = {
-            expand = function(args)
-              luasnip.lsp_expand(args.body)
-            end,
-          },
           sources = cmp.config.sources({
             { name = 'nvim_lsp' },
-            { name = 'luasnip' },
             { name = 'buffer' },
+            { name = 'path' },
           }),
         })
       end,
@@ -412,6 +406,35 @@ require("lazy").setup({
         vim.keymap.set("n", ",S", ":SymbolsClose<CR>", { desc = "Close Symbols Outline" })
       end,
     },
+    {
+      'weilbith/nvim-code-action-menu',
+      cmd = 'CodeActionMenu',
+    },
+
+    {
+      'nvim-treesitter/nvim-treesitter-context',
+      dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    },
+
+    {
+      'preservim/vim-markdown',
+      ft = { 'markdown', 'quarto' },
+    },
+
+    {
+      'mfussenegger/nvim-lint',
+      event = { 'BufWritePost', 'BufReadPost' },
+      config = function()
+        require('lint').linters_by_ft = {
+          linters_by_ft = {
+            python = { 'flake8' },
+            lua = { 'luacheck' },
+              markdown = {'vale'},
+          },
+        }
+      end,
+    },
+
 
 
     { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {}, event = "VeryLazy" }, -- TODO/WARN highlight
