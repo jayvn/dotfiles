@@ -92,37 +92,20 @@ require("lazy").setup({
     { 'mfussenegger/nvim-dap', cmd = { "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" } },
     { 'jay-babu/mason-nvim-dap.nvim', dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap' } },
     {
-      'jayp0521/mason-null-ls.nvim',
-      dependencies = { 'williamboman/mason.nvim', 'nvimtools/none-ls.nvim' },
+      'stevearc/conform.nvim',
+      event = 'BufWritePre', 
+      event = "VeryLazy",
+      cmd = { 'ConformInfo' },
       opts = {
-        ensure_installed = {
-          "pylint",
-          "luacheck",
-          "stylua",
-          "yamllint", -- Added YAML linter
+        formatters_by_ft = {
+          python = { 'black', 'isort' },
+          r = { 'styler' },
+          lua = { 'stylua' },
         },
       },
-      config = function(_, opts)
-        require("mason-null-ls").setup(opts)
-      end,
     },
-    {
-      -- Linter/Formatter setup (using none-ls)
-      'nvimtools/none-ls.nvim',
-      dependencies = { 'jayp0521/mason-null-ls.nvim' }, 
-      config = function()
-        local null_ls = require("null-ls")
-        null_ls.setup({
-          sources = {
-            -- Python
-            null_ls.builtins.diagnostics.pylint,
-            -- Lua
-            null_ls.builtins.diagnostics.luacheck,
-            null_ls.builtins.formatting.stylua,
-          },
-        })
-      end,
-    },
+
+
     { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() require("lsp-inlayhints").setup() end },
     {
       -- LSP Configuration
@@ -460,6 +443,7 @@ vim.keymap.set('n', '[b', ':bprevious<CR>', { desc = 'Previous buffer', silent =
 vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap = true, silent = true, desc = 'Next search result (always forward)' })
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
 
+vim.keymap.set({ "n", "v" }, "<leader>f", function() require("conform").format({ async = true, lsp_fallback = true }) end, { desc = "Format file" })
 
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -471,6 +455,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 -- gq - format
+
 -- Automatically load session on startup if no file arguments are given
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   pattern = "*",
