@@ -70,7 +70,19 @@ require("lazy").setup({
       'williamboman/mason.nvim',
       cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUpdate" },
       config = function()
-        require("mason").setup()
+        require("mason").setup({
+          ensure_installed = {
+            -- Python
+            "ruff",
+            -- R
+            "styler",
+            -- Lua
+            "stylua",
+            "luacheck",
+            -- Markdown
+            "vale",
+          },
+        })
       end,
     },
     {
@@ -95,7 +107,7 @@ require("lazy").setup({
       cmd = { 'ConformInfo' },
       opts = {
         formatters_by_ft = {
-          python = { 'black', 'isort' },
+          python = { 'ruff_format' },
           r = { 'styler' },
           lua = { 'stylua' },
         },
@@ -171,6 +183,20 @@ require("lazy").setup({
           capabilities = capabilities,
           on_attach = on_attach,
         })
+        lspconfig.jsonls.setup {
+          settings = {
+            json = {
+              schemas = {
+                {
+                  description = "Azure Pipelines schema",
+                  fileMatch = { "azure-pipelines.yml", "azure-pipelines.yaml" },
+                  url = "https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/main/service-schema.json",
+                },
+              },
+              validate = { enable = true },
+            },
+          },
+        }
 
         lspconfig.r_language_server.setup({
           capabilities = capabilities,
@@ -211,7 +237,7 @@ require("lazy").setup({
                     telemetry = {
                         enable = false,
               },
-              diagnostics = { 
+              diagnostics = {
                 globals = { 'vim' } -- For init.lua file
               }
             },
@@ -372,9 +398,6 @@ require("lazy").setup({
           inactive_sections = {
             lualine_c = {{'filename', path = 1}}, -- Also show relative path in inactive windows
           },
-          tabline = {
-            lualine_a = {'buffers'},
-          },
           extensions = {'neo-tree', 'trouble'}
         })
       end,
@@ -427,7 +450,7 @@ require("lazy").setup({
       config = function()
         require('lint').linters_by_ft = {
           linters_by_ft = {
-            python = { 'flake8' },
+            python = { 'ruff' },
             lua = { 'luacheck' },
               markdown = {'vale'},
           },
