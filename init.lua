@@ -70,19 +70,7 @@ require("lazy").setup({
       'williamboman/mason.nvim',
       cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUpdate" },
       config = function()
-        require("mason").setup({
-          ensure_installed = {
-            -- Python
-            "ruff",
-            -- R
-            "styler",
-            -- Lua
-            "stylua",
-            "luacheck",
-            -- Markdown
-            "vale",
-          },
-        })
+        require("mason").setup()
       end,
     },
     {
@@ -95,6 +83,7 @@ require("lazy").setup({
           "yamlls",
           "azure_pipelines_ls",
           "lua_ls",
+          "ruff", -- Add ruff to ensure it's installed by Mason
         },
       },
       config = function(_, opts)
@@ -107,7 +96,7 @@ require("lazy").setup({
       cmd = { 'ConformInfo' },
       opts = {
         formatters_by_ft = {
-          python = { 'ruff_format' },
+          python = { 'ruff_format' }, -- Use ruff for formatting Python
           r = { 'styler' },
           lua = { 'stylua' },
         },
@@ -179,9 +168,34 @@ require("lazy").setup({
           end,
         })
 
+        -- Autocommand to disable hover for ruff if pyright is also active
+        vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true })
+        vim.api.nvim_create_autocmd("LspAttach", {
+          group = 'lsp_attach_disable_ruff_hover',
+          callback = function(args)
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if client and client.name == 'ruff' then
+              client.server_capabilities.hoverProvider = false
+            end
+          end,
+          desc = 'LSP: Disable hover capability from Ruff',
+        })
+
         lspconfig.pyright.setup({
           capabilities = capabilities,
           on_attach = on_attach,
+          settings = {
+            pyright = {
+              -- Using Ruff's import organizer
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                -- Ignore all files for analysis to exclusively use Ruff for linting
+                ignore = { '*' },
+              },
+            },
+          },
         })
         lspconfig.jsonls.setup {
           settings = {
@@ -242,6 +256,11 @@ require("lazy").setup({
               }
             },
           },
+        })
+
+        lspconfig.ruff.setup({
+          capabilities = capabilities,
+          on_attach = on_attach,
         })
 
       end,
@@ -398,6 +417,13 @@ require("lazy").setup({
           inactive_sections = {
             lualine_c = {{'filename', path = 1}}, -- Also show relative path in inactive windows
           },
+          tabline = {
+            lualine_a = {
+              {
+                'buffers',
+              },
+            },
+          },
           extensions = {'neo-tree', 'trouble'}
         })
       end,
@@ -450,9 +476,9 @@ require("lazy").setup({
       config = function()
         require('lint').linters_by_ft = {
           linters_by_ft = {
-            python = { 'ruff' },
+            python = { 'ruff' }, -- Use ruff for linting Python
             lua = { 'luacheck' },
-              markdown = {'vale'},
+            markdown = {'vale'},
           },
         }
       end,
@@ -490,7 +516,6 @@ require("lazy").setup({
   -- checker = { enabled = true },
 })
 
--- Set the colorscheme after lazy setup
 vim.cmd([[colorscheme dracula]])
 
 
