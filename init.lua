@@ -116,6 +116,7 @@ require("lazy").setup({
 
 
     { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() require("lsp-inlayhints").setup() end },
+    {"sindrets/diffview.nvim"},
     {
       -- LSP Configuration
       'neovim/nvim-lspconfig',
@@ -129,26 +130,70 @@ require("lazy").setup({
 
         -- Define a common on_attach function for LSP keybindings
         local on_attach = function(client, bufnr)
-          local bufopts = { noremap=true, silent=true, buffer=bufnr }
-          -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Definition' })) -- Uncommented gd
-          vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('keep', bufopts, { desc = 'LSP Hover Documentation' }))
-          -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
-          vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('keep', bufopts, { desc = 'LSP Signature Help' }))
-          vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, vim.tbl_extend('keep', bufopts, { desc = 'LSP Add Workspace Folder' }))
-          vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, vim.tbl_extend('keep', bufopts, { desc = 'LSP Remove Workspace Folder' }))
-          vim.keymap.set('n', '<leader>wl', function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, vim.tbl_extend('keep', bufopts, { desc = 'LSP List Workspace Folders' }))
-          vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Type Definition' }))
-          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, vim.tbl_extend('keep', bufopts, { desc = 'LSP Rename Symbol' }))
-          vim.keymap.set({'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('keep', bufopts, { desc = 'LSP Code Action' }))
-          vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to References' })) -- Keep explicit references mapping
-          --       buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)      --> lists all the implementations for the symbol under the cursor in the quickfix window
-          if client.server_capabilities.completionProvider then
-            bufopts.desc = "Trigger completion"
-            vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, bufopts)
-          end
+		local bufopts = { noremap = true, silent = true, buffer = bufnr }
+		-- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
+		vim.keymap.set(
+			"n",
+			"gd",
+			vim.lsp.buf.definition,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Go to Definition" })
+		) -- Uncommented gd
+		vim.keymap.set(
+			"n",
+			"K",
+			vim.lsp.buf.hover,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Hover Documentation" })
+		)
+		-- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
+		vim.keymap.set(
+			"n",
+			"<C-k>",
+			vim.lsp.buf.signature_help,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Signature Help" })
+		)
+		vim.keymap.set(
+			"n",
+			"<leader>wa",
+			vim.lsp.buf.add_workspace_folder,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Add Workspace Folder" })
+		)
+		vim.keymap.set(
+			"n",
+			"<leader>wr",
+			vim.lsp.buf.remove_workspace_folder,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Remove Workspace Folder" })
+		)
+		vim.keymap.set("n", "<leader>wl", function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, vim.tbl_extend("keep", bufopts, { desc = "LSP List Workspace Folders" }))
+		vim.keymap.set(
+			"n",
+			"<leader>D",
+			vim.lsp.buf.type_definition,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Go to Type Definition" })
+		)
+		vim.keymap.set(
+			"n",
+			"<leader>rn",
+			vim.lsp.buf.rename,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Rename Symbol" })
+		)
+		vim.keymap.set(
+			{ "n", "v" },
+			"<leader>ca",
+			vim.lsp.buf.code_action,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Code Action" })
+		)
+		vim.keymap.set(
+			"n",
+			"gr",
+			vim.lsp.buf.references,
+			vim.tbl_extend("keep", bufopts, { desc = "LSP Go to References" })
+		)
+		if client.server_capabilities.completionProvider then
+			bufopts.desc = "Trigger completion"
+			vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, bufopts)
+		end
         end
 
         -- Autocommand to attach inlay hints
@@ -265,6 +310,15 @@ require("lazy").setup({
 
       end,
     },
+
+    {
+      "antosha417/nvim-lsp-file-operations",
+      dependencies = { "nvim-lua/plenary.nvim", "nvim-neo-tree/neo-tree.nvim" },
+      config = function()
+        require("lsp-file-operations").setup()
+      end,
+    },
+
     {
       'nvim-treesitter/nvim-treesitter',
       event = { "BufReadPost", "BufNewFile" },
