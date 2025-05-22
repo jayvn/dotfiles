@@ -76,6 +76,7 @@ require("lazy").setup({
     {
       'williamboman/mason-lspconfig.nvim',
       dependencies = { 'williamboman/mason.nvim' },
+      tag="v2.0.0-rc.1", 
       opts = {
         ensure_installed = {
           "pyright",
