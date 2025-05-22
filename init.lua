@@ -96,7 +96,7 @@ require("lazy").setup({
       cmd = { 'ConformInfo' },
       opts = {
         formatters_by_ft = {
-          python = { 'ruff_format' }, -- Use ruff for formatting Python
+          python = { 'ruff_format' },
           r = { 'styler' },
           lua = { 'stylua' },
         },
@@ -104,11 +104,11 @@ require("lazy").setup({
       },
       keys = {
         {
-          '<leader>fm', 
+          '<leader>fm',
           function()
             require('conform').format({ async = true, lsp_fallback = true })
           end,
-          mode = '', 
+          mode = '',
           desc = 'Format file (Conform)',
         },
       },
@@ -231,13 +231,12 @@ require("lazy").setup({
           on_attach = on_attach,
           settings = {
             pyright = {
-              -- Using Ruff's import organizer
               disableOrganizeImports = true,
             },
             python = {
               analysis = {
                 -- Ignore all files for analysis to exclusively use Ruff for linting
-                ignore = { '*' },
+                -- ignore = { '*' },
               },
             },
           },
@@ -407,6 +406,7 @@ require("lazy").setup({
             { name = 'buffer' },
             { name = 'path' },
           }),
+          mapping = cmp.mapping.preset.insert({}), -- Fix autocomplete conflict
         })
       end,
     },
@@ -530,7 +530,8 @@ require("lazy").setup({
       config = function()
         require('lint').linters_by_ft = {
           linters_by_ft = {
-            python = { 'ruff' }, -- Use ruff for linting Python
+            python = { 'pyright' },
+            -- python = { 'ruff' }, -- Use ruff for linting Python. Note also uncomment * line in pyright config
             lua = { 'luacheck' },
             markdown = {'vale'},
           },
@@ -546,6 +547,7 @@ require("lazy").setup({
       "folke/trouble.nvim",
       dependencies = { "nvim-tree/nvim-web-devicons" },
       cmd = "Trouble",
+      opts={},
       keys = {
         {
           "<leader>xx",
@@ -589,6 +591,10 @@ vim.keymap.set('n', '[b', ':bprevious<CR>', { desc = 'Previous buffer', silent =
 -- Keep search direction consistent (n forward, N backward)
 vim.keymap.set('n', 'n', "v:searchforward ? 'n' : 'N'", { expr = true, noremap = true, silent = true, desc = 'Next search result (always forward)' })
 vim.keymap.set('n', 'N', "v:searchforward ? 'N' : 'n'", { expr = true, noremap = true, silent = true, desc = 'Previous search result (always backward)' })
+
+vim.api.nvim_create_user_command('Wipeout', function()
+  vim.cmd('%bd|e#|bd# ')
+end, {})
 
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
