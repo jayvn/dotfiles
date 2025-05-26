@@ -407,7 +407,9 @@ require("lazy").setup({
             { name = 'buffer' },
             { name = 'path' },
           }),
-          mapping = cmp.mapping.preset.insert({}), -- Fix autocomplete conflict
+          mapping = cmp.mapping.preset.insert({
+            ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+          }), -- To make pyright auto import work
         })
       end,
     },
@@ -467,22 +469,30 @@ require("lazy").setup({
       config = function()
         require('lualine').setup({
           sections = {
-            lualine_c = {{'filename', path = 1}}, -- Set path = 1 for relative path
+            lualine_c = {{'filename', path = 1}}, -- 1 = relative path
           },
           inactive_sections = {
             lualine_c = {{'filename', path = 1}}, -- Also show relative path in inactive windows
-          },
-          tabline = {
-            lualine_a = {
-              {
-                'buffers',
-              },
-            },
           },
           extensions = {'neo-tree', 'trouble'}
         })
       end,
     },
+    {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons',
+      config = function()
+        require('bufferline').setup {
+          options = {
+            -- show_buffer_close_icons = false,
+            show_buffer_icons = false,
+            offsets = {
+              {
+                filetype = "NvimTree"
+              }
+            }
+          }}
+      end,
+    },
+
     {
       'nvim-telescope/telescope.nvim',
       event = "VimEnter",
@@ -619,4 +629,10 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
     end
   end,
 })
-
+--
+-- TODO: 
+--  gr shows imports . Don't 
+--  gr should be ]] also
+--  File rename 
+--  Search lsp tags !!! leader sw. doesnt work 
+--  Messages aren't really working
