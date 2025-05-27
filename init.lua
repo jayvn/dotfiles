@@ -116,7 +116,8 @@ require("lazy").setup({
     },
 
 
-    { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() require("lsp-inlayhints").setup() end },
+    { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() 	require("lsp-inlayhints").setup()
+end },
     {"sindrets/diffview.nvim"},
     {
       -- LSP Configuration
@@ -302,11 +303,11 @@ require("lazy").setup({
             },
           },
         })
-
-        lspconfig.ruff.setup({
-          capabilities = capabilities,
-          on_attach = on_attach,
-        })
+        -- linting disable
+        -- lspconfig.ruff.setup({ 
+        --   capabilities = capabilities,
+        --   on_attach = on_attach,
+        -- })
 
       end,
     },
@@ -632,7 +633,7 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 --
 -- TODO: 
 --  gr shows imports . Don't 
---  gr should be ]] also
---  File rename 
+--  gr should be ctrl - ] also
+--  File rename  lsp
 --  Search lsp tags !!! leader sw. doesnt work 
 --  Messages aren't really working
