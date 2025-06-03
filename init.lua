@@ -76,7 +76,7 @@ require("lazy").setup({
     {
       'williamboman/mason-lspconfig.nvim',
       dependencies = { 'williamboman/mason.nvim' },
-      tag="v2.0.0-rc.1", 
+      tag="v2.0.0-rc.1",
       opts = {
         ensure_installed = {
           "pyright",
@@ -514,14 +514,6 @@ end },
     },
     { "folke/which-key.nvim", event = "VeryLazy" },
     {
-      "oskarrrrrrr/symbols.nvim",
-      config = function()
-        local r = require("symbols.recipes")
-        vim.keymap.set("n", ",s", ":Symbols<CR>", { desc = "Open Symbols Outline" })
-        vim.keymap.set("n", ",S", ":SymbolsClose<CR>", { desc = "Close Symbols Outline" })
-      end,
-    },
-    {
       'weilbith/nvim-code-action-menu',
       cmd = 'CodeActionMenu',
     },
@@ -617,14 +609,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
--- gq - format
 
--- Automatically load session on startup if no file arguments are given
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   pattern = "*",
   nested = true,
   callback = function()
-    -- Only load if started without arguments
+    -- Auto load session if started without arguments
     if vim.fn.argc() == 0 then
       require("persistence").load()
     end
@@ -632,8 +622,8 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 })
 --
 -- TODO: 
---  gr shows imports . Don't 
---  gr should be ctrl - ] also
---  File rename  lsp
---  Search lsp tags !!! leader sw. doesnt work 
+--  gr shows imports statement. Don't  [apparently this is very hard]
+--  gr should be ctrl - ] also when there's nothing else
+--  File rename  withh lsp
+--  Search lsp tags ( leader fsw) doesnt work for python
 --  Messages aren't really working
