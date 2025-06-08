@@ -622,6 +622,12 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 })
 --
 -- TODO: 
+-- NMAC427/guess-indent.nvim
+-- indent-blankline.nvim
+-- { "folke/neoconf.nvim" }  # can import vscode conf
+--  mrjones2014/smart-splits.nvim # tmux integration 
+--   RRethy/ vim-illuminate
+-- add  onsails/lspkind.nvim 
 --  gr shows imports statement. Don't  [apparently this is very hard]
 --  gr should be ctrl - ] also when there's nothing else
 --  File rename  withh lsp
