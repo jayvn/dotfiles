@@ -65,6 +65,7 @@ require("lazy").setup({
     -- 'folke/tokyonight.nvim',
     { "Mofiqul/dracula.nvim", name = "dracula", priority = 1000 },
 
+    {'akinsho/git-conflict.nvim', version = "*", config = true},
     -- LSP / Mason / DAP
     {
       'williamboman/mason.nvim',
