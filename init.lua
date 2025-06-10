@@ -546,6 +546,52 @@ end },
 
 
     { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {}, event = "VeryLazy" }, -- TODO/WARN highlight
+    {
+      "olimorris/codecompanion.nvim", --copilot meets zig ? 
+       dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+      },
+      -- cmd = { "CodeCompanion", "CodeCompanionOpen" },
+    },
+    {
+      "NMAC427/guess-indent.nvim",   -- newline indent
+      event = { "BufReadPre", "BufNewFile" },
+      config = function()
+        require("guess-indent").setup({})
+      end,
+    },
+    {
+      "lukas-reineke/indent-blankline.nvim", -- indent guides
+      event = { "BufReadPre", "BufNewFile" },
+      main = "ibl",
+      opts = {},
+    },
+    {
+      "folke/neoconf.nvim", --can import conf in .vscode
+      event = "BufReadPre",
+      cmd = "Neoconf",
+    },
+    {
+      "mrjones2014/smart-splits.nvim", -- tmux integration somehow 
+      keys = {
+        { "<A-h>", mode = "n" },
+        { "<A-j>", mode = "n" },
+        { "<A-k>", mode = "n" },
+        { "<A-l>", mode = "n" },
+      },
+      config = function()
+    require("smart-splits").setup({})
+      end,
+    },
+    {
+      "RRethy/vim-illuminate", -- highlight similar words
+      event = { "BufReadPost", "BufNewFile" },
+      config = function()
+    require("illuminate").configure({})
+      end,
+    },
+
     -- Diagnostics / Trouble
     {
       "folke/trouble.nvim",
@@ -622,14 +668,8 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 })
 --
 -- TODO: 
--- NMAC427/guess-indent.nvim
--- indent-blankline.nvim
--- { "folke/neoconf.nvim" }  # can import vscode conf
---  mrjones2014/smart-splits.nvim # tmux integration 
---   RRethy/ vim-illuminate
--- add  onsails/lspkind.nvim 
---  gr shows imports statement. Don't  [apparently this is very hard]
 --  gr should be ctrl - ] also when there's nothing else
 --  File rename  withh lsp
 --  Search lsp tags ( leader fsw) doesnt work for python
 --  Messages aren't really working
+--  gr shows imports statement. Don't  [apparently this is very hard]
