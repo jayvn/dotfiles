@@ -87,6 +87,7 @@ plugins=(
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
+DISABLE_AUTO_UPDATE="true"
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -152,6 +153,7 @@ bindkey "^R" history-incremental-search-backward
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+eval "$(direnv hook zsh)"
 # [[ -n $TMUX ]] && alias vi="zsh ~/vim-tmux-open.zsh"
 
 # export NVM_DIR="$HOME/.nvm"
