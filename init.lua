@@ -64,6 +64,8 @@ require("lazy").setup({
     -- Theme
     -- 'folke/tokyonight.nvim',
     { "Mofiqul/dracula.nvim", name = "dracula", priority = 1000 },
+    { "tomasr/molokai", name = "molokai", priority = 1000 },
+    { "ellisonleao/gruvbox.nvim", name = "gruvbox", priority = 1000 },
 
     {'akinsho/git-conflict.nvim', version = "*", config = true},
     -- LSP / Mason / DAP
@@ -84,6 +86,7 @@ require("lazy").setup({
           "r_language_server",
           "yamlls",
           "azure_pipelines_ls",
+          "jsonls",
           "lua_ls",
           "ruff", -- Add ruff to ensure it's installed by Mason
         },
@@ -116,7 +119,7 @@ require("lazy").setup({
       },
     },
 
-
+    -- { 'andymass/vim-split-diff', lazy = true, cmd = 'Splitdiff' },
     { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() 	require("lsp-inlayhints").setup()
 end },
     {"sindrets/diffview.nvim"},
@@ -618,12 +621,12 @@ end },
       },
     },
   },
-  install = { colorscheme = { "dracula" } },
+  install = { colorscheme = { "gruvbox" } },
   -- automatically check for plugin updates
   -- checker = { enabled = true },
 })
 
-vim.cmd([[colorscheme dracula]])
+vim.cmd([[colorscheme gruvbox]])
 
 
 vim.keymap.set('n', '<leader>el', ':Neotree filesystem toggle left<CR>', { desc = "Explorer NeoTree (Files)", noremap = true, silent = true })
