@@ -162,27 +162,6 @@ require("lazy").setup({
 					-- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
 					vim.keymap.set(
 						"n",
-						"<C-k>",
-						vim.lsp.buf.signature_help,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Signature Help" })
-					)
-					vim.keymap.set(
-						"n",
-						"<leader>wa",
-						vim.lsp.buf.add_workspace_folder,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Add Workspace Folder" })
-					)
-					vim.keymap.set(
-						"n",
-						"<leader>wr",
-						vim.lsp.buf.remove_workspace_folder,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Remove Workspace Folder" })
-					)
-					vim.keymap.set("n", "<leader>wl", function()
-						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-					end, vim.tbl_extend("keep", bufopts, { desc = "LSP List Workspace Folders" }))
-					vim.keymap.set(
-						"n",
 						"<leader>D",
 						vim.lsp.buf.type_definition,
 						vim.tbl_extend("keep", bufopts, { desc = "LSP Go to Type Definition" })
@@ -207,7 +186,7 @@ require("lazy").setup({
 					)
 					if client.server_capabilities.completionProvider then
 						bufopts.desc = "Trigger completion"
-						vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, bufopts)
+						vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, bufopts) -- don't work cuz tmux pane switch
 					end
 				end
 
@@ -568,16 +547,13 @@ require("lazy").setup({
 			event = "VeryLazy",
 			opts = {
 				presets = {
-					bottom_search = true, -- use a classic bottom cmdline for search
-					-- command_palette = true, -- position the cmdline and popupmenu together
 					long_message_to_split = true, -- long messages will be sent to a split
-					lsp_doc_border = true, -- add a border to hover docs and signature help
+					lsp_doc_border = true, -- add a border to hover docs and signature help (doesn't work ?)
 				},
 			},
 			dependencies = {
 				"MunifTanjim/nui.nvim",
-				--   if you want to use the notification view. (cant do echo copy then)
-				-- "rcarriga/nvim-notify",
+				-- "rcarriga/nvim-notify", -use the notification view. (cant do echo copy then)
 			},
 		},
 
