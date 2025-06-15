@@ -66,7 +66,10 @@ require("lazy").setup({
     { "Mofiqul/dracula.nvim", name = "dracula", priority = 1000 },
     { "tomasr/molokai", name = "molokai", priority = 1000 },
     { "ellisonleao/gruvbox.nvim", name = "gruvbox", priority = 1000 },
-
+    { 
+      "powerman/vim-plugin-AnsiEsc", -- helps with ^[ type of console outputs in file
+      cmd = "AnsiEsc",
+    },
     {'akinsho/git-conflict.nvim', version = "*", config = true},
     -- LSP / Mason / DAP
     {
@@ -120,6 +123,7 @@ require("lazy").setup({
     },
 
     -- { 'andymass/vim-split-diff', lazy = true, cmd = 'Splitdiff' },
+    --
     { 'lvimuser/lsp-inlayhints.nvim', dependencies = { 'neovim/nvim-lspconfig' }, config = function() 	require("lsp-inlayhints").setup()
 end },
     {"sindrets/diffview.nvim"},
