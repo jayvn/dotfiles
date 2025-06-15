@@ -352,7 +352,6 @@ require("lazy").setup({
 				})
 			end,
 		},
-		{ "j-hui/fidget.nvim", event = "LspAttach" },
 		{ "onsails/lspkind.nvim", event = { "VimEnter" } },
 		{
 			"nvim-treesitter/nvim-treesitter-textobjects",
@@ -563,6 +562,24 @@ require("lazy").setup({
 			"preservim/vim-markdown",
 			ft = { "markdown", "quarto" },
 		},
+		-- lazy.nvim
+		{
+			"folke/noice.nvim",
+			event = "VeryLazy",
+			opts = {
+				presets = {
+					bottom_search = true, -- use a classic bottom cmdline for search
+					-- command_palette = true, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					lsp_doc_border = true, -- add a border to hover docs and signature help
+				},
+			},
+			dependencies = {
+				"MunifTanjim/nui.nvim",
+				--   if you want to use the notification view. (cant do echo copy then)
+				-- "rcarriga/nvim-notify",
+			},
+		},
 
 		{
 			"mfussenegger/nvim-lint",
@@ -723,10 +740,9 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 		end
 	end,
 })
---
+
 -- TODO:
+--  Search lsp tags ( leader fsw) doesnt work for python or R
+--  File rename  with lsp
+--  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should be ctrl - ] also when there's nothing else
---  File rename  withh lsp
---  Search lsp tags ( leader fsw) doesnt work for python
---  Messages aren't really working
---  gr shows imports statement. Don't  [apparently this is very hard]
