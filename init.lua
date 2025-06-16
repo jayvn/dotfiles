@@ -517,12 +517,7 @@ require("lazy").setup({
 					builtin.lsp_document_symbols,
 					{ desc = "Telescope LSP document symbols" }
 				)
-				vim.keymap.set(
-					"n",
-					"<leader>fsw",
-					builtin.lsp_workspace_symbols,
-					{ desc = "Telescope LSP workspace symbols" }
-				)
+				-- builtin.lsp_workspace_symbols, doesn't work well cuz of lsp s
 				vim.keymap.set("n", "<leader>fst", builtin.treesitter, { desc = "Telescope Treesitter symbols" })
 			end,
 		},
@@ -717,6 +712,7 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	end,
 })
 
+-- `ctags -R --languages=python --kinds-python=cf .` only for classes and functions
 local function lsp_or_tags_definition()
 	local original_pos = vim.fn.getpos(".")
 	-- Try to go to definition with LSP. pcall prevents errors if no LSP is attached.
@@ -737,7 +733,6 @@ end
 vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition (LSP > Tags)" })
 
 -- TODO:
---  Search lsp tags ( leader fsw) doesnt work for python or R
 --  File rename  with lsp
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should be ctrl - ] also when there's nothing else
