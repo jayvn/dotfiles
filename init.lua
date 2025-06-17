@@ -86,6 +86,7 @@ require("lazy").setup({
 			opts = {
 				ensure_installed = {
 					"pyright",
+					"pylint",
 					"r_language_server",
 					"yamlls",
 					"azure_pipelines_ls",
@@ -558,8 +559,9 @@ require("lazy").setup({
 			config = function()
 				require("lint").linters_by_ft = {
 					linters_by_ft = {
-						python = { "pyright" },
+						python = { "pyright", "pylint" },
 						-- python = { 'ruff' }, -- Use ruff for linting Python. Note also uncomment * line in pyright config
+						r = { "lintr" },
 						lua = { "luacheck" },
 						markdown = { "vale" },
 					},
@@ -729,7 +731,6 @@ local function lsp_or_tags_definition()
 	end, 100) -- 100ms delay, can be adjusted
 end
 
--- Unmap the default and map your new function
 vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition (LSP > Tags)" })
 
 -- TODO:
