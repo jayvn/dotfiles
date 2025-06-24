@@ -624,13 +624,11 @@ require("lazy").setup({
 			cmd = "CopilotChat",
 			opts = {
 
-				model = "gemini-2.5-pro",
+				model = "claude-3.7-sonnet-thought", --  "gemini-2.5-pro" early stop
 				auto_insert_mode = true, -- Enter insert mode when chat opens
-				show_help = false, -- Hide the help message in the chat buffer
-				question_header = " ", -- Icon for your questions
-				answer_header = "gemini ", -- Icon for Gemini's answers
+				question_header = "  ",
+				answer_header = " ",
 
-				-- 3. Window Layout
 				window = {
 					layout = "float",
 					relative = "editor",
