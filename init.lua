@@ -621,6 +621,7 @@ require("lazy").setup({
 				{ "github/copilot.vim" },
 				{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
 			},
+			cmd = "CopilotChat",
 			opts = {
 
 				model = "gemini-2.5-pro",
@@ -639,12 +640,53 @@ require("lazy").setup({
 					col = 0.5, -- Position on the right side
 					border = "rounded",
 				},
+				mappings = {
+					close = {
+						insert = "C-q", -- removes the default C-c mapping
+					},
+				},
+				prompts = {
+					-- Default prompts from your config...
+					-- Explain = {
+					-- 	prompt = "Write an explanation for the selected code as paragraphs of text.",
+					-- 	system_prompt = "COPILOT_EXPLAIN",
+					-- },
+					-- Review = {
+					-- 	prompt = "Review the selected code.",
+					-- 	system_prompt = "COPILOT_REVIEW",
+					-- },
+
+					-- Other default prompts...
+					Commit = {
+						prompt = "Write commit message for the change with commitizen convention. Keep the title under 50 characters and wrap message at 72 characters. Format as a gitcommit code block.",
+						context = "git:staged",
+					},
+				},
 			},
-			-- mappings = {
-			-- 	close = {
-			-- 		insert = "C-q", -- removes the default C-c mapping
-			-- 	},
-			-- },
+			keys = {
+				{
+					"<leader>aa",
+					function()
+						return require("CopilotChat").toggle()
+					end,
+					desc = "Toggle",
+					mode = { "n", "v" },
+				},
+				{
+					"<leader>ax",
+					function()
+						return require("CopilotChat").reset()
+					end,
+					desc = "Clear",
+					mode = { "n", "v" },
+				},
+				{
+					"<leader>ac",
+					":CopilotChatCommit<cr>",
+					desc = "Commit",
+					mode = { "n", "v" },
+				},
+			},
 			-- See Commands section for default commands if you want to lazy load on them
 		},
 
