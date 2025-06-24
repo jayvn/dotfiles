@@ -86,7 +86,7 @@ require("lazy").setup({
 			opts = {
 				ensure_installed = {
 					"pyright",
-					"pylint",
+					-- "pylint",
 					"r_language_server",
 					"yamlls",
 					"azure_pipelines_ls",
@@ -570,14 +570,14 @@ require("lazy").setup({
 		},
 
 		{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {}, event = "VeryLazy" }, -- TODO/WARN highlight
-		{
-			"olimorris/codecompanion.nvim", --copilot meets zig ?
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				"nvim-treesitter/nvim-treesitter",
-			},
-			-- cmd = { "CodeCompanion", "CodeCompanionOpen" },
-		},
+		-- {
+		-- 	"olimorris/codecompanion.nvim", --copilot meets zig ?
+		-- 	dependencies = {
+		-- 		"nvim-lua/plenary.nvim",
+		-- 		"nvim-treesitter/nvim-treesitter",
+		-- 	},
+		-- 	-- cmd = { "CodeCompanion", "CodeCompanionOpen" },
+		-- },
 		{
 			"NMAC427/guess-indent.nvim", -- newline indent
 			event = { "BufReadPre", "BufNewFile" },
@@ -614,6 +614,38 @@ require("lazy").setup({
 			config = function()
 				require("illuminate").configure({})
 			end,
+		},
+		{
+			"CopilotC-Nvim/CopilotChat.nvim",
+			dependencies = {
+				{ "github/copilot.vim" },
+				{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+			},
+			opts = {
+
+				model = "gemini-2.5-pro",
+				auto_insert_mode = true, -- Enter insert mode when chat opens
+				show_help = false, -- Hide the help message in the chat buffer
+				question_header = " ", -- Icon for your questions
+				answer_header = "gemini ", -- Icon for Gemini's answers
+
+				-- 3. Window Layout
+				window = {
+					layout = "float",
+					relative = "editor",
+					width = 0.5, -- 50% of editor width
+					height = 0.9, -- 90% of editor height
+					row = 0.05,
+					col = 0.5, -- Position on the right side
+					border = "rounded",
+				},
+			},
+			-- mappings = {
+			-- 	close = {
+			-- 		insert = "C-q", -- removes the default C-c mapping
+			-- 	},
+			-- },
+			-- See Commands section for default commands if you want to lazy load on them
 		},
 
 		-- Diagnostics / Trouble
@@ -737,3 +769,4 @@ vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition 
 --  File rename  with lsp
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should be ctrl - ] also when there's nothing else
+--  ysaw doesn't work to repeat with .
