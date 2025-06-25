@@ -817,10 +817,6 @@ end, {
 	desc = "Copy the full path of the current file to the clipboard",
 })
 
--- TODO
--- command! DeletePrintLines g/\.show()\|print/d
--- echo current file path
-
 vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition (LSP > Tags)" })
 
 -- TODO:
