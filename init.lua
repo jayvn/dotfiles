@@ -803,6 +803,24 @@ local function lsp_or_tags_definition()
 	end, 100) -- 100ms delay, can be adjusted
 end
 
+vim.api.nvim_create_user_command("DeletePrintLines", "g/\\.show()\\|print/d", {
+	force = true,
+	desc = "Delete all lines containing .show() or print",
+})
+
+vim.api.nvim_create_user_command("CurFilePath", function()
+	local file_path = vim.fn.expand("%")
+	vim.fn.setreg("+", file_path) -- Set the system clipboard register '+' to the file path
+	print("Copied to clipboard: " .. file_path)
+end, {
+	force = true,
+	desc = "Copy the full path of the current file to the clipboard",
+})
+
+-- TODO
+-- command! DeletePrintLines g/\.show()\|print/d
+-- echo current file path
+
 vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition (LSP > Tags)" })
 
 -- TODO:
