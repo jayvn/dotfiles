@@ -817,6 +817,68 @@ end, {
 	desc = "Copy the full path of the current file to the clipboard",
 })
 
+-- function to find and insert words from all tmux panes.
+local function pick_tmux_word()
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local actions = require("telescope.actions")
+	local conf = require("telescope.config").values
+
+	local cmd = [[tmux list-panes -s -F '#{pane_id}' | xargs -I {} tmux capture-pane -p -J -t {}]]
+
+	-- Asynchronously run the command to avoid freezing Neovim
+	vim.loop
+		.spawn("sh", {
+			args = { "-c", cmd },
+		}, function(code)
+			if code ~= 0 then
+				vim.notify("Error getting tmux pane content, tmux command failed.", vim.log.levels.ERROR)
+			end
+		end)
+		:on_stdout(function(err, data)
+			assert(not err, err)
+			if not data then
+				return
+			end
+
+			-- Process the output into a unique list of words
+			local words = {}
+			local unique_words = {}
+			for word in data:gmatch("%w+") do
+				if not unique_words[word] then
+					table.insert(words, word)
+					unique_words[word] = true
+				end
+			end
+
+			if #words == 0 then
+				vim.notify("No words found in tmux panes.", vim.log.levels.INFO)
+				return
+			end
+
+			-- Create and launch the Telescope picker
+			pickers
+				.new({}, {
+					prompt_title = "Words From Tmux Panes",
+					finder = finders.new_table({ results = words }),
+					sorter = conf.generic_sorter({}),
+					attach_mappings = function(prompt_bufnr)
+						actions.select_default:replace(function()
+							local selection = actions.get_selected_entry()
+							actions.close(prompt_bufnr)
+							if selection then
+								vim.api.nvim_put({ selection.value }, "c", false, true)
+							end
+						end)
+						return true
+					end,
+				})
+				:find()
+		end)
+end
+
+-- Create the keymap to trigger the function in Insert mode
+vim.keymap.set("i", "<C-u>", pick_tmux_word, { desc = "Pick a word from tmux panes" })
 vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition (LSP > Tags)" })
 
 -- TODO:
@@ -826,3 +888,4 @@ vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition 
 --  `ysaw` combination repeat with .
 -- Tabs should be able to be reordered.
 --  C v is now copy ? ( probably due to terminal config ? check with windows terminal
+--  why md files are folded auto.? open folds by default
