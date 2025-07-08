@@ -482,22 +482,15 @@ require("lazy").setup({
 			end,
 		},
 		{
-			"akinsho/bufferline.nvim",
-			version = "*",
-			dependencies = "nvim-tree/nvim-web-devicons",
-			config = function()
-				require("bufferline").setup({
-					options = {
-						-- show_buffer_close_icons = false,
-						show_buffer_icons = false,
-						offsets = {
-							{
-								filetype = "NvimTree",
-							},
-						},
-					},
-				})
+			"romgrk/barbar.nvim",
+			dependencies = { "nvim-tree/nvim-web-devicons" },
+			init = function()
+				vim.g.barbar_auto_setup = false
 			end,
+			opts = {
+				animation = true,
+			},
+			version = "^1.0.0",
 		},
 
 		{
@@ -746,6 +739,19 @@ end, { desc = "Edit Neovim config (init.lua)" })
 vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer", silent = true })
 vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "Previous buffer", silent = true })
 
+-- -- Barbar.nvim keymaps
+-- vim.keymap.set('n', '<leader>bb', '<Cmd>BufferOrderByBufferNumber<CR>', { desc = 'Sort buffers by buffer number' })
+-- vim.keymap.set('n', '<leader>bd', '<Cmd>BufferOrderByDirectory<CR>', { desc = 'Sort buffers by directory' })
+-- vim.keymap.set('n', '<leader>bl', '<Cmd>BufferOrderByLanguage<CR>', { desc = 'Sort buffers by language' })
+-- vim.keymap.set('n', '<leader>bw', '<Cmd>BufferOrderByWindowNumber<CR>', { desc = 'Sort buffers by window number' })
+
+-- vim.keymap.set('n', '<leader>bc', '<Cmd>BufferClose<CR>', { desc = 'Close current buffer' })
+
+-- -- Move buffer
+-- vim.keymap.set('n', '<A-,>', '<Cmd>BufferMovePrevious<CR>', { desc = 'Move buffer to the left' })
+-- vim.keymap.set('n', '<A-.>', '<Cmd>BufferMoveNext<CR>', { desc = 'Move buffer to the right' })
+
+
 -- Keep search direction consistent (n forward, N backward)
 vim.keymap.set(
 	"n",
@@ -885,5 +891,5 @@ vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition 
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should be ctrl - ] also when there's nothing else
 --  `ysaw` combination does not repeat with .
---	Tabs should be able to be reordered.
+--	Tabs should be able to be reordered. (DONE)
 --  why md files are folded auto.? open folds by default
