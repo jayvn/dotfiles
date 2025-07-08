@@ -513,6 +513,8 @@ require("lazy").setup({
 				)
 				-- builtin.lsp_workspace_symbols, doesn't work well cuz of lsp s
 				vim.keymap.set("n", "<leader>fst", builtin.treesitter, { desc = "Telescope Treesitter symbols" })
+				vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+				vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Telescope commands" })
 			end,
 		},
 		{ "folke/which-key.nvim", event = "VeryLazy" },
@@ -525,10 +527,7 @@ require("lazy").setup({
 			"nvim-treesitter/nvim-treesitter-context",
 			dependencies = { "nvim-treesitter/nvim-treesitter" },
 		},
-		-- {
-		-- 	"preservim/vim-markdown",
-		-- 	ft = { "markdown", "quarto" },
-		-- },
+		
 		-- lazy.nvim
 		{
 			"folke/noice.nvim",
