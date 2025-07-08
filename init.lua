@@ -532,11 +532,10 @@ require("lazy").setup({
 			"nvim-treesitter/nvim-treesitter-context",
 			dependencies = { "nvim-treesitter/nvim-treesitter" },
 		},
-
-		{
-			"preservim/vim-markdown",
-			ft = { "markdown", "quarto" },
-		},
+		-- {
+		-- 	"preservim/vim-markdown",
+		-- 	ft = { "markdown", "quarto" },
+		-- },
 		-- lazy.nvim
 		{
 			"folke/noice.nvim",
@@ -885,7 +884,6 @@ vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition 
 --  File rename  with lsp
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should be ctrl - ] also when there's nothing else
---  `ysaw` combination repeat with .
--- Tabs should be able to be reordered.
---  C v is now copy ? ( probably due to terminal config ? check with windows terminal
+--  `ysaw` combination does not repeat with .
+--	Tabs should be able to be reordered.
 --  why md files are folded auto.? open folds by default
