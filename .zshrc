@@ -7,17 +7,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
-# If  the PATH export and sourcing bash_aliases aren't placeed on top virtualenvwrapper.sh not found error is shown
 
-# export PATH="$HOME/.nvm/versions/node/v20.9.0/bin:$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$PATH"
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -38,9 +28,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -70,13 +57,10 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 # history-substring-search
 
-export NVM_LAZY_LOAD=true # Lazy load zsh-nvm
 plugins=(
   history-substring-search
   z
-  # virtualenvwrapper
   # zsh-syntax-highlighting
-  # zsh-nvm
   zsh-autosuggestions
   zsh-syntax-highlighting
   colorize
@@ -89,6 +73,12 @@ plugins=(
 
 DISABLE_AUTO_UPDATE="true"
 source $ZSH/oh-my-zsh.sh
+
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
+
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -116,7 +106,6 @@ export EDITOR='nvim'
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
   #alias dir='dir --color=auto'
   #alias vdir='vdir --color=auto'
 
@@ -125,20 +114,14 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -halF'
-alias la='ls -A'
-alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
+# sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 export CC=clang
 export CXX=clang++
 set -o vi
-
-export ANSIBLE_INVENTORY=~/ansible_hosts
 
 # bind UP and DOWN arrow keys
 zmodload zsh/terminfo
@@ -155,6 +138,7 @@ bindkey "^R" history-incremental-search-backward
 
 # [[ -n $TMUX ]] && alias vi="zsh ~/vim-tmux-open.zsh"
 
+# ----
 
 function _print_all_panes() {
   for pane_id in $(tmux list-panes -F '#{pane_id}'); do
@@ -177,9 +161,10 @@ _tmux_pane_words() {
 
 zle -N _tmux_pane_words
 bindkey '^U' _tmux_pane_words
+# ----
 
 # Define lazy conda aliases as an array in zsh syntax
-lazy_conda_aliases=('conda' 'Rscript' 'R' 'radian' 'x86_64-conda-linux-gnu-gcc' 'npm')
+lazy_conda_aliases=('conda' 'Rscript' 'R' 'radian' 'x86_64-conda-linux-gnu-gcc')
 
 load_conda() {
   # Unalias all the lazy conda aliases
@@ -220,6 +205,14 @@ done
 
 # export R_HOME="/home/jay/miniconda/bin/R"
 
-export SSL_CERT_FILE=~/zscaler_root_ca.crt
+# export SSL_CERT_FILE=~/zscaler_root_ca.crt
+# alias aider="/home/jay/miniconda/envs/aider-env/bin/aider"
 
-eval "$(direnv hook zsh)"
+eval "$(direnv hook zsh)" # direnv tool
+
+# bun completions
+[ -s "/home/jay/.bun/_bun" ] && source "/home/jay/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

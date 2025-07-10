@@ -108,21 +108,53 @@ export PLOTS_DEFAULT_BACKEND=PyPlot
 
 
 ## Node stuff
-# Add every binary that requires nvm, npm or node to run to an array of node globals
-# NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
-# NODE_GLOBALS+=("node")
-# NODE_GLOBALS+=("nvm")
-# 
-# # Lazy-loading nvm + npm on node globals call
-# load_nvm () {
-#   export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-#   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-# }
-# 
-# # Making node global trigger the lazy loading
-# for cmd in "${NODE_GLOBALS[@]}"; do
-#   eval "${cmd}(){ unset -f ${NODE_GLOBALS}; load_nvm; ${cmd} \$@ }"
-# done
+
+function extract() {
+  for archive in "$@"; do
+    if [ -f "$archive" ] ; then
+      case "$archive" in
+        *.tar.bz2) tar xvjf "$archive" ;;
+        *.tar.gz)  tar xvzf "$archive" ;;
+        *.tar)     tar xvf "$archive"  ;;
+        *.zip)     unzip "$archive"    ;;
+        *.gz)      gunzip "$archive"   ;;
+        *.rar)     unrar x "$archive"  ;;
+        *) echo "$archive cannot be extracted via extract()" ;;
+      esac
+    else
+      echo "$archive is not a valid file"
+    fi
+  done
+}
+alias myip='curl ifconfig.me'
+
+alias cp='cp -i'  # prompt for confirmation before overwriting or deleting files.
+alias mv='mv -i'
+alias rm='rm -i'
+
+alias ls='eza --icons'
+alias ll='eza -l --git' # long format with git status
+alias la='eza -la --git' # long format, all files
+alias tree='eza --tree --git-ignore'
+alias l='eza -lah'
+
+# Runs pytest, captures output, and opens it in Vi with specific settings.
+pytestvi() {
+    local outfile="1.out.py"
+    python -m unittest "$@" > "$outfile" 2>&1;
+    # pytest -s "$@" > "$outfile" 2>&1;
+    vi -c 'lua vim.diagnostic.config({virtual_text=false})' \
+       -c 'setlocal nowrap' \
+       -c 'AnsiEsc' \
+       -c 'setlocal filetype=python' \
+       "$outfile"
+}
 
 
-source /usr/share/bash-completion/completions/flatpak
+# source /usr/share/bash-completion/completions/flatpak
+
+alias r="radian"
+alias bat="batcat -p"
+alias lg=lazygit
+
+export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
