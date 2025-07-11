@@ -71,7 +71,7 @@ Plug 'editorconfig/editorconfig-vim'
 " Plug 'JuliaEditorSupport/deoplete-julia' Deprecated for 0.6
 
 " Tags
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags' # warn- auto runs ctags
 " Plug 'majutsushi/tagbar'
 " Plug 'vim-scripts/taglist.vim'
 Plug 'romainl/vim-cool'
@@ -365,21 +365,9 @@ let g:vim_markdown_folding_disabled=1
 
 "nmap <CR> li<CR><esc>k$
 
-"ctags stuff
-nmap <Leader>tf :call CtagsFind(expand('<cword>'))<CR>
-" use <C-]> instead
-com! -nargs=+ Tf :call CtagsFind("<args>")
-" split window and search for tag
-
 nmap <Leader>ts :exe('stj '.expand('<cword>'))<CR>
 
 let cmdline_follow_colorscheme = 1
-
-" open new tab and search for tag
-fun! CtagsFind(keyword)
-    tabe
-    exe "tj ".a:keyword
-endfunction
 nmap <Leader>id o<Esc>:r! date "+\%Y-\%m-\%d"<CR>kJA** [jayakrishnan.v]<Esc>I- **<Esc>A Initial Version<Esc>
 noremap <expr> n (v:searchforward ? 'n' : 'N')
 noremap <expr> N (v:searchforward ? 'N' : 'n')

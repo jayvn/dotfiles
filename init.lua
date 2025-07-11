@@ -885,6 +885,12 @@ end
 vim.keymap.set("i", "<C-u>", pick_tmux_word, { desc = "Pick a word from tmux panes" })
 vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition (LSP > Tags)" })
 
+
+-- Find ctag for word under cursor in a new tab
+vim.keymap.set("n", "<Leader>tf", function()
+  vim.cmd("tabnew | tjump " .. vim.fn.expand("<cword>"))
+end, { desc = "Find ctag for word under cursor" })
+
 -- TODO:
 --  File rename  with lsp
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
