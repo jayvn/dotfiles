@@ -1,10 +1,12 @@
 alias rm="rm -i"
 
 alias g=git
-alias gs="git branch -a | cat && git status"
+# alias gs="git branch -a | cat && git status"
+alias gs="git status"
 alias ga="git add . -A"
 alias gdH="git diff --color-words=\"[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+\" HEAD"
-alias gd="git diff --color-words "
+# alias gd="git diff --color-words "
+alias gd="git ddiff"
 alias grb="g rb --root -i"
 
 # alias mysql=mycli
@@ -154,7 +156,7 @@ pytestvi() {
 # source /usr/share/bash-completion/completions/flatpak
 
 alias r="radian"
-alias bat="batcat -p"
+alias cat="batcat -p"
 alias lg=lazygit
 
 export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs

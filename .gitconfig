@@ -8,18 +8,25 @@
         hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
         l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
         co = checkout
-        ci = commit -m
         a = add . -A
         cm = commit -m
         d = diff
         rb = rebase
         b = branch
+        sw = switch
         pl = pull
         ps = push
         h = !git --no-pager log --abbrev-commit --pretty=oneline --max-count=10
         br = branch
         bl=log --remotes=origin --graph --decorate --oneline --simplify-by-decoration
         who=shortlog -sn --
+        pickaxe=log -p -S --debug
+        brp = !git branch --merged main | grep -vE '^\\*? *(main)$'
+        # Difftastic aliases, so `git dlog` is `git log` with difftastic and so on.
+        dlog = -c diff.external=difft log --ext-diff
+        dshow = -c diff.external=difft show --ext-diff
+        ddiff = -c diff.external=difft diff
+
 [column]
         ui = auto
 [branch]
