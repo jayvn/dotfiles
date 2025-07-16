@@ -710,6 +710,9 @@ require("lazy").setup({
 })
 
 vim.cmd([[colorscheme gruvbox]])
+-- Make the editor background transparent
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }) -- For floating windows like LSP hover
 
 vim.keymap.set(
 	"n",
