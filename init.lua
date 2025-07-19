@@ -85,7 +85,7 @@ require("lazy").setup({
 			tag = "v2.0.0-rc.1",
 			opts = {
 				ensure_installed = {
-					"pyright",
+					"basedpyright", -- Python LSP Server with willRenameFiles support
 					-- "pylint",
 					"r_language_server",
 					"yamlls",
@@ -226,17 +226,18 @@ require("lazy").setup({
 					desc = "LSP: Disable hover capability from Ruff",
 				})
 
-				lspconfig.pyright.setup({
+				lspconfig.basedpyright.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 					settings = {
-						pyright = {
-							disableOrganizeImports = true,
+						basedpyright = {
+							typeCheckingMode = "basic",
 						},
 						python = {
 							analysis = {
-								-- Ignore all files for analysis to exclusively use Ruff for linting
-								-- ignore = { '*' },
+								autoSearchPaths = true,
+								useLibraryCodeForTypes = true,
+								diagnosticMode = "openFilesOnly",
 							},
 						},
 					},
