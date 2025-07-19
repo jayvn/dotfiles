@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
 			{ out, "WarningMsg" },
-			{ "\nPress any key to exit..." },
+			"\nPress any key to exit...",
 		}, true, {})
 		vim.fn.getchar()
 		os.exit(1)
@@ -379,7 +379,22 @@ require("lazy").setup({
 
 		-- Utils / Tools
 		{ "godlygeek/tabular", cmd = { "Tabularize", "Tab" } },
-		{ "echasnovski/mini.surround", event = "VeryLazy" },
+		{
+			"echasnovski/mini.surround",
+			event = "VeryLazy",
+			config = function()
+				require("mini.surround").setup({
+					mappings = {
+						add = "ys",
+						delete = "ds",
+						replace = "cs",
+					},
+				})
+
+				-- Make special mapping for "add surrounding for line"
+				vim.api.nvim_set_keymap("n", "yss", "ys_", { noremap = false })
+			end,
+		},
 		{ "tpope/vim-commentary", event = "VeryLazy" },
 		{ "romainl/vim-cool", event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
 		{ "tpope/vim-fugitive", event = "VeryLazy", cmd = "Git" },
@@ -737,6 +752,8 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>ev", function()
 	vim.cmd.edit(vim.fn.stdpath("config") .. "/init.lua")
 end, { desc = "Edit Neovim config (init.lua)" })
+
+-- vim.keymap.set("n", "<leader>sv", function() -- Not supported with lazy nvim, sorry
 
 -- Buffer navigation shortcuts
 vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer", silent = true })
