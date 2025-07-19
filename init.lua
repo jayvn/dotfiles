@@ -379,7 +379,7 @@ require("lazy").setup({
 
 		-- Utils / Tools
 		{ "godlygeek/tabular", cmd = { "Tabularize", "Tab" } },
-		{ "tpope/vim-surround", event = "VeryLazy" },
+		{ "mini.surround", event = "VeryLazy" },
 		{ "tpope/vim-commentary", event = "VeryLazy" },
 		{ "romainl/vim-cool", event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
 		{ "tpope/vim-fugitive", event = "VeryLazy", cmd = "Git" },
@@ -528,7 +528,7 @@ require("lazy").setup({
 			"nvim-treesitter/nvim-treesitter-context",
 			dependencies = { "nvim-treesitter/nvim-treesitter" },
 		},
-		
+
 		-- lazy.nvim
 		{
 			"folke/noice.nvim",
@@ -754,7 +754,6 @@ vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "Previous buffer", silent =
 -- vim.keymap.set('n', '<A-,>', '<Cmd>BufferMovePrevious<CR>', { desc = 'Move buffer to the left' })
 -- vim.keymap.set('n', '<A-.>', '<Cmd>BufferMoveNext<CR>', { desc = 'Move buffer to the right' })
 
-
 -- Keep search direction consistent (n forward, N backward)
 vim.keymap.set(
 	"n",
@@ -889,16 +888,13 @@ end
 vim.keymap.set("i", "<C-u>", pick_tmux_word, { desc = "Pick a word from tmux panes" })
 vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition (LSP > Tags)" })
 
-
 -- Find ctag for word under cursor in a new tab
 vim.keymap.set("n", "<Leader>tf", function()
-  vim.cmd("tabnew | tjump " .. vim.fn.expand("<cword>"))
+	vim.cmd("tabnew | tjump " .. vim.fn.expand("<cword>"))
 end, { desc = "Find ctag for word under cursor" })
 
 -- TODO:
---  File rename  with lsp
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
---  gr should be ctrl - ] also when there's nothing else
---  `ysaw` combination does not repeat with .
---	Tabs should be able to be reordered. (DONE)
---  why md files are folded auto.? open folds by default
+--  gr should also be ctrl - ] when there's nothing else
+--  `ysaw`/`ysw` combination does not repeat with . (TESTING FIX)
+--	Tabs ordering isn't intuitive ]b doesn't go to the right buffer. (DONE)
