@@ -755,9 +755,9 @@ end, { desc = "Edit Neovim config (init.lua)" })
 
 -- vim.keymap.set("n", "<leader>sv", function() -- Not supported with lazy nvim, sorry
 
--- Buffer navigation shortcuts
-vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "Next buffer", silent = true })
-vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "Previous buffer", silent = true })
+-- Buffer navigation shortcuts 
+vim.keymap.set("n", "]b", "<Cmd>BufferNext<CR>", { desc = "Next buffer", silent = true })
+vim.keymap.set("n", "[b", "<Cmd>BufferPrevious<CR>", { desc = "Previous buffer", silent = true })
 
 -- -- Barbar.nvim keymaps
 -- vim.keymap.set('n', '<leader>bb', '<Cmd>BufferOrderByBufferNumber<CR>', { desc = 'Sort buffers by buffer number' })
@@ -881,4 +881,3 @@ end, { desc = "Find ctag for word under cursor" })
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should also be ctrl - ] when there's nothing else
 --  `ysaw`/`ysw` combination does not repeat with . (TESTING FIX)
---	Tabs ordering isn't intuitive ]b doesn't go to the right buffer. (DONE)
