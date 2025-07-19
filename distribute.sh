@@ -1,4 +1,17 @@
 #!/bin/bash
+# nfs-common nfs-kernel-server 
+
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv tool install neovim radian
+
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt update
+
+sudo apt install asciinema neovim cmake clang curl tmux tree ctags ripgrep htop
+
+#vi -p ~/.byobu/keybindings.tmux ~/.tmux.conf
+# f9 to set c-b as esc seq
+#
 loc=`pwd`
 filelocs=(
     .cvsignore
@@ -14,16 +27,15 @@ filelocs=(
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 #===
-# steam deck flatpak nvim
-flatpak install neovim
-curl -fLo ~/.var/app/io.neovim.nvim/config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-ln -s ~/.vimrc ~/.var/app/io.neovim.nvim/config/nvim/init.vim
-ln -s ${loc}/nvim ${loc}/.local/bin/nvim
+# steam deck nix pkg nvim
+curl -L https://nixos.org/nix/install | sh
+nix-env -i neovim
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
 #===
 
 # --- Sometimes you have conda installed stuff that just isn't picked up by other tools (neovim in these cases)
-ln -s /home/jay/miniconda/bin/radian /home/jay/.local/bin/
-ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/
+# ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/ # uv tool install nodeenv? bun? 
 # ---
 
 #TODO: If .vim does not exist, create it
@@ -38,8 +50,9 @@ sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/to
 
 # Add zsh plugins
 # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# is too much , don't use it
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
-git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
+# git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
@@ -49,5 +62,3 @@ done
 
 # Under System Preferences > Keyboard Layout > Options... > Ctrl key position, I checked 'Caps Lock as Ctrl'.
 # xcape -e 'Control_L=Escape'
-
-pip3 -U install virtualenvwrapper
