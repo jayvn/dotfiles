@@ -759,6 +759,14 @@ end, { desc = "Edit Neovim config (init.lua)" })
 vim.keymap.set("n", "]b", "<Cmd>BufferNext<CR>", { desc = "Next buffer", silent = true })
 vim.keymap.set("n", "[b", "<Cmd>BufferPrevious<CR>", { desc = "Previous buffer", silent = true })
 
+-- Tab navigation shortcuts
+vim.keymap.set("n", "]t", "<Cmd>tabnext<CR>", { desc = "Next tab", silent = true })
+vim.keymap.set("n", "[t", "<Cmd>tabprevious<CR>", { desc = "Previous tab", silent = true })
+
+-- Quickfix navigation shortcuts
+vim.keymap.set("n", "]q", "<Cmd>cnext<CR>", { desc = "Next quickfix item", silent = true })
+vim.keymap.set("n", "[q", "<Cmd>cprevious<CR>", { desc = "Previous quickfix item", silent = true })
+
 -- -- Barbar.nvim keymaps
 -- vim.keymap.set('n', '<leader>bb', '<Cmd>BufferOrderByBufferNumber<CR>', { desc = 'Sort buffers by buffer number' })
 -- vim.keymap.set('n', '<leader>bd', '<Cmd>BufferOrderByDirectory<CR>', { desc = 'Sort buffers by directory' })
