@@ -138,7 +138,8 @@ alias ls='eza --icons'
 alias ll='eza -l --git' # long format with git status
 alias la='eza -la --git' # long format, all files
 alias tree='eza --tree --git-ignore'
-alias l='eza -lah'
+alias l='eza -lah --icons --git --group-directories-first --time-style=relative --sort=modified --accessed --hyperlink --color-scale'
+
 
 # Runs pytest, captures output, and opens it in Vi with specific settings.
 pytestvi() {
