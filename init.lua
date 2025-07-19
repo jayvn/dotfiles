@@ -379,7 +379,7 @@ require("lazy").setup({
 
 		-- Utils / Tools
 		{ "godlygeek/tabular", cmd = { "Tabularize", "Tab" } },
-		{ "mini.surround", event = "VeryLazy" },
+		{ "echasnovski/mini.surround", event = "VeryLazy" },
 		{ "tpope/vim-commentary", event = "VeryLazy" },
 		{ "romainl/vim-cool", event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
 		{ "tpope/vim-fugitive", event = "VeryLazy", cmd = "Git" },
@@ -531,7 +531,7 @@ require("lazy").setup({
 
 		-- lazy.nvim
 		{
-			"folke/noice.nvim",
+			"folke/noice.nvim", -- messages UI (minimal )
 			event = "VeryLazy",
 			opts = {
 				presets = {
@@ -607,78 +607,78 @@ require("lazy").setup({
 				require("illuminate").configure({})
 			end,
 		},
-		{
-			"CopilotC-Nvim/CopilotChat.nvim",
-			dependencies = {
-				{ "github/copilot.vim" },
-				{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-			},
-			cmd = "CopilotChat",
-			opts = {
+		-- {
+		-- 	"CopilotC-Nvim/CopilotChat.nvim",
+		-- 	dependencies = {
+		-- 		{ "github/copilot.vim" },
+		-- 		{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+		-- 	},
+		-- 	cmd = "CopilotChat",
+		-- 	opts = {
 
-				model = "claude-3.7-sonnet-thought", --  "gemini-2.5-pro" early stop
-				auto_insert_mode = true, -- Enter insert mode when chat opens
-				question_header = "  ",
-				answer_header = " ",
+		-- 		model = "claude-3.7-sonnet-thought", --  "gemini-2.5-pro" early stop
+		-- 		auto_insert_mode = true, -- Enter insert mode when chat opens
+		-- 		question_header = "  ",
+		-- 		answer_header = " ",
 
-				window = {
-					layout = "float",
-					relative = "editor",
-					width = 0.5, -- 50% of editor width
-					height = 0.9, -- 90% of editor height
-					row = 0.05,
-					col = 0.5, -- Position on the right side
-					border = "rounded",
-				},
-				mappings = {
-					close = {
-						insert = "C-q", -- removes the default C-c mapping
-					},
-				},
-				prompts = {
-					-- Default prompts from your config...
-					-- Explain = {
-					-- 	prompt = "Write an explanation for the selected code as paragraphs of text.",
-					-- 	system_prompt = "COPILOT_EXPLAIN",
-					-- },
-					-- Review = {
-					-- 	prompt = "Review the selected code.",
-					-- 	system_prompt = "COPILOT_REVIEW",
-					-- },
+		-- 		window = {
+		-- 			layout = "float",
+		-- 			relative = "editor",
+		-- 			width = 0.5, -- 50% of editor width
+		-- 			height = 0.9, -- 90% of editor height
+		-- 			row = 0.05,
+		-- 			col = 0.5, -- Position on the right side
+		-- 			border = "rounded",
+		-- 		},
+		-- 		mappings = {
+		-- 			close = {
+		-- 				insert = "C-q", -- removes the default C-c mapping
+		-- 			},
+		-- 		},
+		-- 		prompts = {
+		-- 			-- Default prompts from your config...
+		-- 			-- Explain = {
+		-- 			-- 	prompt = "Write an explanation for the selected code as paragraphs of text.",
+		-- 			-- 	system_prompt = "COPILOT_EXPLAIN",
+		-- 			-- },
+		-- 			-- Review = {
+		-- 			-- 	prompt = "Review the selected code.",
+		-- 			-- 	system_prompt = "COPILOT_REVIEW",
+		-- 			-- },
 
-					-- Other default prompts...
-					Commit = {
-						prompt = "Write commit message for the change with commitizen convention. Keep the title under 50 characters and wrap message at 72 characters. Format as a gitcommit code block.",
-						context = "git:staged",
-					},
-				},
-			},
-			keys = {
-				{
-					"<leader>aa",
-					function()
-						return require("CopilotChat").toggle()
-					end,
-					desc = "Toggle",
-					mode = { "n", "v" },
-				},
-				{
-					"<leader>ax",
-					function()
-						return require("CopilotChat").reset()
-					end,
-					desc = "Clear",
-					mode = { "n", "v" },
-				},
-				{
-					"<leader>ac",
-					":CopilotChatCommit<cr>",
-					desc = "Commit",
-					mode = { "n", "v" },
-				},
-			},
-			-- See Commands section for default commands if you want to lazy load on them
-		},
+		-- 			-- Other default prompts...
+		-- 			Commit = {
+		-- 				prompt = "Write commit message for the change with commitizen convention. Keep the title under 50 characters and wrap message at 72 characters. Format as a gitcommit code block.",
+		-- 				context = "git:staged",
+		-- 			},
+		-- 		},
+		-- 	},
+		-- keys = {
+		-- 	{
+		-- 		"<leader>aa",
+		-- 		function()
+		-- 			return require("CopilotChat").toggle()
+		-- 		end,
+		-- 		desc = "Toggle",
+		-- 		mode = { "n", "v" },
+		-- 	},
+		-- 	{
+		-- 		"<leader>ax",
+		-- 		function()
+		-- 			return require("CopilotChat").reset()
+		-- 		end,
+		-- 		desc = "Clear",
+		-- 		mode = { "n", "v" },
+		-- 	},
+		-- 	{
+		-- 		"<leader>ac",
+		-- 		":CopilotChatCommit<cr>",
+		-- 		desc = "Commit",
+		-- 		mode = { "n", "v" },
+		-- 	},
+		-- },
+		-- -- See Commands section for default commands if you want to lazy load on them
+		-- },
 
 		-- Diagnostics / Trouble
 		{
@@ -824,64 +824,31 @@ end, {
 	desc = "Copy the full path of the current file to the clipboard",
 })
 
--- function to find and insert words from all tmux panes.
 local function pick_tmux_word()
-	local pickers = require("telescope.pickers")
-	local finders = require("telescope.finders")
-	local actions = require("telescope.actions")
-	local conf = require("telescope.config").values
-
-	local cmd = [[tmux list-panes -s -F '#{pane_id}' | xargs -I {} tmux capture-pane -p -J -t {}]]
-
-	-- Asynchronously run the command to avoid freezing Neovim
-	vim.loop
-		.spawn("sh", {
-			args = { "-c", cmd },
-		}, function(code)
-			if code ~= 0 then
-				vim.notify("Error getting tmux pane content, tmux command failed.", vim.log.levels.ERROR)
+	local words, seen = {}, {}
+	for _, line in
+		ipairs(vim.fn.systemlist([[tmux list-panes -s -F '#{pane_id}' | xargs -I {} tmux capture-pane -p -J -t {}]]))
+	do
+		for word in line:gmatch("%w+") do
+			if not seen[word] then
+				words[#words + 1], seen[word] = word, true
 			end
-		end)
-		:on_stdout(function(err, data)
-			assert(not err, err)
-			if not data then
-				return
-			end
-
-			-- Process the output into a unique list of words
-			local words = {}
-			local unique_words = {}
-			for word in data:gmatch("%w+") do
-				if not unique_words[word] then
-					table.insert(words, word)
-					unique_words[word] = true
-				end
-			end
-
-			if #words == 0 then
-				vim.notify("No words found in tmux panes.", vim.log.levels.INFO)
-				return
-			end
-
-			-- Create and launch the Telescope picker
-			pickers
-				.new({}, {
-					prompt_title = "Words From Tmux Panes",
-					finder = finders.new_table({ results = words }),
-					sorter = conf.generic_sorter({}),
-					attach_mappings = function(prompt_bufnr)
-						actions.select_default:replace(function()
-							local selection = actions.get_selected_entry()
-							actions.close(prompt_bufnr)
-							if selection then
-								vim.api.nvim_put({ selection.value }, "c", false, true)
-							end
-						end)
-						return true
-					end,
-				})
-				:find()
-		end)
+		end
+	end
+	require("telescope.pickers")
+		.new({}, {
+			finder = require("telescope.finders").new_table({ results = words }),
+			sorter = require("telescope.config").values.generic_sorter({}),
+			attach_mappings = function(bufnr)
+				require("telescope.actions").select_default:replace(function()
+					local sel = require("telescope.actions.state").get_selected_entry()
+					require("telescope.actions").close(bufnr)
+					vim.api.nvim_put({ sel.value }, "c", false, true)
+				end)
+				return true
+			end,
+		})
+		:find()
 end
 
 -- Create the keymap to trigger the function in Insert mode
