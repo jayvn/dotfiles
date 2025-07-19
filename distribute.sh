@@ -58,5 +58,10 @@ for i in ${filelocs[@]}; do
     ln -sf ${loc}/$i ~/$i
 done
 
+# Map Caps Lock to Ctrl
 # Under System Preferences > Keyboard Layout > Options... > Ctrl key position, I checked 'Caps Lock as Ctrl'.
 # xcape -e 'Control_L=Escape'
+#
+### Within vim, i can do 
+# : LspInstall pyright r_language_server
+# : MasonInstall black
