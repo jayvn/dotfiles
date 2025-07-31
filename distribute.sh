@@ -14,7 +14,7 @@ sudo apt install asciinema neovim cmake clang curl tmux tree ctags ripgrep htop
 #
 loc=`pwd`
 filelocs=(
-    .cvsignore
+    .gitignore_global
     vim-tmux-open.zsh
     # .muttrc
     .bash_aliases

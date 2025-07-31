@@ -20,6 +20,7 @@ alias firefox="flatpak run org.mozilla.firefox"
 
 # alias wd="cd ~/ev/"
 alias py=python3
+alias python=python3
 # alias vpn=/opt/cisco/anyconnect/bin/vpn
 # alias iju='jupyter console --ZMQTerminalInteractiveShell.editing_mode=vi \
 #            --kernel=julia-0.6'
