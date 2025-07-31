@@ -386,19 +386,11 @@ require("lazy").setup({
 		-- Utils / Tools
 		{ "godlygeek/tabular", cmd = { "Tabularize", "Tab" } },
 		{
-			"echasnovski/mini.surround",
+			"kylechui/nvim-surround",
+			version = "*",
 			event = "VeryLazy",
 			config = function()
-				require("mini.surround").setup({
-					mappings = {
-						add = "ys",
-						delete = "ds",
-						replace = "cs",
-					},
-				})
-
-				-- Make special mapping for "add surrounding for line"
-				vim.api.nvim_set_keymap("n", "yss", "ys_", { noremap = false })
+				require("nvim-surround").setup({})
 			end,
 		},
 		{ "tpope/vim-commentary", event = "VeryLazy" },
@@ -761,7 +753,7 @@ end, { desc = "Edit Neovim config (init.lua)" })
 
 -- vim.keymap.set("n", "<leader>sv", function() -- Not supported with lazy nvim, sorry
 
--- Buffer navigation shortcuts 
+-- Buffer navigation shortcuts
 vim.keymap.set("n", "]b", "<Cmd>BufferNext<CR>", { desc = "Next buffer", silent = true })
 vim.keymap.set("n", "[b", "<Cmd>BufferPrevious<CR>", { desc = "Previous buffer", silent = true })
 
@@ -894,4 +886,3 @@ end, { desc = "Find ctag for word under cursor" })
 -- TODO:
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should also be ctrl - ] when there's nothing else
---  `ysaw`/`ysw` combination does not repeat with . (TESTING FIX)
