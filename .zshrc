@@ -52,7 +52,6 @@ COMPLETION_WAITING_DOTS="true"
 
 plugins=(
   history-substring-search
-  z
   # zsh-syntax-highlighting
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -203,6 +202,7 @@ eval "$(direnv hook zsh)" # direnv tool
 
 # bun completions
 [ -s "/home/jay/.bun/_bun" ] && source "/home/jay/.bun/_bun"
+eval "$(zoxide init zsh)"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
