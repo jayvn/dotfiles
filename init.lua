@@ -93,6 +93,7 @@ require("lazy").setup({
 					"jsonls",
 					"lua_ls",
 					"ruff", -- Add ruff to ensure it's installed by Mason
+					"rust_analyzer", -- Rust LSP Server
 				},
 			},
 			config = function(_, opts)
@@ -302,6 +303,7 @@ require("lazy").setup({
 						},
 					},
 				})
+					capabilities = capabilities,
 				-- linting disable
 				-- lspconfig.ruff.setup({
 				--   capabilities = capabilities,
@@ -324,7 +326,7 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = { "python", "lua", "vim", "r", "bash", "yaml", "markdown" },
+					ensure_installed = { "python", "lua", "vim", "r", "bash", "yaml", "markdown", "rust" },
 					highlight = {
 						enable = true,
 						additional_vim_regex_highlighting = false,
