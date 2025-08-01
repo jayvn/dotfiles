@@ -7,14 +7,19 @@ uv tool install neovim radian
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 
-sudo apt install asciinema neovim cmake clang curl tmux tree universal-ctags htop
+sudo apt install asciinema neovim cmake clang curl tmux tree universal-ctags htop lazygit 
 
 cargo install --locked yazi-fm yazi-cli
-cargo install --locked nu\ # shell+ csv view sort, etc
-                        difftastic \ # git diff
-                        zoxide \ # z search instead of cd
-                        ripgrep\ # rg search
-                        tlrc # tldr for commands
+cargo install --locked nu difftastic zoxide ripgrep tlrc bat bottom
+#                         nu # shell+ csv view sort, etc
+#                         difftastic  # git diff
+#                         zoxide  # z search instead of cd
+#                         ripgrep # rg search
+#                         tlrc # tldr for commands
+#                         bat is like cat
+#                         bottom is like top
+#                         sk is like fzf
+
 # f9 to set c-b as esc seq
 #
 loc=`pwd`
@@ -39,7 +44,9 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim
 #===
 
 # --- Sometimes you have conda installed stuff that just isn't picked up by other tools (neovim in these cases)
-# ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/ # uv tool install nodeenv? bun? 
+# use bun instead of nodejs
+# --ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/ # uv tool install nodeenv? ? 
+#
 # ---
 
 #TODO: If .vim does not exist, create it
