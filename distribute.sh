@@ -7,9 +7,14 @@ uv tool install neovim radian
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 
-sudo apt install asciinema neovim cmake clang curl tmux tree ctags ripgrep htop
+sudo apt install asciinema neovim cmake clang curl tmux tree universal-ctags htop
 
-#vi -p ~/.byobu/keybindings.tmux ~/.tmux.conf
+cargo install --locked yazi-fm yazi-cli
+cargo install --locked nu\ # shell+ csv view sort, etc
+                        difftastic \ # git diff
+                        zoxide \ # z search instead of cd
+                        ripgrep\ # rg search
+                        tlrc # tldr for commands
 # f9 to set c-b as esc seq
 #
 loc=`pwd`
