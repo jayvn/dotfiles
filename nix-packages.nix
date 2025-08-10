@@ -6,6 +6,7 @@ pkgs.buildEnv {
     bun
     clang
     shfmt
+    bat
     direnv
     eza
     difftastic

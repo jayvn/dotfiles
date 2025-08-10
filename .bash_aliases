@@ -110,7 +110,6 @@ pytestvi() {
 # source /usr/share/bash-completion/completions/flatpak
 
 alias r="radian"
-alias cat="batcat -p"
 alias lg=lazygit
 
 export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
