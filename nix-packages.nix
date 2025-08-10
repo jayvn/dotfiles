@@ -3,27 +3,28 @@
 pkgs.buildEnv {
   name = "my-packages";
   paths = with pkgs; [
+    # zsh # not doing this cuz everyone looks at /bin/zsh
+    bat
+    btop
     bun
     clang
-    shfmt
-    bat
-    firefox
+    difftastic
     direnv
     eza
-    tmux
-    vim
-    # zsh # not doing this cuz everyone looks at /bin/zsh
-    ripgrep
-    btop
-    zoxide
-    difftastic
+    firefox
+    fzf
     lazygit
     neovim
     openblas
+    ripgrep
     ruff
+    shfmt
+    tmux
     universal-ctags
+    vim
     vscode
     yazi
     zig
+    zoxide
   ];
 }
