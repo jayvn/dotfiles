@@ -6,7 +6,7 @@ export ZSH=~/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 # "dogenpunk","Soliah","awesomepanda","agnoster","amuse", "fino", powerlevel10k/powerlevel10k"
-ZSH_THEME="awesomepanda" # 
+ZSH_THEME="awesomepanda" #
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -56,25 +56,18 @@ plugins=(
 )
 
 # User configuration
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
 
 export EDITOR='nvim'
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
 # fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -88,7 +81,6 @@ export EDITOR='nvim'
 
 # Add an "alert" alias for long running commands.  Use like so:
 # sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 export CC=clang
 export CXX=clang++

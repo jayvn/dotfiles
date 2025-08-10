@@ -6,10 +6,8 @@ alias gd="git ddiff"
 alias grb="g rb --root -i"
 
 # alias mysql=mycli
-alias t="tree"
 alias vi=nvim
 
-# alias wd="cd ~/ev/"
 alias py=python3
 alias ag='grep -Rn'
 gitclean() {
@@ -41,10 +39,9 @@ replacetext() {
 #   history | awk '{print $2}' | sort | uniq -c | sort -nr | head
 # }
 
-alias tgz='tar -zxvf'
-alias tbz='tar -jxvf'
-export PATH=$PATH:~/.local/bin # For pip installed packages
-export PATH=$PATH:/usr/bin     # For pip installed packages
+# Add an "alert" alias for long running commands.  Use like so:
+# sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # When using nix package manager and want to load it in start menu
 # export XDG_DATA_DIRS="expand(~)/.nix-profile/share"
@@ -73,11 +70,11 @@ alias cp='cp -i' # prompt for confirmation before overwriting or deleting files.
 alias mv='mv -i'
 alias rm='rm -i'
 
-alias ls='eza --icons'
+alias l='eza --icons'
 alias ll='eza -l --git'  # long format with git status
 alias la='eza -la --git' # long format, all files
 alias tree='eza --tree --git-ignore'
-alias l='eza -lah --icons --git --group-directories-first --time-style=relative --sort=modified --accessed --hyperlink --color-scale'
+alias lfull='eza -lah --icons --git --group-directories-first --time-style=relative --sort=modified --accessed --hyperlink --color-scale'
 
 # Runs pytest, captures output, and opens it in Vi with specific settings.
 pytestvi() {

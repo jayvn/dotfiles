@@ -26,5 +26,8 @@ pkgs.buildEnv {
     yazi
     zig
     zoxide
+    # zellig
+    atuin
+    nushell
   ];
 }

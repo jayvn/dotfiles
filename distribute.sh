@@ -56,8 +56,9 @@ ln -sf ${loc}/init.lua $XDG_CONFIG_HOME/nvim/init.lua
 curl -L https://nixos.org/nix/install | sh
 nix-env -if nix-packages.nix
 
-# --- Sometimes you have conda installed stuff that just isn't picked up by other tools (neovim in these cases)
-# ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/
+# --- Sometimes you have installed stuff that just isn't picked up by other tools (neovim in these cases)
+# ln -s $(which bun) ~/.bun/bin/node
+# atuin??
 # ---
 
 # ZSH
