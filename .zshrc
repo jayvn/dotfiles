@@ -17,7 +17,7 @@ ZSH_THEME="awesomepanda" # powerlevel10k/powerlevel10k"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -56,7 +56,6 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   colorize
-  # zsh-vi-mode
 )
 
 # User configuration
@@ -132,78 +131,16 @@ bindkey "^R" history-incremental-search-backward
 
 # ----
 
-function _print_all_panes() {
-  for pane_id in $(tmux list-panes -F '#{pane_id}'); do
-    tmux capture-pane -p -J -S 0 -E - -t "$pane_id" | tr ' ' '\n' | sort -u | rg '[a-zA-Z0-9]+'
-  done
-}
-
-_tmux_pane_words() {
-  local current_word="${LBUFFER##* }"
-  local new_rbuffer="${RBUFFER/#[^ ]##/}"
-  local prompt="${LBUFFER% *} ␣ $new_rbuffer "
-
-  local selected_word=$(_print_all_panes | fzf --query="$current_word" --prompt="$prompt" --height=20 --layout=reverse --no-sort --print-query | tail -n1)
-  local new_lbuffer="${LBUFFER% *} $selected_word"
-  BUFFER="$new_lbuffer$new_rbuffer"
-  CURSOR="${#${new_lbuffer}}"
-
-  zle redisplay
-}
-
-zle -N _tmux_pane_words
-bindkey '^U' _tmux_pane_words
-# ----
-
-# Define lazy conda aliases as an array in zsh syntax
-lazy_conda_aliases=('conda' 'Rscript' 'R' 'radian' 'x86_64-conda-linux-gnu-gcc')
-
-load_conda() {
-  # Unalias all the lazy conda aliases
-  for lazy_conda_alias in "${lazy_conda_aliases[@]}"
-  do
-    unalias $lazy_conda_alias 2>/dev/null
-  done
-
-  __conda_prefix="$HOME/.miniconda" # Set your conda Location
-
-  # >>> conda initialize >>>
-  __conda_setup="$('/home/jay/miniconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-  else
-    if [ -f "/home/jay/miniconda/etc/profile.d/conda.sh" ]; then
-      # . "/home/jay/miniconda/etc/profile.d/conda.sh"  # commented out by conda initialize
-    else
-      # export PATH="/home/jay/miniconda/bin:$PATH"  # commented out by conda initialize
-    fi
-  fi
-  unset __conda_setup
-  # <<< conda initialize <<<
-
-  unset __conda_prefix
-  unset -f load_conda
-}
-
-# Create the lazy loading aliases
-for lazy_conda_alias in "${lazy_conda_aliases[@]}"
-do
-  alias $lazy_conda_alias="load_conda && $lazy_conda_alias"
-done
 
 
 # export R_HOME="/home/jay/miniconda/bin/R"
 
 # export SSL_CERT_FILE=~/zscaler_root_ca.crt
-# alias aider="/home/jay/miniconda/envs/aider-env/bin/aider"
 
-eval "$(direnv hook zsh)" # direnv tool
-# eval "$(starship init zsh)"
 
 # bun completions
 [ -s "/home/jay/.bun/_bun" ] && source "/home/jay/.bun/_bun"
 eval "$(zoxide init zsh)"
 
 # bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+eval "$(direnv hook zsh)"
