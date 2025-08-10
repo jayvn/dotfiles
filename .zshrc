@@ -5,8 +5,8 @@ export ZSH=~/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-# ZSH_THEME="dogenpunk","Soliah","awesomepanda","agnoster","amuse", "fino"
-ZSH_THEME="awesomepanda" # powerlevel10k/powerlevel10k"
+# "dogenpunk","Soliah","awesomepanda","agnoster","amuse", "fino", powerlevel10k/powerlevel10k"
+ZSH_THEME="awesomepanda" # 
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -51,7 +51,6 @@ COMPLETION_WAITING_DOTS="true"
 
 plugins=(
   history-substring-search
-  # zsh-syntax-highlighting
   zsh-autosuggestions
   zsh-syntax-highlighting
   colorize
@@ -79,9 +78,6 @@ export EDITOR='nvim'
 #   export EDITOR='mvim'
 # fi
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -101,8 +97,8 @@ set -o vi
 
 # bind UP and DOWN arrow keys
 zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
+# bindkey "$terminfo[kcuu1]" history-substring-search-up
+# bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # bind k and j for VI mode
 # bindkey -M vicmd 'k' history-substring-search-up
