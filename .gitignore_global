@@ -21,3 +21,4 @@ __pycache__
 *.jldws
 node_modules/*
 .ipynb_checkpoints/
+.claude
