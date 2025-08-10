@@ -120,9 +120,8 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # export SSL_CERT_FILE=~/zscaler_root_ca.crt
 
-# bun completions
 [ -s "/home/jay/.bun/_bun" ] && source "/home/jay/.bun/_bun"
-eval "$(zoxide init zsh)"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# bun
+# Direnv integration
 eval "$(direnv hook zsh)"
