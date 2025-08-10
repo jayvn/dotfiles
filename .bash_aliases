@@ -106,6 +106,9 @@ alias tbz='tar -jxvf'
 export PATH=$PATH:~/.local/bin  # For pip installed packages
 export PATH=$PATH:/usr/bin  # For pip installed packages
 
+# When using nix package manager and want to load it in start menu
+# export XDG_DATA_DIRS="expand(~)/.nix-profile/share"
+
 export PLOTS_DEFAULT_BACKEND=PyPlot
 
 
