@@ -93,6 +93,7 @@ require("lazy").setup({
 					"jsonls",
 					"lua_ls",
 					"ruff", -- Add ruff to ensure it's installed by Mason
+					"bashls", -- Bash language server
 				},
 			},
 			config = function(_, opts)
@@ -103,11 +104,15 @@ require("lazy").setup({
 			"stevearc/conform.nvim",
 			event = "VeryLazy",
 			cmd = { "ConformInfo" },
+			dependencies = { "williamboman/mason.nvim" },
 			opts = {
 				formatters_by_ft = {
 					python = { "ruff_format", "ruff_fix", "ruff_organize_imports" },
 					r = { "styler" },
 					lua = { "stylua" },
+					bash = { "shfmt" },
+					sh = { "shfmt" },
+					zsh = { "shfmt" },
 				},
 				-- format_on_save = false,
 			},
@@ -301,6 +306,11 @@ require("lazy").setup({
 							},
 						},
 					},
+				})
+
+				lspconfig.bashls.setup({
+					capabilities = capabilities,
+					on_attach = on_attach,
 				})
 				-- linting disable
 				-- lspconfig.ruff.setup({

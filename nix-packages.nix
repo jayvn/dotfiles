@@ -5,6 +5,7 @@ pkgs.buildEnv {
   paths = with pkgs; [
     bun
     clang
+    shfmt
     direnv
     eza
     difftastic
