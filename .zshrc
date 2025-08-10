@@ -50,7 +50,6 @@ COMPLETION_WAITING_DOTS="true"
 # history-substring-search
 
 plugins=(
-  history-substring-search
   zsh-autosuggestions
   zsh-syntax-highlighting
   colorize
@@ -95,16 +94,7 @@ export CC=clang
 export CXX=clang++
 set -o vi
 
-# bind UP and DOWN arrow keys
-zmodload zsh/terminfo
-# bindkey "$terminfo[kcuu1]" history-substring-search-up
-# bindkey "$terminfo[kcud1]" history-substring-search-down
-
-# bind k and j for VI mode
-# bindkey -M vicmd 'k' history-substring-search-up
-# bindkey -M vicmd 'j' history-substring-search-down
-
-# bindkey "^R" history-incremental-search-backward
+# Atuin handles history search
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -113,11 +103,13 @@ zmodload zsh/terminfo
 # ----
 
 # export R_HOME="/home/jay/miniconda/bin/R"
-
 # export SSL_CERT_FILE=~/zscaler_root_ca.crt
 
 [ -s "/home/jay/.bun/_bun" ] && source "/home/jay/.bun/_bun"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# Direnv integration
+# direnv , auto execute .envrc file in filder
 eval "$(direnv hook zsh)"
+
+# Atuin - shell history
+eval "$(atuin init zsh)"
