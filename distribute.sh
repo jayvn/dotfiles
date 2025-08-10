@@ -1,5 +1,5 @@
 #!/bin/bash
-# nfs-common nfs-kernel-server 
+# nfs-common nfs-kernel-server
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv tool install neovim radian
@@ -12,7 +12,7 @@ sudo apt install asciinema neovim cmake clang curl tmux tree ctags ripgrep htop
 #vi -p ~/.byobu/keybindings.tmux ~/.tmux.conf
 # f9 to set c-b as esc seq
 #
-loc=`pwd`
+loc=$(pwd)
 filelocs=(
     .cvsignore
     vim-tmux-open.zsh
@@ -29,7 +29,7 @@ mkdir -p ~/.vim
 
 # Setup vim-plug for Vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Link Vim config (init.vim as ~/.vimrc)
 ln -sf ${loc}/init.vim ~/.vimrc
@@ -47,7 +47,7 @@ curl -L https://nixos.org/nix/install | sh
 nix-env -if nix-packages.nix
 
 # --- Sometimes you have conda installed stuff that just isn't picked up by other tools (neovim in these cases)
-# ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/ 
+# ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/
 # ---
 
 # ZSH
@@ -68,6 +68,6 @@ done
 # Under System Preferences > Keyboard Layout > Options... > Ctrl key position, I checked 'Caps Lock as Ctrl'.
 # xcape -e 'Control_L=Escape'
 #
-### Within vim, i can do 
+### Within vim, i can do
 # : LspInstall pyright r_language_server
 # : MasonInstall black
