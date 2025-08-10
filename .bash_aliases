@@ -48,54 +48,7 @@ replacetext() {
     # rpl
     ag -ls $1 | xargs sed -ri -e "s/$1/$2/g"
 }
-
-# ugits() {
-#     # store the current dir
-#     CUR_DIR=$(pwd)
 #
-#     # Let the person running the script know what's going on.
-#     echo "\n\033[1mPulling in latest changes for all repositories...\033[0m\n"
-#
-#     # Find all git repositories and update it to the master latest revision
-#     for i in $(find . -name ".git" | cut -c 3-); do
-#         echo "";
-#         echo "\033[33m"+$i+"\033[0m";
-#
-#         # We have to go to the .git parent directory to call the pull command
-#         cd "$i";
-#         cd ..;
-#
-#         # finally pull
-#         git pull origin master;
-#         gitclean # clean merged branches
-#         # Also update the tags
-#         ctags -R
-#
-#         # lets get back to the CUR_DIR
-#         cd $CUR_DIR
-#     done
-#
-#     echo "\n\033[32mComplete!\033[0m\n"
-# }
-
-# Update the date and pull from all repos
-udate()
-{
-    sudo apt update
-    sudo date -s "$(wget -qSO- --max-redirect=0 google.com 2>&1 | grep Date: | cut -d' ' -f5-8)Z"
-    # ugits
-    time sudo apt -y full-upgrade
-    source ~/.oh-my-zsh/tools/upgrade.sh
-    # R -e "update.packages()"
-    # pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U --user
-
-    nvim -c "PlugUpdate | PlugUpgrade"
-
-    # Probably should be last because this can fail
-    julia -e "using Pkg; Pkg.update()"
-    julia -e "recompile()"
-}
-
 # set -o vi
 # mostused() {
 #   history | awk '{print $2}' | sort | uniq -c | sort -nr | head
@@ -109,11 +62,8 @@ export PATH=$PATH:/usr/bin  # For pip installed packages
 # When using nix package manager and want to load it in start menu
 # export XDG_DATA_DIRS="expand(~)/.nix-profile/share"
 
-export PLOTS_DEFAULT_BACKEND=PyPlot
-
 
 ## Node stuff
-
 function extract() {
   for archive in "$@"; do
     if [ -f "$archive" ] ; then

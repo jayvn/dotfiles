@@ -7,6 +7,7 @@ pkgs.buildEnv {
     clang
     direnv
     eza
+    difftastic
     lazygit
     neovim
     openblas
