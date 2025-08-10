@@ -12,7 +12,7 @@ pkgs.buildEnv {
     eza
     tmux
     vim
-    zsh
+    # zsh # not doing this cuz everyone looks at /bin/zsh
     ripgrep
     btop
     zoxide
