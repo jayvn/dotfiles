@@ -7,8 +7,15 @@ pkgs.buildEnv {
     clang
     shfmt
     bat
+    firefox
     direnv
     eza
+    tmux
+    vim
+    zsh
+    ripgrep
+    btop
+    zoxide
     difftastic
     lazygit
     neovim

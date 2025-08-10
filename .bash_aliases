@@ -7,7 +7,6 @@ alias grb="g rb --root -i"
 
 # alias mysql=mycli
 alias t="tree"
-alias sa="sudo apt"
 alias vi=nvim
 
 # alias wd="cd ~/ev/"
@@ -94,5 +93,6 @@ pytestvi() {
 
 alias r="radian"
 alias lg=lazygit
+alias z=zoxide
 
 export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
