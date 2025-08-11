@@ -29,5 +29,6 @@ jay_*
 jdevtools
 node_modules/*
 tags
-testfile*
-venv*
+.ipynb_checkpoints/
+.claude
+.venv*

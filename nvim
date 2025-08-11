@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [ -z "$1" ]; then
-    flatpak run io.neovim.nvim
-else
-    flatpak run io.neovim.nvim "$1"
-fi

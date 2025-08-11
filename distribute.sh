@@ -1,5 +1,5 @@
 #!/bin/bash
-# nfs-common nfs-kernel-server 
+# nfs-common nfs-kernel-server
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv tool install neovim radian
@@ -22,7 +22,7 @@ cargo install --locked nu difftastic zoxide ripgrep tlrc bat bottom
 
 # f9 to set c-b as esc seq
 #
-loc=`pwd`
+loc=$(pwd)
 filelocs=(
     .gitignore_global
     vim-tmux-open.zsh
@@ -33,30 +33,34 @@ filelocs=(
     .zshrc
     .gitconfig)
 
+# ========== VIM SETUP ==========
+# Create Vim directory
+mkdir -p ~/.vim
+
+# Setup vim-plug for Vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-#===
-# steam deck nix pkg nvim
-curl -L https://nixos.org/nix/install | sh
-nix-env -i neovim
-curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-ln -s ~/.vimrc ~/.config/nvim/init.vim
-#===
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# --- Sometimes you have conda installed stuff that just isn't picked up by other tools (neovim in these cases)
-# use bun instead of nodejs
-# --ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/ # uv tool install nodeenv? ? 
-#
-# ---
-
-#TODO: If .vim does not exist, create it
-mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
-ln -sf ~/.vim $XDG_CONFIG_HOME/nvim
-ln -sf ${loc}/init.vim $XDG_CONFIG_HOME/nvim/init.vim
+# Link Vim config (init.vim as ~/.vimrc)
 ln -sf ${loc}/init.vim ~/.vimrc
 
-ln -s ${loc}/user.lua $XDG_CONFIG_HOME/nvim/lua/plugins/user.lua
+# ========== NEOVIM SETUP ==========
+# Create Neovim config directory
+mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+mkdir -p $XDG_CONFIG_HOME/nvim
 
+# Link Neovim config (init.lua in config directory)
+ln -sf ${loc}/init.lua $XDG_CONFIG_HOME/nvim/init.lua
+
+# Steam Deck nix package for Neovim
+curl -L https://nixos.org/nix/install | sh
+nix-env -if nix-packages.nix
+
+# --- Sometimes you have conda installed stuff that just isn't picked up by other tools (neovim in these cases)
+# ln -s /home/jay/miniconda/bin/node /home/jay/.local/bin/
+# ---
+
+# ZSH
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
 # Add zsh plugins
@@ -74,6 +78,6 @@ done
 # Under System Preferences > Keyboard Layout > Options... > Ctrl key position, I checked 'Caps Lock as Ctrl'.
 # xcape -e 'Control_L=Escape'
 #
-### Within vim, i can do 
+### Within vim, i can do
 # : LspInstall pyright r_language_server
 # : MasonInstall black

@@ -94,6 +94,7 @@ require("lazy").setup({
 					"lua_ls",
 					"ruff", -- Add ruff to ensure it's installed by Mason
 					"rust_analyzer", -- Rust LSP Server
+					"bashls", -- Bash language server
 				},
 			},
 			config = function(_, opts)
@@ -104,11 +105,15 @@ require("lazy").setup({
 			"stevearc/conform.nvim",
 			event = "VeryLazy",
 			cmd = { "ConformInfo" },
+			dependencies = { "williamboman/mason.nvim" },
 			opts = {
 				formatters_by_ft = {
 					python = { "ruff_format", "ruff_fix", "ruff_organize_imports" },
 					r = { "styler" },
 					lua = { "stylua" },
+					bash = { "shfmt" },
+					sh = { "shfmt" },
+					zsh = { "shfmt" },
 				},
 				-- format_on_save = false,
 			},
@@ -305,6 +310,10 @@ require("lazy").setup({
 				})
 
 				lspconfig.rust_analyzer.setup({
+					capabilities = capabilities,
+					on_attach = on_attach,
+				})
+				lspconfig.bashls.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
