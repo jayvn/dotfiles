@@ -1,3 +1,6 @@
+-- Enable Lua module cache for faster loading
+vim.loader.enable()
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -63,18 +66,18 @@ require("lazy").setup({
 	spec = {
 		-- Theme
 		-- 'folke/tokyonight.nvim',
-		{ "Mofiqul/dracula.nvim", name = "dracula", priority = 1000 },
-		{ "tomasr/molokai", name = "molokai", priority = 1000 },
-		{ "ellisonleao/gruvbox.nvim", name = "gruvbox", priority = 1000 },
+		{ "ellisonleao/gruvbox.nvim", name = "gruvbox", priority = 1000, lazy = false },
+		-- "tomasr/molokai", "ellisonleao/gruvbox.nvim",
 		{
 			"powerman/vim-plugin-AnsiEsc", -- helps with ^[ type of console outputs in file
 			cmd = "AnsiEsc",
 		},
-		{ "akinsho/git-conflict.nvim", version = "*", config = true },
+		{ "akinsho/git-conflict.nvim", version = "*", event = "BufReadPre", config = true },
 		-- LSP / Mason / DAP
 		{
 			"williamboman/mason.nvim",
 			cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUpdate" },
+			event = "VeryLazy",
 			config = function()
 				require("mason").setup()
 			end,
@@ -83,6 +86,7 @@ require("lazy").setup({
 			"williamboman/mason-lspconfig.nvim",
 			dependencies = { "williamboman/mason.nvim" },
 			tag = "v2.0.0-rc.1",
+			event = { "BufReadPre", "BufNewFile" },
 			opts = {
 				ensure_installed = {
 					"basedpyright", -- Python LSP Server with willRenameFiles support
@@ -134,11 +138,12 @@ require("lazy").setup({
 		{
 			"lvimuser/lsp-inlayhints.nvim",
 			dependencies = { "neovim/nvim-lspconfig" },
+			event = "LspAttach",
 			config = function()
 				require("lsp-inlayhints").setup()
 			end,
 		},
-		{ "sindrets/diffview.nvim" },
+		{ "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles" } },
 		{
 			-- LSP Configuration
 			"neovim/nvim-lspconfig",
@@ -146,6 +151,7 @@ require("lazy").setup({
 				"williamboman/mason.nvim",
 				"williamboman/mason-lspconfig.nvim",
 			},
+			event = { "BufReadPre", "BufNewFile" },
 			config = function()
 				local lspconfig = require("lspconfig")
 				local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -328,6 +334,7 @@ require("lazy").setup({
 		{
 			"antosha417/nvim-lsp-file-operations",
 			dependencies = { "nvim-lua/plenary.nvim", "nvim-neo-tree/neo-tree.nvim" },
+			event = "VeryLazy",
 			config = function()
 				require("lsp-file-operations").setup()
 			end,
@@ -352,6 +359,7 @@ require("lazy").setup({
 		{
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			dependencies = { "nvim-treesitter/nvim-treesitter" },
+			event = { "BufReadPost", "BufNewFile" },
 			config = function()
 				require("nvim-treesitter.configs").setup({
 					textobjects = {
@@ -406,7 +414,7 @@ require("lazy").setup({
 		{ "romainl/vim-cool", event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
 		{ "tpope/vim-fugitive", event = "VeryLazy", cmd = "Git" },
 		{ "mhinz/vim-signify" },
-		{ "jalvesaq/Nvim-R", ft = { "r", "rmd", "quarto" } },
+		{ "jalvesaq/Nvim-R", ft = { "r", "rmd", "quarto" }, lazy = true },
 		{ "idbrii/vim-mergetool", cmd = "Mergetool" },
 		{
 			"f-person/git-blame.nvim",
@@ -443,6 +451,7 @@ require("lazy").setup({
 		{
 			"nvim-neo-tree/neo-tree.nvim",
 			branch = "v3.x",
+			cmd = { "Neotree" },
 			dependencies = {
 				"nvim-lua/plenary.nvim",
 				"nvim-tree/nvim-web-devicons",
@@ -507,6 +516,7 @@ require("lazy").setup({
 		{
 			"romgrk/barbar.nvim",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
+			event = "VeryLazy",
 			init = function()
 				vim.g.barbar_auto_setup = false
 			end,
@@ -549,6 +559,7 @@ require("lazy").setup({
 		{
 			"nvim-treesitter/nvim-treesitter-context",
 			dependencies = { "nvim-treesitter/nvim-treesitter" },
+			event = { "BufReadPost", "BufNewFile" },
 		},
 
 		-- lazy.nvim
@@ -728,6 +739,20 @@ require("lazy").setup({
 		},
 	},
 	install = { colorscheme = { "gruvbox" } },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"matchit",
+				"matchparen",
+				"netrwPlugin",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 	-- automatically check for plugin updates
 	-- checker = { enabled = true },
 })
@@ -736,6 +761,10 @@ vim.cmd([[colorscheme gruvbox]])
 -- Make the editor background transparent
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }) -- For floating windows like LSP hover
+
+-- Better highlight for selected buffer tab
+vim.api.nvim_set_hl(0, "BufferCurrent", { bg = "#3c3836", bold = true })
+vim.api.nvim_set_hl(0, "BufferCurrentMod", { bg = "#3c3836", bold = true })
 
 vim.keymap.set(
 	"n",
@@ -895,3 +924,4 @@ end, { desc = "Find ctag for word under cursor" })
 -- TODO:
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should also be ctrl - ] when there's nothing else
+-- dir-telescope.nvim
