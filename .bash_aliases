@@ -9,6 +9,7 @@ alias grb="g rb --root -i"
 alias vi=nvim
 
 alias py=python3
+alias python=python3
 alias ag='grep -Rn'
 gitclean() {
   git checkout master
