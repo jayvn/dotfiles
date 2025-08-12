@@ -100,9 +100,9 @@ set -o vi
 [ -s "/home/jay/.bun/_bun" ] && source "/home/jay/.bun/_bun"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-export BUN_INSTALL="$HOME/.bun" ▐
+export BUN_INSTALL="$HOME/.bun"
 # Needed to find bun installed stuff
-export PATH="$BUN_INSTALL/bin:$PATH" ▐
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # direnv , auto execute .envrc file in filder
 eval "$(direnv hook zsh)"
