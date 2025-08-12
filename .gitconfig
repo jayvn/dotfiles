@@ -28,6 +28,8 @@
         dshow = -c diff.external=difft show --ext-diff
         ddiff = -c diff.external=difft diff
 
+        difft = -c diff.external=difft diff
+	prdiff = "!f() { git difft ${1:-origin/main}...HEAD; }; f"
 [column]
         ui = auto
 [branch]
