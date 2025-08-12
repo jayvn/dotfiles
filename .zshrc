@@ -103,5 +103,6 @@ set -o vi
 # direnv , auto execute .envrc file in filder
 eval "$(direnv hook zsh)"
 
+eval "$(zoxide init zsh)"
 # Atuin - shell history
 eval "$(atuin init zsh)"

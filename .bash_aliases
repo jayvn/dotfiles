@@ -90,6 +90,5 @@ pytestvi() {
 
 alias r="radian"
 alias lg=lazygit
-alias z=zoxide
 
 export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
