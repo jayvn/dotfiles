@@ -133,7 +133,6 @@ require("lazy").setup({
 			},
 		},
 
-		-- { 'andymass/vim-split-diff', lazy = true, cmd = 'Splitdiff' },
 		--
 		{
 			"lvimuser/lsp-inlayhints.nvim",
@@ -851,6 +850,15 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 		if vim.fn.argc() == 0 then
 			require("persistence").load()
 		end
+	end,
+})
+
+-- Set colorcolumn for R files to indicate 80 character limit
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.r", "*.R", "*.Rmd", "*.rmd" },
+	callback = function()
+		vim.opt_local.colorcolumn = "80"
+		vim.opt_local.textwidth = 80
 	end,
 })
 
