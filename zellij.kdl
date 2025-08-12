@@ -1,0 +1,16 @@
+// Minimal Zellij configuration
+keybinds clear-defaults=false {
+}
+
+options {
+    default_shell "zsh"
+    copy_command "xclip -selection clipboard"
+    simplified_ui false
+    session_name true
+    mouse_mode true
+}
+
+plugins {
+    tab-bar { path "tab-bar"; }
+    status-bar { path "status-bar"; }
+}
