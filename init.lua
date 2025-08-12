@@ -119,6 +119,21 @@ require("lazy").setup({
 					sh = { "shfmt" },
 					zsh = { "shfmt" },
 				},
+				formatters = {
+					styler = {
+						inherit = false,
+						command = "R",
+						args = {
+							"-s",
+							"-e",
+							"styler::style_file(commandArgs(TRUE), style = styler::tidyverse_style, scope = I(c('indention', 'spaces', 'tokens')), indent_by = 2)",
+							"--args",
+							"$FILENAME",
+						},
+						stdin = false,
+					},
+				},
+				-- f
 				-- format_on_save = false,
 			},
 			keys = {
