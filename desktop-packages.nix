@@ -7,8 +7,9 @@ pkgs.buildEnv {
    gimp
    krita
    vlc
-   # kdenlive
-   
+   kdePackages.kdenlive
+   calibre
+
    # Web Browsers
    firefox
    ungoogled-chromium
@@ -17,9 +18,9 @@ pkgs.buildEnv {
    vscode
    
    # Office & Productivity
-   calibre
    gnumeric
    filezilla
+   krita
    
    # Games
    warzone2100

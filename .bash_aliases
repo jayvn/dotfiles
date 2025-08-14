@@ -44,8 +44,6 @@ replacetext() {
 # sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# When using nix package manager and want to load it in start menu
-# export XDG_DATA_DIRS="expand(~)/.nix-profile/share"
 
 ## Node stuff
 function extract() {
@@ -65,6 +63,9 @@ function extract() {
     fi
   done
 }
+
+# When using nix package manager and want to load installed packages in start menu
+# export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 alias myip='curl ifconfig.me'
 
 alias cp='cp -i' # prompt for confirmation before overwriting or deleting files.

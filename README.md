@@ -59,3 +59,11 @@ The repository uses symbolic links created by `distribute.sh`:
 - Steam Deck compatibility checks in setup script
 - Python environment managed via UV instead of pip
 - File safety aliases (`rm -i`, `cp -i`, `mv -i`) to prevent accidental deletions
+
+# Steam Deck Nix GUI Apps Fix
+
+Nix Qt apps (krita, calibre, kdenlive) crash with "Could not initialize GLX" on Steam Deck due to graphics driver mismatch. Solution: copy read-only Nix .desktop files to `~/.local/share/applications/` and patch them to use `QT_XCB_GL_INTEGRATION=none` for software rendering.
+
+Script copies all Nix desktop files locally, patches Qt apps with the environment variable, and makes them executable - local files override Nix ones via XDG_DATA_DIRS precedence.
+(XDG_DATA_DIRS used to be adding applications/ folder from nix, but i disabled it , redundant now )
+ aand calibre works now
