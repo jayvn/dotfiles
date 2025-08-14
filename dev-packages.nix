@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.buildEnv {
-  name = "my-packages";
+  name = "dev-packages";
   paths = with pkgs; [
     # zsh # not doing this cuz everyone looks at /bin/zsh not nix folder
     atuin
