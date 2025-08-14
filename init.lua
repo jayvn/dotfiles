@@ -73,6 +73,7 @@ require("lazy").setup({
 			cmd = "AnsiEsc",
 		},
 		{ "akinsho/git-conflict.nvim", version = "*", event = "BufReadPre", config = true },
+		{ "folke/snacks.nvim" },
 		-- LSP / Mason / DAP
 		{
 			"williamboman/mason.nvim",
@@ -948,3 +949,4 @@ end, { desc = "Find ctag for word under cursor" })
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should also be ctrl - ] when there's nothing else
 -- dir-telescope.nvim
+-- space ev should not switch neotree to file if there's a neotree pane already open (buffers / git changes) instead should close it.
