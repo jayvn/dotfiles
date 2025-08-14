@@ -12,24 +12,19 @@ pkgs.buildEnv {
     difftastic
     direnv
     eza
-    # firefox
     fzf
     lazygit
     neovim
     nushell
-    # openblas
     ripgrep
     ruff
     shfmt
     tmux
     universal-ctags
     vim
-    # vscode #Non free, not needed for wsl
     yazi
     zellij
     zig
     zoxide
-    atuin
-    nushell
   ];
 }
