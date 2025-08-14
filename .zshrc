@@ -110,3 +110,5 @@ eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 # Atuin - shell history
 eval "$(atuin init zsh)"
+
+. "$HOME/.local/bin/env"

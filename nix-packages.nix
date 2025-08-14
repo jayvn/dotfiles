@@ -29,5 +29,7 @@ pkgs.buildEnv {
     zellij
     zig
     zoxide
+    atuin
+    nushell
   ];
 }
