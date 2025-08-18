@@ -169,90 +169,57 @@ require("lazy").setup({
 			event = { "BufReadPre", "BufNewFile" },
 			config = function()
 				local lspconfig = require("lspconfig")
-				local capabilities = require("cmp_nvim_lsp").default_capabilities()
+				local capabilities = vim.lsp.protocol.make_client_capabilities()
+				capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 				-- Define a common on_attach function for LSP keybindings
 				local on_attach = function(client, bufnr)
-					local bufopts = { noremap = true, silent = true, buffer = bufnr }
-					-- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Declaration' }))
-					vim.keymap.set(
-						"n",
-						"gd",
-						vim.lsp.buf.definition,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Go to Definition" })
-					) -- Uncommented gd
-					vim.keymap.set(
-						"n",
-						"K",
-						vim.lsp.buf.hover,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Hover Documentation" })
-					)
-					-- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('keep', bufopts, { desc = 'LSP Go to Implementation' }))
-					vim.keymap.set(
-						"n",
-						"<leader>D",
-						vim.lsp.buf.type_definition,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Go to Type Definition" })
-					)
-					vim.keymap.set(
-						"n",
-						"<leader>rn",
-						vim.lsp.buf.rename,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Rename Symbol" })
-					)
-					vim.keymap.set(
-						{ "n", "v" },
-						"<leader>ca",
-						vim.lsp.buf.code_action,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Code Action" })
-					)
-					vim.keymap.set(
-						"n",
-						"gr",
-						vim.lsp.buf.references,
-						vim.tbl_extend("keep", bufopts, { desc = "LSP Go to References" })
-					)
-					if client.server_capabilities.completionProvider then
-						bufopts.desc = "Trigger completion"
-						vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, bufopts) -- don't work cuz tmux pane switch
+					local function map(mode, lhs, rhs, desc)
+						vim.keymap.set(mode, lhs, rhs, { noremap = true, silent = true, buffer = bufnr, desc = desc })
 					end
+
+					map("n", "gd", vim.lsp.buf.definition, "LSP Go to Definition")
+					map("n", "K", vim.lsp.buf.hover, "LSP Hover Documentation")
+					map("n", "<leader>D", vim.lsp.buf.type_definition, "LSP Go to Type Definition")
+					map("n", "<leader>rn", vim.lsp.buf.rename, "LSP Rename Symbol")
+					map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "LSP Code Action")
+					map("n", "gr", vim.lsp.buf.references, "LSP Go to References")
+
+					vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 				end
 
 				-- Autocommand to attach inlay hints
-				vim.api.nvim_create_augroup("LspAttach_inlayhints", { clear = true })
 				vim.api.nvim_create_autocmd("LspAttach", {
-					group = "LspAttach_inlayhints",
+					group = vim.api.nvim_create_augroup("LspAttach_inlayhints", { clear = true }),
 					callback = function(args)
 						if not (args.data and args.data.client_id) then
 							return
 						end
-						local bufnr = args.buf
 						local client = vim.lsp.get_client_by_id(args.data.client_id)
-						local inlayhints_plugin = require("lazy.core.config").plugins["lsp-inlayhints.nvim"]
-						if
-							client
-							and client.supports_method("textDocument/inlayHint")
-							and inlayhints_plugin
-							and inlayhints_plugin.loaded
-						then
-							pcall(require("lsp-inlayhints").on_attach, client, bufnr)
+						if client and client.supports_method("textDocument/inlayHint") then
+							-- Make sure you have the inlay hints plugin installed
+							pcall(require("lsp-inlayhints").on_attach, client, args.buf)
 						end
 					end,
 				})
 
 				-- Autocommand to disable hover for ruff if pyright is also active
-				vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true })
 				vim.api.nvim_create_autocmd("LspAttach", {
-					group = "lsp_attach_disable_ruff_hover",
+					group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
 					callback = function(args)
 						local client = vim.lsp.get_client_by_id(args.data.client_id)
 						if client and client.name == "ruff" then
-							client.server_capabilities.hoverProvider = false
+							-- Or ruff_lsp depending on what you have installed
+							local pyright_clients = vim.lsp.get_clients({ name = "basedpyright", bufnr = args.buf })
+							if #pyright_clients > 0 then
+								client.server_capabilities.hoverProvider = false
+							end
 						end
 					end,
-					desc = "LSP: Disable hover capability from Ruff",
+					desc = "LSP: Disable hover capability from Ruff if basedpyright is active",
 				})
 
+				-- Configure basedpyright
 				lspconfig.basedpyright.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
@@ -269,7 +236,11 @@ require("lazy").setup({
 						},
 					},
 				})
+
+				-- Configure jsonls
 				lspconfig.jsonls.setup({
+					capabilities = capabilities,
+					on_attach = on_attach,
 					settings = {
 						json = {
 							schemas = {
@@ -284,6 +255,7 @@ require("lazy").setup({
 					},
 				})
 
+				-- Configure r_language_server
 				lspconfig.r_language_server.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
@@ -302,21 +274,23 @@ require("lazy").setup({
 							},
 						},
 					},
-					flags = {
-						debounce_text_changes = 150,
-					},
 				})
 
+				-- Configure azure_pipelines_ls
 				lspconfig.azure_pipelines_ls.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
 
+				-- Configure lua_ls
 				lspconfig.lua_ls.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 					settings = {
 						Lua = {
+							runtime = {
+								version = "LuaJIT",
+							},
 							workspace = {
 								checkThirdParty = false,
 							},
@@ -330,18 +304,22 @@ require("lazy").setup({
 					},
 				})
 
+				-- Configure rust_analyzer
 				lspconfig.rust_analyzer.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
+
+				-- Configure bashls
 				lspconfig.bashls.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
-				-- linting disable
+
+				-- Configure ruff
 				-- lspconfig.ruff.setup({
-				--   capabilities = capabilities,
-				--   on_attach = on_attach,
+				--  capabilities = capabilities,
+				--  on_attach = on_attach,
 				-- })
 			end,
 		},
@@ -439,29 +417,6 @@ require("lazy").setup({
 			end,
 		},
 
-		-- Completion Engine (nvim-cmp)
-		{
-			"hrsh7th/nvim-cmp",
-			event = "InsertEnter",
-			dependencies = {
-				"hrsh7th/cmp-nvim-lsp",
-				"hrsh7th/cmp-buffer",
-				"hrsh7th/cmp-path",
-			},
-			config = function()
-				local cmp = require("cmp")
-				cmp.setup({
-					sources = cmp.config.sources({
-						{ name = "nvim_lsp" },
-						{ name = "buffer" },
-						{ name = "path" },
-					}),
-					mapping = cmp.mapping.preset.insert({
-						["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-					}), -- To make pyright auto import work
-				})
-			end,
-		},
 		-- File Explorer
 		{
 			"nvim-neo-tree/neo-tree.nvim",
@@ -949,6 +904,13 @@ end, { desc = "Open Lazygit" })
 vim.keymap.set("n", "<Leader>tf", function()
 	vim.cmd("tabnew | tjump " .. vim.fn.expand("<cword>"))
 end, { desc = "Find ctag for word under cursor" })
+
+-- Native LSP completion setup
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append("c")
+
+-- LSP completion keybindings
+vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { desc = "Trigger LSP completion" })
 
 -- TODO:
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
