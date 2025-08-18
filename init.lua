@@ -498,9 +498,6 @@ require("lazy").setup({
 					builtin.lsp_document_symbols,
 					{ desc = "Telescope LSP document symbols" }
 				)
-				-- builtin.lsp_workspace_symbols, doesn't work well cuz of lsp s
-				vim.keymap.set("n", "<leader>fst", builtin.treesitter, { desc = "Telescope Treesitter symbols" })
-				vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 				vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Telescope commands" })
 			end,
 		},
@@ -549,14 +546,6 @@ require("lazy").setup({
 		},
 
 		{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {}, event = "VeryLazy" }, -- TODO/WARN highlight
-		-- {
-		-- 	"olimorris/codecompanion.nvim", --copilot meets zig ?
-		-- 	dependencies = {
-		-- 		"nvim-lua/plenary.nvim",
-		-- 		"nvim-treesitter/nvim-treesitter",
-		-- 	},
-		-- 	-- cmd = { "CodeCompanion", "CodeCompanionOpen" },
-		-- },
 		{
 			"NMAC427/guess-indent.nvim", -- newline indent
 			event = { "BufReadPre", "BufNewFile" },
@@ -594,79 +583,6 @@ require("lazy").setup({
 				require("illuminate").configure({})
 			end,
 		},
-		-- {
-		-- 	"CopilotC-Nvim/CopilotChat.nvim",
-		-- 	dependencies = {
-		-- 		{ "github/copilot.vim" },
-		-- 		{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-		-- 	},
-		-- 	cmd = "CopilotChat",
-		-- 	opts = {
-
-		-- 		model = "claude-3.7-sonnet-thought", --  "gemini-2.5-pro" early stop
-		-- 		auto_insert_mode = true, -- Enter insert mode when chat opens
-		-- 		question_header = "  ",
-		-- 		answer_header = " ",
-
-		-- 		window = {
-		-- 			layout = "float",
-		-- 			relative = "editor",
-		-- 			width = 0.5, -- 50% of editor width
-		-- 			height = 0.9, -- 90% of editor height
-		-- 			row = 0.05,
-		-- 			col = 0.5, -- Position on the right side
-		-- 			border = "rounded",
-		-- 		},
-		-- 		mappings = {
-		-- 			close = {
-		-- 				insert = "C-q", -- removes the default C-c mapping
-		-- 			},
-		-- 		},
-		-- 		prompts = {
-		-- 			-- Default prompts from your config...
-		-- 			-- Explain = {
-		-- 			-- 	prompt = "Write an explanation for the selected code as paragraphs of text.",
-		-- 			-- 	system_prompt = "COPILOT_EXPLAIN",
-		-- 			-- },
-		-- 			-- Review = {
-		-- 			-- 	prompt = "Review the selected code.",
-		-- 			-- 	system_prompt = "COPILOT_REVIEW",
-		-- 			-- },
-
-		-- 			-- Other default prompts...
-		-- 			Commit = {
-		-- 				prompt = "Write commit message for the change with commitizen convention. Keep the title under 50 characters and wrap message at 72 characters. Format as a gitcommit code block.",
-		-- 				context = "git:staged",
-		-- 			},
-		-- 		},
-		-- 	},
-		-- keys = {
-		-- 	{
-		-- 		"<leader>aa",
-		-- 		function()
-		-- 			return require("CopilotChat").toggle()
-		-- 		end,
-		-- 		desc = "Toggle",
-		-- 		mode = { "n", "v" },
-		-- 	},
-		-- 	{
-		-- 		"<leader>ax",
-		-- 		function()
-		-- 			return require("CopilotChat").reset()
-		-- 		end,
-		-- 		desc = "Clear",
-		-- 		mode = { "n", "v" },
-		-- 	},
-		-- 	{
-		-- 		"<leader>ac",
-		-- 		":CopilotChatCommit<cr>",
-		-- 		desc = "Commit",
-		-- 		mode = { "n", "v" },
-		-- 	},
-		-- },
-		-- -- See Commands section for default commands if you want to lazy load on them
-		-- },
-
 		-- Diagnostics / Trouble
 		{
 			"folke/trouble.nvim",
