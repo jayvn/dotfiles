@@ -67,3 +67,5 @@ Nix Qt apps (krita, calibre, kdenlive) crash with "Could not initialize GLX" on 
 Script copies all Nix desktop files locally, patches Qt apps with the environment variable, and makes them executable - local files override Nix ones via XDG_DATA_DIRS precedence.
 (XDG_DATA_DIRS used to be adding applications/ folder from nix, but i disabled it , redundant now )
  aand calibre works now
+
+`nix-env -iA nixpkgs.Rorsomepkgs` In WSL no download from homeoffice . Timeouts
