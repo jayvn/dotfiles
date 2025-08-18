@@ -203,22 +203,6 @@ require("lazy").setup({
 					end,
 				})
 
-				-- Autocommand to disable hover for ruff if pyright is also active
-				vim.api.nvim_create_autocmd("LspAttach", {
-					group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
-					callback = function(args)
-						local client = vim.lsp.get_client_by_id(args.data.client_id)
-						if client and client.name == "ruff" then
-							-- Or ruff_lsp depending on what you have installed
-							local pyright_clients = vim.lsp.get_clients({ name = "basedpyright", bufnr = args.buf })
-							if #pyright_clients > 0 then
-								client.server_capabilities.hoverProvider = false
-							end
-						end
-					end,
-					desc = "LSP: Disable hover capability from Ruff if basedpyright is active",
-				})
-
 				-- Configure basedpyright
 				lspconfig.basedpyright.setup({
 					capabilities = capabilities,
