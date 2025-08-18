@@ -940,6 +940,11 @@ end
 vim.keymap.set("i", "<C-u>", pick_tmux_word, { desc = "Pick a word from tmux panes" })
 vim.keymap.set("n", "<C-]>", lsp_or_tags_definition, { desc = "Go to definition (LSP > Tags)" })
 
+-- Lazygit integration with Snacks
+vim.keymap.set("n", "<leader>lg", function()
+	Snacks.terminal("lazygit", { cwd = vim.fn.getcwd() })
+end, { desc = "Open Lazygit" })
+
 -- Find ctag for word under cursor in a new tab
 vim.keymap.set("n", "<Leader>tf", function()
 	vim.cmd("tabnew | tjump " .. vim.fn.expand("<cword>"))
