@@ -896,6 +896,30 @@ vim.opt.shortmess:append("c")
 -- LSP completion keybindings
 vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { desc = "Trigger LSP completion" })
 
+-- Auto-import on completion accept
+vim.api.nvim_create_autocmd("CompleteDone", {
+	callback = function()
+		local completed_item = vim.v.completed_item
+		if
+			completed_item
+			and completed_item.user_data
+			and completed_item.user_data.nvim
+			and completed_item.user_data.nvim.lsp
+		then
+			local completion_item = completed_item.user_data.nvim.lsp.completion_item
+			if completion_item and completion_item.additionalTextEdits then
+				vim.schedule(function()
+					vim.lsp.util.apply_text_edits(
+						completion_item.additionalTextEdits,
+						vim.api.nvim_get_current_buf(),
+						"utf-8"
+					)
+				end)
+			end
+		end
+	end,
+})
+
 -- TODO:
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
 --  gr should also be ctrl - ] when there's nothing else
