@@ -98,7 +98,7 @@ require("lazy").setup({
 					"lua_ls",
 					"ruff", -- Add ruff to ensure it's installed by Mason
 					"rust_analyzer", -- Rust LSP Server
-					"bashls", -- Bash language server
+					-- "bashls", 
 				},
 			},
 			config = function(_, opts)

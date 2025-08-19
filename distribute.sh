@@ -7,7 +7,7 @@ uv tool install neovim radian
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 
-sudo apt install asciinema neovim cmake clang curl tmux tree universal-ctags htop lazygit 
+sudo apt install asciinema neovim cmake clang curl tmux tree universal-ctags htop lazygit
 
 cargo install --locked yazi-fm yazi-cli
 cargo install --locked nu difftastic zoxide ripgrep tlrc bat bottom
@@ -51,6 +51,10 @@ mkdir -p $XDG_CONFIG_HOME/nvim
 
 # Link Neovim config (init.lua in config directory)
 ln -sf ${loc}/init.lua $XDG_CONFIG_HOME/nvim/init.lua
+
+# Link lazygit config
+mkdir -p $XDG_CONFIG_HOME/lazygit
+ln -sf ${loc}/lazygit-config.yml $XDG_CONFIG_HOME/lazygit/config.yml
 
 # Steam Deck nix package for Neovim
 curl -L https://nixos.org/nix/install | sh

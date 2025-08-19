@@ -72,6 +72,7 @@
 [commit]
         verbose = true
 [rerere]
+        #  remembers how you resolved merge conflicts and reapplies the same fixes when the same conflicts happen again.
         enabled = true
         autoupdate = true
 [rebase]
@@ -86,29 +87,17 @@
 # list-alias=!git la
 # rv=checkout --
 # revert=checkout --
-# fp=push --force
-# force-push=push -- force
 # um=!sh -c 'git checkout master && git fetch origin && git pull origin master'
 # branch-log=!git bl
 # mywork=!sh -c 'git log --since ""$1" day ago" --oneline --author "Maarten Heremans"' -
 # worklog=!sh -c 'git log --since ""$1" day ago" --oneline --author "$2"' -
-# pb=!git show-branch | ack '\*' | ack -v "`git rev-parse --abbrev-ref HEAD`" | head -n1 | sed 
-# 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'
+# pb=!git show-branch | rg '\*' | rg -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'
 # parent-branch=!git pb
 # feature=!f() { git checkout -b feature/$1; }; f
 # hotfix=!f() { git checkout -b hotfix/$1; }; f
 # bugfix=!f() { git checkout -b bugfix/$1; }; f
 # test=!f() { git checkout -b test/$1; }; f
-# ls=log --pretty=format:"%C(yellow)%h%Cred%d\ %Creset%s%Cblue\ [%cn]" --decorate
-# log-short=!git ls
-# ll=log --pretty=format:"%C(yellow)%h%Cred%d\ %Creset%s%Cblue\ [%cn]" --decorate --numstat
-# log-files=!git ll
-# lds=log --pretty=format:"%C(yellow)%h\ %ad%Cred%d\ %Creset%s%Cblue\ [%cn]" --decorate --date=short
-# log-date=!git lds
-# ld=log --pretty=format:"%C(yellow)%h\ %ad%Cred%d\ %Creset%s%Cblue\ [%cn]" --decorate 
 # --date=relative
-# log-reldate=!git ld
-# le=log --oneline --decorate
 # file-log=log -u
 # lc=!f() { git ll $1^..$1; }; f
 # log-changed=!git lc
@@ -121,7 +110,6 @@
 # find-file=!git f
 # find-string=grep -Ii --break --heading -n08:36
 # so=remote -v show origin
-# show-origin=!git so
 # prune-all=!git remote | xargs -n 1 git remote prune
 # whois=!sh -c 'git log -i -l --pretty="format:%an <%ae>
 # unpushed=log --branches --not --remotes --color --graph --pretty=format:'%Cred%h%Creset 
