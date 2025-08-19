@@ -311,28 +311,12 @@ require("lazy").setup({
 						additional_vim_regex_highlighting = false,
 					},
 					indent = { enable = true },
-				})
-			end,
-		},
-		{ "onsails/lspkind.nvim", event = { "VimEnter" } },
-		{
-			"nvim-treesitter/nvim-treesitter-textobjects",
-			dependencies = { "nvim-treesitter/nvim-treesitter" },
-			event = { "BufReadPost", "BufNewFile" },
-			config = function()
-				require("nvim-treesitter.configs").setup({
 					textobjects = {
 						textobjects = {
 							select = {
 								enable = true,
 								lookahead = true,
 							},
-							-- keymaps = {
-							--   ["af"] = "@function.outer",
-							--   ["if"] = "@function.inner",
-							--   ["ac"] = "@class.outer",
-							--   ["ic"] = "@class.inner",
-							-- },
 							move = {
 								enable = true,
 								set_jumps = true,
@@ -358,6 +342,7 @@ require("lazy").setup({
 				})
 			end,
 		},
+		{ "onsails/lspkind.nvim", event = { "VimEnter" } },
 
 		-- Utils / Tools
 		{ "godlygeek/tabular", cmd = { "Tabularize", "Tab" } },
@@ -378,9 +363,7 @@ require("lazy").setup({
 		{
 			"f-person/git-blame.nvim",
 			event = "BufReadPre",
-			config = function()
-				require("gitblame").setup({ enabled = true })
-			end,
+			config = true,
 		},
 
 		-- File Explorer
