@@ -56,6 +56,10 @@ ln -sf ${loc}/init.lua $XDG_CONFIG_HOME/nvim/init.lua
 mkdir -p $XDG_CONFIG_HOME/lazygit
 ln -sf ${loc}/lazygit-config.yml $XDG_CONFIG_HOME/lazygit/config.yml
 
+# Link fish config
+mkdir -p $XDG_CONFIG_HOME/fish
+ln -sf ${loc}/config.fish $XDG_CONFIG_HOME/fish/config.fish
+
 # Steam Deck nix package for Neovim
 curl -L https://nixos.org/nix/install | sh
 nix-env -if nix-packages.nix

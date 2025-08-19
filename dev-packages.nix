@@ -13,6 +13,7 @@ pkgs.buildEnv {
     difftastic
     direnv
     eza # replaces `ls` with enhanced features
+    fish # prio over pacman installed fish (i want updates)
     fzf
     gawk
     lazygit # `lazygit` for git UI
