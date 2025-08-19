@@ -20,6 +20,7 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+vim.g.R_assign = 0
 
 -- Set editor options
 vim.opt.number = true
@@ -98,7 +99,7 @@ require("lazy").setup({
 					"lua_ls",
 					"ruff", -- Add ruff to ensure it's installed by Mason
 					"rust_analyzer", -- Rust LSP Server
-					-- "bashls", 
+					-- "bashls",
 				},
 			},
 			config = function(_, opts)
