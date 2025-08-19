@@ -203,7 +203,6 @@ require("lazy").setup({
 					end,
 				})
 
-				-- Configure basedpyright
 				lspconfig.basedpyright.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
@@ -221,7 +220,6 @@ require("lazy").setup({
 					},
 				})
 
-				-- Configure jsonls
 				lspconfig.jsonls.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
@@ -239,7 +237,6 @@ require("lazy").setup({
 					},
 				})
 
-				-- Configure r_language_server
 				lspconfig.r_language_server.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
@@ -260,13 +257,11 @@ require("lazy").setup({
 					},
 				})
 
-				-- Configure azure_pipelines_ls
 				lspconfig.azure_pipelines_ls.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
 
-				-- Configure lua_ls
 				lspconfig.lua_ls.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
@@ -288,23 +283,16 @@ require("lazy").setup({
 					},
 				})
 
-				-- Configure rust_analyzer
 				lspconfig.rust_analyzer.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
 
-				-- Configure bashls
 				lspconfig.bashls.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
-
-				-- Configure ruff
-				-- lspconfig.ruff.setup({
-				--  capabilities = capabilities,
-				--  on_attach = on_attach,
-				-- })
+				-- tried ruff , doesn't have all features as basedpyright which also has file rename
 			end,
 		},
 
@@ -422,7 +410,6 @@ require("lazy").setup({
 			end,
 		},
 		{
-
 			"mechatroner/rainbow_csv",
 			ft = {
 				"csv",
@@ -445,11 +432,11 @@ require("lazy").setup({
 
 		{
 			"folke/persistence.nvim",
-			event = "VimEnter", -- Load plugin on startup
-			opts = { -- Add options for autosaving
+			event = "VimEnter",
+			opts = {
 				autosave = { save_on_quit = true },
 			},
-			config = true, -- Explicitly run setup with opts
+			config = true,
 		},
 		{
 			"nvim-lualine/lualine.nvim",
@@ -519,8 +506,8 @@ require("lazy").setup({
 			event = "VeryLazy",
 			opts = {
 				presets = {
-					long_message_to_split = true, -- long messages will be sent to a split
-					lsp_doc_border = true, -- add a border to hover docs and signature help (doesn't work ?)
+					long_message_to_split = true,
+					lsp_doc_border = true,
 				},
 			},
 			dependencies = {
@@ -534,13 +521,11 @@ require("lazy").setup({
 			event = { "BufWritePost", "BufReadPost" },
 			config = function()
 				require("lint").linters_by_ft = {
-					linters_by_ft = {
-						python = { "pyright", "pylint" },
-						-- python = { 'ruff' }, -- Use ruff for linting Python. Note also uncomment * line in pyright config
-						r = { "lintr" },
-						lua = { "luacheck" },
-						markdown = { "vale" },
-					},
+					python = { "pyright", "pylint" },
+					-- python = { 'ruff' }, -- Use ruff for linting Python. Note also uncomment * line in pyright config
+					r = { "lintr" },
+					lua = { "luacheck" },
+					markdown = { "vale" },
 				}
 			end,
 		},
@@ -672,18 +657,6 @@ vim.keymap.set("n", "[t", "<Cmd>tabprevious<CR>", { desc = "Previous tab", silen
 -- Quickfix navigation shortcuts
 vim.keymap.set("n", "]q", "<Cmd>cnext<CR>", { desc = "Next quickfix item", silent = true })
 vim.keymap.set("n", "[q", "<Cmd>cprevious<CR>", { desc = "Previous quickfix item", silent = true })
-
--- -- Barbar.nvim keymaps
--- vim.keymap.set('n', '<leader>bb', '<Cmd>BufferOrderByBufferNumber<CR>', { desc = 'Sort buffers by buffer number' })
--- vim.keymap.set('n', '<leader>bd', '<Cmd>BufferOrderByDirectory<CR>', { desc = 'Sort buffers by directory' })
--- vim.keymap.set('n', '<leader>bl', '<Cmd>BufferOrderByLanguage<CR>', { desc = 'Sort buffers by language' })
--- vim.keymap.set('n', '<leader>bw', '<Cmd>BufferOrderByWindowNumber<CR>', { desc = 'Sort buffers by window number' })
-
--- vim.keymap.set('n', '<leader>bc', '<Cmd>BufferClose<CR>', { desc = 'Close current buffer' })
-
--- -- Move buffer
--- vim.keymap.set('n', '<A-,>', '<Cmd>BufferMovePrevious<CR>', { desc = 'Move buffer to the left' })
--- vim.keymap.set('n', '<A-.>', '<Cmd>BufferMoveNext<CR>', { desc = 'Move buffer to the right' })
 
 -- Keep search direction consistent (n forward, N backward)
 vim.keymap.set(
