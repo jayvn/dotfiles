@@ -17,6 +17,7 @@
    - Neovim + lazy plugin manager ; mapped to vi
    - backup editor : vim +  vim-plug ; mapped to vim 
    - Language servers configured via Mason and native LSP
+   - All vim questions are to be meant for ./init.lua unless expeclitly specified
 
 
 # Steam Deck Nix GUI Apps Fix
