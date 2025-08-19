@@ -322,7 +322,7 @@ require("lazy").setup({
 				})
 			end,
 		},
-		{ "onsails/lspkind.nvim", event = { "VimEnter" } },
+		{ "onsails/lspkind.nvim" },
 
 		-- Utils / Tools
 		{ "godlygeek/tabular", cmd = { "Tabularize", "Tab" } },
@@ -536,7 +536,6 @@ require("lazy").setup({
 			},
 		},
 	},
-	install = { colorscheme = { "gruvbox" } },
 	performance = {
 		rtp = {
 			disabled_plugins = {
