@@ -509,7 +509,6 @@ require("lazy").setup({
 		{
 			"RRethy/vim-illuminate", -- highlight similar words
 			event = { "BufReadPost", "BufNewFile" },
-			config = true,
 		},
 		-- Diagnostics / Trouble
 		{
