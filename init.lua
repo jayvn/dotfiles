@@ -314,13 +314,9 @@ require("lazy").setup({
 					textobjects = {
 						textobjects = {
 							select = {
-								enable = true,
 								lookahead = true,
 							},
-							move = {
-								enable = true,
-								set_jumps = true,
-							},
+							move = {},
 						},
 					},
 				})
@@ -334,9 +330,7 @@ require("lazy").setup({
 			"kylechui/nvim-surround",
 			version = "*",
 			event = "VeryLazy",
-			config = function()
-				require("nvim-surround").setup({})
-			end,
+			config = true,
 		},
 		{ "tpope/vim-commentary", event = "VeryLazy" },
 		{ "romainl/vim-cool", event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
@@ -490,9 +484,7 @@ require("lazy").setup({
 		{
 			"NMAC427/guess-indent.nvim", -- newline indent
 			event = { "BufReadPre", "BufNewFile" },
-			config = function()
-				require("guess-indent").setup({})
-			end,
+			config = true,
 		},
 		{
 			"lukas-reineke/indent-blankline.nvim", -- indent guides
@@ -512,16 +504,12 @@ require("lazy").setup({
 				{ "<A-k>", mode = "n" },
 				{ "<A-l>", mode = "n" },
 			},
-			config = function()
-				require("smart-splits").setup({})
-			end,
+			config = true,
 		},
 		{
 			"RRethy/vim-illuminate", -- highlight similar words
 			event = { "BufReadPost", "BufNewFile" },
-			config = function()
-				require("illuminate").configure({})
-			end,
+			config = true,
 		},
 		-- Diagnostics / Trouble
 		{
