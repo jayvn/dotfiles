@@ -65,9 +65,8 @@ require("lazy").setup({
 
 	spec = {
 		-- Theme
-		-- 'folke/tokyonight.nvim',
+		-- 'folke/tokyonight.nvim', "tomasr/molokai", "ellisonleao/gruvbox.nvim",
 		{ "ellisonleao/gruvbox.nvim", name = "gruvbox", priority = 1000, lazy = false },
-		-- "tomasr/molokai", "ellisonleao/gruvbox.nvim",
 		{
 			"powerman/vim-plugin-AnsiEsc", -- helps with ^[ type of console outputs in file
 			cmd = "AnsiEsc",
@@ -185,7 +184,7 @@ require("lazy").setup({
 					map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "LSP Code Action")
 					map("n", "gr", vim.lsp.buf.references, "LSP Go to References")
 
-					vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+					vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 				end
 
 				-- Autocommand to attach inlay hints
@@ -521,7 +520,7 @@ require("lazy").setup({
 			event = { "BufWritePost", "BufReadPost" },
 			config = function()
 				require("lint").linters_by_ft = {
-					python = { "pyright", "pylint" },
+					python = { "pylint" },
 					-- python = { 'ruff' }, -- Use ruff for linting Python. Note also uncomment * line in pyright config
 					r = { "lintr" },
 					lua = { "luacheck" },
