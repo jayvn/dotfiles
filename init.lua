@@ -520,8 +520,7 @@ require("lazy").setup({
 			event = { "BufWritePost", "BufReadPost" },
 			config = function()
 				require("lint").linters_by_ft = {
-					python = { "pylint" },
-					-- python = { 'ruff' }, -- Use ruff for linting Python. Note also uncomment * line in pyright config
+					python = { "pylint" }, -- 'ruff' is good enough?
 					r = { "lintr" },
 					lua = { "luacheck" },
 					markdown = { "vale" },
@@ -541,10 +540,9 @@ require("lazy").setup({
 			"lukas-reineke/indent-blankline.nvim", -- indent guides
 			event = { "BufReadPre", "BufNewFile" },
 			main = "ibl",
-			opts = {},
 		},
 		{
-			"folke/neoconf.nvim", --can import conf in .vscode
+			"folke/neoconf.nvim", --can import conf in .vscode/
 			event = "BufReadPre",
 			cmd = "Neoconf",
 		},
