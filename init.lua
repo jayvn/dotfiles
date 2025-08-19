@@ -45,13 +45,7 @@ vim.opt.scrolloff = 999 -- Keep cursor centered vertically when possible
 vim.opt.sidescrolloff = 8 -- Keep 8 columns visible left/right of cursor when scrolling horizontally
 
 -- Persistent Undo
-vim.opt.undofile = true -- Enable persistent undo
-local undodir = vim.fn.stdpath("data") .. "/undodir"
-
-if vim.fn.isdirectory(undodir) == 0 then
-	vim.fn.mkdir(undodir, "p")
-end
-vim.opt.undodir = undodir -- Set the undo directory
+vim.opt.undofile = true
 
 -- Better Command Line Experience
 vim.opt.cmdheight = 1 -- Set command line height
@@ -380,7 +374,7 @@ require("lazy").setup({
 		{ "tpope/vim-fugitive", event = "VeryLazy", cmd = "Git" },
 		{ "mhinz/vim-signify" },
 		{ "jalvesaq/Nvim-R", ft = { "r", "rmd", "quarto" }, lazy = true },
-		{ "idbrii/vim-mergetool", cmd = "Mergetool" },
+		-- { "idbrii/vim-mergetool", cmd = "Mergetool" },
 		{
 			"f-person/git-blame.nvim",
 			event = "BufReadPre",
@@ -489,10 +483,6 @@ require("lazy").setup({
 			end,
 		},
 		{ "folke/which-key.nvim", event = "VeryLazy" },
-		{
-			"weilbith/nvim-code-action-menu",
-			cmd = "CodeActionMenu",
-		},
 
 		{
 			"nvim-treesitter/nvim-treesitter-context",
