@@ -5,18 +5,20 @@ pkgs.buildEnv {
   paths = with pkgs; [
     # zsh # not doing this cuz everyone looks at /bin/zsh not nix folder
     atuin
-    bat
+    bash-language-server # for nvim
+    bat # `batcat` replaces `cat` with syntax highlighting
     btop
     bun
     clang
     difftastic
     direnv
-    eza
+    eza # replaces `ls` with enhanced features
     fzf
-    lazygit
+    gawk
+    lazygit # `lazygit` for git UI
     neovim
     nushell
-    ripgrep
+    ripgrep # for fast searching  (rust)
     ruff
     shfmt
     tmux
