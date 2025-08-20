@@ -20,7 +20,6 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-vim.g.R_assign = 0
 
 -- Set editor options
 vim.opt.number = true
@@ -305,7 +304,7 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = { "python", "lua", "vim", "r", "bash", "yaml", "markdown", "rust" },
+					ensure_installed = { "python", "lua", "vim", "r", "bash", "yaml", "markdown", "rust", "rnoweb" },
 					highlight = {
 						enable = true,
 						additional_vim_regex_highlighting = false,
@@ -336,7 +335,7 @@ require("lazy").setup({
 		{ "romainl/vim-cool", event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
 		{ "tpope/vim-fugitive", event = "VeryLazy", cmd = "Git" },
 		{ "mhinz/vim-signify" },
-		{ "jalvesaq/Nvim-R", ft = { "r", "rmd", "quarto" }, lazy = true },
+		{ "R-nvim/R.nvim", ft = { "r", "rmd", "quarto" }, lazy = false },
 		-- { "idbrii/vim-mergetool", cmd = "Mergetool" },
 		{
 			"f-person/git-blame.nvim",
@@ -495,20 +494,6 @@ require("lazy").setup({
 			"folke/neoconf.nvim", --can import conf in .vscode/
 			event = "BufReadPre",
 			cmd = "Neoconf",
-		},
-		{
-			"mrjones2014/smart-splits.nvim", -- tmux integration somehow
-			keys = {
-				{ "<A-h>", mode = "n" },
-				{ "<A-j>", mode = "n" },
-				{ "<A-k>", mode = "n" },
-				{ "<A-l>", mode = "n" },
-			},
-			config = true,
-		},
-		{
-			"RRethy/vim-illuminate", -- highlight similar words
-			event = { "BufReadPost", "BufNewFile" },
 		},
 		-- Diagnostics / Trouble
 		{
