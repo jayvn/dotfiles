@@ -33,3 +33,5 @@ Solution: copy read-only Nix .desktop files to `~/.local/share/applications/` an
 
 # SteamOS update
 sudo chown -R deck:deck /nix
+
+nvim-cmp doesn't seem to be updated since a while unfortunately

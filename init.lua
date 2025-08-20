@@ -162,8 +162,8 @@ require("lazy").setup({
 			event = { "BufReadPre", "BufNewFile" },
 			config = function()
 				local lspconfig = require("lspconfig")
-				local capabilities = vim.lsp.protocol.make_client_capabilities()
-				capabilities.textDocument.completion.completionItem.snippetSupport = true
+				local capabilities =
+					require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 				-- Define a common on_attach function for LSP keybindings
 				local on_attach = function(client, bufnr)
 					local function map(mode, lhs, rhs, desc)
@@ -320,7 +320,65 @@ require("lazy").setup({
 				})
 			end,
 		},
-		{ "onsails/lspkind.nvim" },
+		-- Completion
+		{
+			"saghen/blink.cmp",
+			lazy = false,
+			dependencies = "rafamadriz/friendly-snippets",
+			version = "v0.*",
+			opts = {
+				keymap = { preset = "default" },
+				appearance = {
+					use_nvim_cmp_as_default = true,
+					nerd_font_variant = "mono",
+				},
+				sources = {
+					default = { "lsp", "path", "snippets", "buffer" },
+					providers = {
+						lsp = {
+							name = "LSP",
+							module = "blink.cmp.sources.lsp",
+						},
+						path = {
+							name = "Path",
+							module = "blink.cmp.sources.path",
+							score_offset = 3,
+						},
+						snippets = {
+							name = "Snippets",
+							module = "blink.cmp.sources.snippets",
+						},
+						buffer = {
+							name = "Buffer",
+							module = "blink.cmp.sources.buffer",
+						},
+					},
+				},
+				completion = {
+					trigger = {
+						prefetch_on_insert = true,
+						show_on_insert_on_trigger_character = true,
+					},
+					accept = {
+						auto_brackets = {
+							enabled = true,
+						},
+					},
+					menu = {
+						auto_show = true,
+						draw = {
+							treesitter = { "lsp" },
+						},
+					},
+					documentation = {
+						auto_show = true,
+						auto_show_delay_ms = 200,
+					},
+				},
+				signature = { enabled = true },
+			},
+			opts_extend = { "sources.default" },
+		},
 
 		-- Utils / Tools
 		{ "godlygeek/tabular", cmd = { "Tabularize", "Tab" } },
@@ -703,36 +761,8 @@ vim.keymap.set("n", "<Leader>tf", function()
 	vim.cmd("tabnew | tjump " .. vim.fn.expand("<cword>"))
 end, { desc = "Find ctag for word under cursor" })
 
--- Native LSP completion setup
+-- Completion options for blink.cmp
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
-vim.opt.shortmess:append("c")
-
--- LSP completion keybindings
-vim.keymap.set("i", "<C-Space>", { desc = "Trigger LSP completion" })
-
--- Auto-import on completion accept
-vim.api.nvim_create_autocmd("CompleteDone", {
-	callback = function()
-		local completed_item = vim.v.completed_item
-		if
-			completed_item
-			and completed_item.user_data
-			and completed_item.user_data.nvim
-			and completed_item.user_data.nvim.lsp
-		then
-			local completion_item = completed_item.user_data.nvim.lsp.completion_item
-			if completion_item and completion_item.additionalTextEdits then
-				vim.schedule(function()
-					vim.lsp.util.apply_text_edits(
-						completion_item.additionalTextEdits,
-						vim.api.nvim_get_current_buf(),
-						"utf-8"
-					)
-				end)
-			end
-		end
-	end,
-})
 
 -- TODO:
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
