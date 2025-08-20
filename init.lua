@@ -327,52 +327,17 @@ require("lazy").setup({
 			dependencies = "rafamadriz/friendly-snippets",
 			version = "v0.*",
 			opts = {
-				keymap = { preset = "default" },
-				appearance = {
-					use_nvim_cmp_as_default = true,
-					nerd_font_variant = "mono",
+				keymap = {
+					preset = "default",
+					["<Tab>"] = { "select_and_accept" },
 				},
 				sources = {
 					default = { "lsp", "path", "snippets", "buffer" },
-					providers = {
-						lsp = {
-							name = "LSP",
-							module = "blink.cmp.sources.lsp",
-						},
-						path = {
-							name = "Path",
-							module = "blink.cmp.sources.path",
-							score_offset = 3,
-						},
-						snippets = {
-							name = "Snippets",
-							module = "blink.cmp.sources.snippets",
-						},
-						buffer = {
-							name = "Buffer",
-							module = "blink.cmp.sources.buffer",
-						},
-					},
 				},
 				completion = {
-					trigger = {
-						prefetch_on_insert = true,
-						show_on_insert_on_trigger_character = true,
-					},
 					accept = {
-						auto_brackets = {
-							enabled = true,
-						},
-					},
-					menu = {
-						auto_show = true,
-						draw = {
-							treesitter = { "lsp" },
-						},
-					},
-					documentation = {
-						auto_show = true,
-						auto_show_delay_ms = 200,
+						auto_brackets = { enabled = true },
+						resolve_timeout_ms = 500,
 					},
 				},
 				signature = { enabled = true },
