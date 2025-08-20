@@ -164,7 +164,6 @@ require("lazy").setup({
 				local lspconfig = require("lspconfig")
 				local capabilities = vim.lsp.protocol.make_client_capabilities()
 				capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 				-- Define a common on_attach function for LSP keybindings
 				local on_attach = function(client, bufnr)
 					local function map(mode, lhs, rhs, desc)
@@ -709,7 +708,7 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
 
 -- LSP completion keybindings
-vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { desc = "Trigger LSP completion" })
+vim.keymap.set("i", "<C-Space>", { desc = "Trigger LSP completion" })
 
 -- Auto-import on completion accept
 vim.api.nvim_create_autocmd("CompleteDone", {
