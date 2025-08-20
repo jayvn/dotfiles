@@ -339,6 +339,10 @@ require("lazy").setup({
 						auto_brackets = { enabled = true },
 						resolve_timeout_ms = 500,
 					},
+					documentation = {
+						auto_show = true,
+						auto_show_delay_ms = 200,
+					},
 				},
 				signature = { enabled = true },
 			},
