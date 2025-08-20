@@ -732,3 +732,4 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 --  gr should also be ctrl - ] when there's nothing else
 -- dir-telescope.nvim
 -- space ev should not switch neotree to file if there's a neotree pane already open (buffers / git changes) instead should close it.
+-- organize this file by logical sections
