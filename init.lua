@@ -83,16 +83,16 @@ require("lazy").setup({
 			event = { "BufReadPre", "BufNewFile" },
 			opts = {
 				ensure_installed = {
-					"basedpyright", -- Python LSP Server with willRenameFiles support
+					"basedpyright", -- with willRenameFiles support
 					-- "pylint",
 					"r_language_server",
 					"yamlls",
 					"azure_pipelines_ls",
 					"jsonls",
 					"lua_ls",
-					"ruff", -- Add ruff to ensure it's installed by Mason
+					"ruff",
 					"rust_analyzer", -- Rust LSP Server
-					-- "bashls",
+					-- "bashls", -- installed externally
 				},
 			},
 			config = function(_, opts)
@@ -127,8 +127,6 @@ require("lazy").setup({
 						stdin = false,
 					},
 				},
-				-- f
-				-- format_on_save = false,
 			},
 			keys = {
 				{
@@ -427,9 +425,6 @@ require("lazy").setup({
 					sections = {
 						lualine_c = { { "filename", path = 1 } }, -- 1 = relative path
 					},
-					inactive_sections = {
-						lualine_c = { { "filename", path = 1 } }, -- Also show relative path in inactive windows
-					},
 					extensions = { "neo-tree", "trouble" },
 				})
 			end,
@@ -452,7 +447,6 @@ require("lazy").setup({
 			event = "VimEnter",
 			dependencies = { "nvim-lua/plenary.nvim" },
 			config = function()
-				-- Add Telescope keymaps
 				local builtin = require("telescope.builtin")
 				vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
 				vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
@@ -497,7 +491,7 @@ require("lazy").setup({
 			event = { "BufWritePost", "BufReadPost" },
 			config = function()
 				require("lint").linters_by_ft = {
-					python = { "pylint" }, -- 'ruff' is good enough?
+					python = { "pylint" }, -- 'ruff' is not good enough?
 					r = { "lintr" },
 					lua = { "luacheck" },
 					markdown = { "vale" },
