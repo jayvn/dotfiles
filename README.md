@@ -17,6 +17,7 @@
    - Neovim + lazy plugin manager ; mapped to vi
    - backup editor : vim +  vim-plug ; mapped to vim 
    - Language servers configured via Mason and native LSP
+   - All vim questions are to be meant for ./init.lua unless expeclitly specified
 
 
 # Steam Deck Nix GUI Apps Fix
@@ -32,3 +33,5 @@ Solution: copy read-only Nix .desktop files to `~/.local/share/applications/` an
 
 # SteamOS update
 sudo chown -R deck:deck /nix
+
+nvim-cmp doesn't seem to be updated since a while unfortunately

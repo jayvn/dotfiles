@@ -44,13 +44,7 @@ vim.opt.scrolloff = 999 -- Keep cursor centered vertically when possible
 vim.opt.sidescrolloff = 8 -- Keep 8 columns visible left/right of cursor when scrolling horizontally
 
 -- Persistent Undo
-vim.opt.undofile = true -- Enable persistent undo
-local undodir = vim.fn.stdpath("data") .. "/undodir"
-
-if vim.fn.isdirectory(undodir) == 0 then
-	vim.fn.mkdir(undodir, "p")
-end
-vim.opt.undodir = undodir -- Set the undo directory
+vim.opt.undofile = true
 
 -- Better Command Line Experience
 vim.opt.cmdheight = 1 -- Set command line height
@@ -65,9 +59,8 @@ require("lazy").setup({
 
 	spec = {
 		-- Theme
-		-- 'folke/tokyonight.nvim',
+		-- 'folke/tokyonight.nvim', "tomasr/molokai", "ellisonleao/gruvbox.nvim",
 		{ "ellisonleao/gruvbox.nvim", name = "gruvbox", priority = 1000, lazy = false },
-		-- "tomasr/molokai", "ellisonleao/gruvbox.nvim",
 		{
 			"powerman/vim-plugin-AnsiEsc", -- helps with ^[ type of console outputs in file
 			cmd = "AnsiEsc",
@@ -99,7 +92,7 @@ require("lazy").setup({
 					"lua_ls",
 					"ruff", -- Add ruff to ensure it's installed by Mason
 					"rust_analyzer", -- Rust LSP Server
-					-- "bashls", 
+					-- "bashls",
 				},
 			},
 			config = function(_, opts)
@@ -169,9 +162,8 @@ require("lazy").setup({
 			event = { "BufReadPre", "BufNewFile" },
 			config = function()
 				local lspconfig = require("lspconfig")
-				local capabilities = vim.lsp.protocol.make_client_capabilities()
-				capabilities.textDocument.completion.completionItem.snippetSupport = true
-
+				local capabilities =
+					require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 				-- Define a common on_attach function for LSP keybindings
 				local on_attach = function(client, bufnr)
 					local function map(mode, lhs, rhs, desc)
@@ -185,7 +177,7 @@ require("lazy").setup({
 					map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "LSP Code Action")
 					map("n", "gr", vim.lsp.buf.references, "LSP Go to References")
 
-					vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+					vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 				end
 
 				-- Autocommand to attach inlay hints
@@ -311,58 +303,50 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = { "python", "lua", "vim", "r", "bash", "yaml", "markdown", "rust" },
+					ensure_installed = { "python", "lua", "vim", "r", "bash", "yaml", "markdown", "rust", "rnoweb" },
 					highlight = {
 						enable = true,
 						additional_vim_regex_highlighting = false,
 					},
 					indent = { enable = true },
-				})
-			end,
-		},
-		{ "onsails/lspkind.nvim", event = { "VimEnter" } },
-		{
-			"nvim-treesitter/nvim-treesitter-textobjects",
-			dependencies = { "nvim-treesitter/nvim-treesitter" },
-			event = { "BufReadPost", "BufNewFile" },
-			config = function()
-				require("nvim-treesitter.configs").setup({
 					textobjects = {
 						textobjects = {
 							select = {
-								enable = true,
 								lookahead = true,
 							},
-							-- keymaps = {
-							--   ["af"] = "@function.outer",
-							--   ["if"] = "@function.inner",
-							--   ["ac"] = "@class.outer",
-							--   ["ic"] = "@class.inner",
-							-- },
-							move = {
-								enable = true,
-								set_jumps = true,
-								goto_next_start = {
-									["]m"] = "@function.outer",
-									["]]"] = "@class.outer",
-								},
-								goto_next_end = {
-									["]M"] = "@function.outer",
-									["]["] = "@class.outer",
-								},
-								goto_previous_start = {
-									["[m"] = "@function.outer",
-									["[["] = "@class.outer",
-								},
-								goto_previous_end = {
-									["[M"] = "@function.outer",
-									["[]"] = "@class.outer",
-								},
-							},
+							move = {},
 						},
 					},
 				})
 			end,
+		},
+		-- Completion
+		{
+			"saghen/blink.cmp",
+			lazy = false,
+			dependencies = "rafamadriz/friendly-snippets",
+			version = "v0.*",
+			opts = {
+				keymap = {
+					preset = "default",
+					["<Tab>"] = { "select_and_accept" },
+				},
+				sources = {
+					default = { "lsp", "path", "snippets", "buffer" },
+				},
+				completion = {
+					accept = {
+						auto_brackets = { enabled = true },
+						resolve_timeout_ms = 500,
+					},
+					documentation = {
+						auto_show = true,
+						auto_show_delay_ms = 200,
+					},
+				},
+				signature = { enabled = true },
+			},
+			opts_extend = { "sources.default" },
 		},
 
 		-- Utils / Tools
@@ -371,22 +355,18 @@ require("lazy").setup({
 			"kylechui/nvim-surround",
 			version = "*",
 			event = "VeryLazy",
-			config = function()
-				require("nvim-surround").setup({})
-			end,
+			config = true,
 		},
 		{ "tpope/vim-commentary", event = "VeryLazy" },
 		{ "romainl/vim-cool", event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
 		{ "tpope/vim-fugitive", event = "VeryLazy", cmd = "Git" },
 		{ "mhinz/vim-signify" },
-		{ "jalvesaq/Nvim-R", ft = { "r", "rmd", "quarto" }, lazy = true },
-		{ "idbrii/vim-mergetool", cmd = "Mergetool" },
+		{ "R-nvim/R.nvim", ft = { "r", "rmd", "quarto" }, lazy = false },
+		-- { "idbrii/vim-mergetool", cmd = "Mergetool" },
 		{
 			"f-person/git-blame.nvim",
 			event = "BufReadPre",
-			config = function()
-				require("gitblame").setup({ enabled = true })
-			end,
+			config = true,
 		},
 
 		-- File Explorer
@@ -489,10 +469,6 @@ require("lazy").setup({
 			end,
 		},
 		{ "folke/which-key.nvim", event = "VeryLazy" },
-		{
-			"weilbith/nvim-code-action-menu",
-			cmd = "CodeActionMenu",
-		},
 
 		{
 			"nvim-treesitter/nvim-treesitter-context",
@@ -521,8 +497,7 @@ require("lazy").setup({
 			event = { "BufWritePost", "BufReadPost" },
 			config = function()
 				require("lint").linters_by_ft = {
-					python = { "pyright", "pylint" },
-					-- python = { 'ruff' }, -- Use ruff for linting Python. Note also uncomment * line in pyright config
+					python = { "pylint" }, -- 'ruff' is good enough?
 					r = { "lintr" },
 					lua = { "luacheck" },
 					markdown = { "vale" },
@@ -534,39 +509,17 @@ require("lazy").setup({
 		{
 			"NMAC427/guess-indent.nvim", -- newline indent
 			event = { "BufReadPre", "BufNewFile" },
-			config = function()
-				require("guess-indent").setup({})
-			end,
+			config = true,
 		},
 		{
 			"lukas-reineke/indent-blankline.nvim", -- indent guides
 			event = { "BufReadPre", "BufNewFile" },
 			main = "ibl",
-			opts = {},
 		},
 		{
-			"folke/neoconf.nvim", --can import conf in .vscode
+			"folke/neoconf.nvim", --can import conf in .vscode/
 			event = "BufReadPre",
 			cmd = "Neoconf",
-		},
-		{
-			"mrjones2014/smart-splits.nvim", -- tmux integration somehow
-			keys = {
-				{ "<A-h>", mode = "n" },
-				{ "<A-j>", mode = "n" },
-				{ "<A-k>", mode = "n" },
-				{ "<A-l>", mode = "n" },
-			},
-			config = function()
-				require("smart-splits").setup({})
-			end,
-		},
-		{
-			"RRethy/vim-illuminate", -- highlight similar words
-			event = { "BufReadPost", "BufNewFile" },
-			config = function()
-				require("illuminate").configure({})
-			end,
 		},
 		-- Diagnostics / Trouble
 		{
@@ -593,7 +546,6 @@ require("lazy").setup({
 			},
 		},
 	},
-	install = { colorscheme = { "gruvbox" } },
 	performance = {
 		rtp = {
 			disabled_plugins = {
@@ -778,36 +730,8 @@ vim.keymap.set("n", "<Leader>tf", function()
 	vim.cmd("tabnew | tjump " .. vim.fn.expand("<cword>"))
 end, { desc = "Find ctag for word under cursor" })
 
--- Native LSP completion setup
+-- Completion options for blink.cmp
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
-vim.opt.shortmess:append("c")
-
--- LSP completion keybindings
-vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { desc = "Trigger LSP completion" })
-
--- Auto-import on completion accept
-vim.api.nvim_create_autocmd("CompleteDone", {
-	callback = function()
-		local completed_item = vim.v.completed_item
-		if
-			completed_item
-			and completed_item.user_data
-			and completed_item.user_data.nvim
-			and completed_item.user_data.nvim.lsp
-		then
-			local completion_item = completed_item.user_data.nvim.lsp.completion_item
-			if completion_item and completion_item.additionalTextEdits then
-				vim.schedule(function()
-					vim.lsp.util.apply_text_edits(
-						completion_item.additionalTextEdits,
-						vim.api.nvim_get_current_buf(),
-						"utf-8"
-					)
-				end)
-			end
-		end
-	end,
-})
 
 -- TODO:
 --  gr currently shows imports statement. Don't  [apparently this is very hard]
