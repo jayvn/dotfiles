@@ -172,7 +172,6 @@ require("lazy").setup({
 					vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 				end
 
-				-- Autocommand to enable native inlay hints
 				vim.api.nvim_create_autocmd("LspAttach", {
 					group = vim.api.nvim_create_augroup("LspAttach_inlayhints", { clear = true }),
 					callback = function(args)
@@ -181,7 +180,6 @@ require("lazy").setup({
 						end
 						local client = vim.lsp.get_client_by_id(args.data.client_id)
 						if client and client.supports_method("textDocument/inlayHint") then
-							-- Enable native inlay hints (available in Neovim 0.10+)
 							vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
 						end
 					end,
