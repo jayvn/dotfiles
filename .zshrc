@@ -68,5 +68,5 @@ eval "$(zoxide init zsh)"
 # Atuin - shell history
 # eval "$(atuin init zsh)"
 
-# Local environment
+# Local environment (I think `uv` needs this  - auto added at some point)
 . "$HOME/.local/bin/env"
