@@ -91,6 +91,8 @@ set -o vi
 # export SSL_CERT_FILE=~/zscaler_root_ca.crt
 
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+export PATH="$HOME/.bun/bin:$PATH"
+
 
 # direnv , auto execute .envrc file in filder
 eval "$(direnv hook zsh)"
