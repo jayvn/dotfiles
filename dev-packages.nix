@@ -29,5 +29,7 @@ pkgs.buildEnv {
     zellij
     zig
     zoxide
+    zsh-autosuggestions # ditching oh-my-zsh at some point
+    zsh-syntax-highlighting
   ];
 }

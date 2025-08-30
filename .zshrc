@@ -52,7 +52,6 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
-  colorize
 )
 
 # User configuration
