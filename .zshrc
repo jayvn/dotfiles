@@ -8,6 +8,7 @@ setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
+setopt HIST_REDUCE_BLANKS
 
 # Completion system
 autoload -Uz compinit && compinit
