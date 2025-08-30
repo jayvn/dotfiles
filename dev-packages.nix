@@ -3,7 +3,7 @@
 pkgs.buildEnv {
   name = "dev-packages";
   paths = with pkgs; [
-    # zsh # not doing this cuz everyone looks at /bin/zsh not nix folder
+    zsh # prio over pacman installed
     atuin
     bash-language-server # for nvim
     bat # `batcat` replaces `cat` with syntax highlighting
