@@ -10,7 +10,8 @@
 
 ### Key Configurations
 1. **Shell Environment**: 
-   - Zsh + Oh-My-Zsh framework
+   - Minimal Zsh configuration (no Oh-My-Zsh dependency)
+   - Zsh plugins (autosuggestions, syntax-highlighting) installed via Nix packages in `dev-packages.nix`
    - bash aliases and functions in `.bash_aliases`
 
 2. **Editor Stack**:

@@ -3,7 +3,7 @@
 pkgs.buildEnv {
   name = "dev-packages";
   paths = with pkgs; [
-    atuin
+    # atuin
     bash-language-server # for nvim
     bat # `batcat` replaces `cat` with syntax highlighting
     btop

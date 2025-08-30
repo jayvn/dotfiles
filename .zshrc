@@ -51,8 +51,8 @@ export CXX=clang++
 # Vi mode
 set -o vi
 
-# FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# FZF keybindings and completion
+eval "$(fzf --zsh)"
 
 # Bun
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -65,7 +65,7 @@ eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
 # Atuin - shell history
-eval "$(atuin init zsh)"
+# eval "$(atuin init zsh)"
 
 # Local environment
 . "$HOME/.local/bin/env"
