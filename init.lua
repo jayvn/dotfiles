@@ -317,7 +317,7 @@ require("lazy").setup({
 			opts = {
 				keymap = {
 					preset = "default",
-					["<Tab>"] = { "select_and_accept" },
+					-- ["<Tab>"] = { "select_and_accept" },
 				},
 				sources = {
 					default = { "lsp", "path", "snippets", "buffer" },
