@@ -1,103 +1,71 @@
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+# Minimal Zsh configuration (no Oh My Zsh)
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-# "dogenpunk","Soliah","awesomepanda","agnoster","amuse", "fino", powerlevel10k/powerlevel10k"
-ZSH_THEME="awesomepanda" #
+# History settings
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# Completion system
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+# Key bindings
+bindkey -e  # Emacs mode (change to -v for vi mode)
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+# Load plugins from Nix packages
+source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# Simple prompt (customize as needed)
+# Format: user@host:dir $
+PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+# Git info in prompt with dirty status
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr '+'
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' formats ' %b%c%u'
+precmd() { vcs_info }
+setopt PROMPT_SUBST
+RPROMPT='${vcs_info_msg_0_}'
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-# history-substring-search
-
-plugins=(
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
-
-# User configuration
-# export MANPATH="/usr/local/man:$MANPATH"
-
-source $ZSH/oh-my-zsh.sh
-
+# Load aliases
 if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
+    . ~/.bash_aliases
 fi
 
+# Environment variables
 export EDITOR='nvim'
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# fi
-
-#
-
-# Add an "alert" alias for long running commands.  Use like so:
-# sleep 10; alert
-
 export CC=clang
 export CXX=clang++
+
+# Vi mode
 set -o vi
 
-# Atuin handles history search
-
+# FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# [[ -n $TMUX ]] && alias vi="zsh ~/vim-tmux-open.zsh"
-
-# ----
-
-# export R_HOME="/home/jay/miniconda/bin/R"
-# export SSL_CERT_FILE=~/zscaler_root_ca.crt
-
+# Bun
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 export PATH="$HOME/.bun/bin:$PATH"
 
-
-# direnv , auto execute .envrc file in filder
+# Direnv - auto execute .envrc file in folder
 eval "$(direnv hook zsh)"
 
+# Zoxide - smarter cd
 eval "$(zoxide init zsh)"
+
 # Atuin - shell history
 eval "$(atuin init zsh)"
 
+# Local environment
 . "$HOME/.local/bin/env"
