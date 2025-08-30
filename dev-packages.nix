@@ -29,7 +29,7 @@ pkgs.buildEnv {
     zellij
     zig
     zoxide
-    zsh # prio over pacman installed
+    zsh # prio over pacman installed zsh
     zsh-autosuggestions # ditching oh-my-zsh at some point
     zsh-syntax-highlighting
   ];
