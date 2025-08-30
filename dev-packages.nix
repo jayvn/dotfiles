@@ -3,7 +3,6 @@
 pkgs.buildEnv {
   name = "dev-packages";
   paths = with pkgs; [
-    zsh # prio over pacman installed
     atuin
     bash-language-server # for nvim
     bat # `batcat` replaces `cat` with syntax highlighting
@@ -25,10 +24,12 @@ pkgs.buildEnv {
     tmux
     universal-ctags
     vim
+    xclip
     yazi
     zellij
     zig
     zoxide
+    zsh # prio over pacman installed
     zsh-autosuggestions # ditching oh-my-zsh at some point
     zsh-syntax-highlighting
   ];
