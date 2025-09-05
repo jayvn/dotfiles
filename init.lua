@@ -170,19 +170,6 @@ require("lazy").setup({
 					vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 				end
 
-				-- vim.api.nvim_create_autocmd("LspAttach", {
-				-- 	group = vim.api.nvim_create_augroup("LspAttach_inlayhints", { clear = true }),
-				-- 	callback = function(args)
-				-- 		if not (args.data and args.data.client_id) then
-				-- 			return
-				-- 		end
-				-- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
-				-- 		if client and client.supports_method("textDocument/inlayHint") then
-				-- 			vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
-				-- 		end
-				-- 	end,
-				-- })
-
 				lspconfig.basedpyright.setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
