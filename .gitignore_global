@@ -32,3 +32,4 @@ tags
 .ipynb_checkpoints/
 .claude
 .venv*
+AGENTS.md

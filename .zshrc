@@ -10,6 +10,11 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
 setopt HIST_REDUCE_BLANKS
 
+# source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 # Completion system
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
@@ -19,10 +24,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 bindkey -e  # Emacs mode (change to -v for vi mode)
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
-
-# Load plugins from Nix packages
-source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Simple prompt (customize as needed)
 # Format: user@host:dir $
