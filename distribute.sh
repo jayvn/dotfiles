@@ -1,7 +1,7 @@
 #!/bin/bash
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
-uv tool install neovim radian black ruff
+uv tool install neovim radian black ruff basedpyright
 
 loc=$(pwd)
 filelocs=(
@@ -45,8 +45,9 @@ ln -sf ${loc}/config.fish $XDG_CONFIG_HOME/fish/config.fish
 
 # --- Sometimes you have installed stuff that just isn't picked up by other tools (neovim in these cases)
 # ln -s $(which bun) ~/.bun/bin/node
-# atuin??
 # ---
+# Install bun somehow
+# bun install -g prettier @anthropic-ai/claude-code 
 
 for i in ${filelocs[@]}; do
     ln -sf ${loc}/$i ~/$i
@@ -60,4 +61,4 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-sy
 # xcape -e 'Control_L=Escape'
 
 ### Within vim, i can do
-# : LspInstall pyright r_language_server
+# : LspInstall r_language_server

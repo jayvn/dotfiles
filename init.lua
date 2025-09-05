@@ -83,14 +83,12 @@ require("lazy").setup({
 			event = { "BufReadPre", "BufNewFile" },
 			opts = {
 				ensure_installed = {
-					"basedpyright", -- with willRenameFiles support
 					-- "pylint",
 					"r_language_server",
 					"yamlls",
 					"azure_pipelines_ls",
 					"jsonls",
 					"lua_ls",
-					"ruff",
 					"rust_analyzer", -- Rust LSP Server
 					-- "bashls", -- installed externally
 				},
