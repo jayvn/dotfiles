@@ -3,34 +3,37 @@
 pkgs.buildEnv {
   name = "dev-packages";
   paths = with pkgs; [
-    # atuin
+    # atuin # search history and all
     bash-language-server # for nvim
-    bat # `batcat` replaces `cat` with syntax highlighting
-    btop
-    bun
+    bat # like cat with syntax highlighting
+    bottom # like top/btop
+    bun # instead of npm
     clang
-    difftastic
-    direnv
-    eza # replaces `ls` with enhanced features
-    fish # prio over pacman installed fish (i want updates)
-    fzf
-    gawk
+    # cmake # migrated but not sure
+    curl
+    difftastic # git diff
+    # direnv
+    # eza # replaces `ls` with enhanced features
+    # fish # new shell i want to try
+    # fzf
+    htop 
     lazygit # `lazygit` for git UI
     neovim
-    nushell
+    # nixfmt-rfc-style # nix formatter # downloads a lot of haskell
+    nushell # nu shell+ csv view sort, etc
     ripgrep # for fast searching  (rust)
-    ruff
-    shfmt
+    # ruff # formatter + isort # NOTE: comment it out because 
+    shfmt # bash/zsh formatter
+    tlrc # tldr for commands
     tmux
     universal-ctags
     vim
     xclip
-    yazi
-    zellij
-    zig
-    zoxide
-    zsh # prio over pacman installed zsh
-    zsh-autosuggestions # ditching oh-my-zsh at some point
-    zsh-syntax-highlighting
+    yazi # file explorer
+    zellij # instead of tmux
+    zoxide # z search instead of cd
+    zsh # prio over system installed zsh, but keep it because other tools use it
+    zsh-autosuggestions # ditching oh-my-zsh 
+    zsh-syntax-highlighting# ditching oh-my-zsh 
   ];
 }
