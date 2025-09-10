@@ -10,8 +10,8 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
 setopt HIST_REDUCE_BLANKS
 
-# source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-# source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # source ~/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
