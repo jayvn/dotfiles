@@ -90,6 +90,11 @@ pytestvi() {
     "$outfile"
 }
 
+# Generate branch name using llm
+genbrname() {
+  gemini -p "generate short branch name from : $*"
+}
+
 alias r="radian"
 alias t="tree"
 alias lg=lazygit
