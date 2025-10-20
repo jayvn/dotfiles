@@ -149,7 +149,6 @@ require("lazy").setup({
 			},
 			event = { "BufReadPre", "BufNewFile" },
 			config = function()
-				local lspconfig = require("lspconfig")
 				local capabilities =
 					require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 				-- Define a common on_attach function for LSP keybindings
@@ -168,7 +167,7 @@ require("lazy").setup({
 					vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 				end
 
-				lspconfig.basedpyright.setup({
+				vim.lsp.config("basedpyright", {
 					capabilities = capabilities,
 					on_attach = on_attach,
 					settings = {
@@ -184,8 +183,9 @@ require("lazy").setup({
 						},
 					},
 				})
+				vim.lsp.enable("basedpyright")
 
-				lspconfig.jsonls.setup({
+				vim.lsp.config("jsonls", {
 					capabilities = capabilities,
 					on_attach = on_attach,
 					settings = {
@@ -201,8 +201,9 @@ require("lazy").setup({
 						},
 					},
 				})
+				vim.lsp.enable("jsonls")
 
-				lspconfig.r_language_server.setup({
+				vim.lsp.config("r_language_server", {
 					capabilities = capabilities,
 					on_attach = on_attach,
 					settings = {
@@ -221,13 +222,15 @@ require("lazy").setup({
 						},
 					},
 				})
+				vim.lsp.enable("r_language_server")
 
-				lspconfig.azure_pipelines_ls.setup({
+				vim.lsp.config("azure_pipelines_ls", {
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
+				vim.lsp.enable("azure_pipelines_ls")
 
-				lspconfig.lua_ls.setup({
+				vim.lsp.config("lua_ls", {
 					capabilities = capabilities,
 					on_attach = on_attach,
 					settings = {
@@ -247,16 +250,19 @@ require("lazy").setup({
 						},
 					},
 				})
+				vim.lsp.enable("lua_ls")
 
-				lspconfig.rust_analyzer.setup({
+				vim.lsp.config("rust_analyzer", {
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
+				vim.lsp.enable("rust_analyzer")
 
-				lspconfig.bashls.setup({
+				vim.lsp.config("bashls", {
 					capabilities = capabilities,
 					on_attach = on_attach,
 				})
+				vim.lsp.enable("bashls")
 				-- tried ruff , doesn't have all features as basedpyright which also has file rename
 			end,
 		},
