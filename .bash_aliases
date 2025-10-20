@@ -92,11 +92,22 @@ pytestvi() {
 
 # Generate branch name using llm
 genbrname() {
-  gemini -p "generate short branch name from : $*"
+  claude -p "generate short branch name from : $*"
+}
+
+# Format changed files between origin/main and HEAD
+fmtchanged() {
+  local files=$(git diff --name-only --diff-filter=d origin/main...HEAD | grep '\.py$')
+  if [ -n "$files" ]; then
+    echo "$files" | xargs -r ruff check --select I --fix
+    echo "$files" | xargs -r ruff check --fix
+    echo "$files" | xargs -r ruff format
+  fi
 }
 
 alias r="radian"
 alias t="tree"
 alias lg=lazygit
+alias zg=‘zoxide —basedir $(git rev-parse --show-toplevel)’
 
 export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
