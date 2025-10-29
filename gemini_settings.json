@@ -1,4 +1,10 @@
 {
+  "tools": {
+    "shell": {
+      "enableInteractiveShell": true,
+      "showColor": true
+    }
+  },
   "hideBanner": true,
   "context": {
     "fileName": "AGENTS.md"
