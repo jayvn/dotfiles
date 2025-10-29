@@ -53,6 +53,14 @@ for i in ${filelocs[@]}; do
     ln -sf ${loc}/$i ~/$i
 done
 
+# Link Claude Code settings
+mkdir -p ~/.claude
+ln -sf ${loc}/claude_settings.json ~/.claude/settings.json
+
+# Link Gemini settings
+mkdir -p ~/.gemini
+ln -sf ${loc}/gemini_settings.json ~/.gemini/settings.json
+
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
 
