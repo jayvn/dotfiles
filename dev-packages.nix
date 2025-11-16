@@ -7,6 +7,7 @@ pkgs.buildEnv {
     bash-language-server # for nvim
     bat # like cat with syntax highlighting
     bottom # like top/btop
+    sublime-merge
     nodejs
     clang
     # cmake # migrated but not sure
@@ -17,7 +18,7 @@ pkgs.buildEnv {
     # fish # new shell i want to try
     # fzf
     htop 
-    lazygit # `lazygit` for git UI
+    lazygit # `lazygit` for git UI 
     neovim
     # nixfmt-rfc-style # nix formatter # downloads a lot of haskell
     nushell # nu shell+ csv view sort, etc
