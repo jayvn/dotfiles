@@ -1,28 +1,21 @@
-{ pkgs ? import <nixpkgs> {} }:
-pkgs.buildEnv {
- name = "desktop-packages";
- paths = with pkgs; [
-   # Media & Graphics
-   audacity
-   gimp
-   krita
-   vlc
-   kdePackages.kdenlive
-   calibre
+ # Media & Graphics
+ audacity
+ gimp
+ # krita
+ vlc
+ # kdePackages.kdenlive . is stuck
+ # calibre
 
-   # Web Browsers
-   firefox
-   ungoogled-chromium
-   
-   # Development
-   vscode
-   
-   # Office & Productivity
-   gnumeric
-   filezilla
-   krita
-   
-   # Games
-   warzone2100
- ];
-}
+ # Web Browsers
+ firefox
+ ungoogled-chromium
+ 
+ # Development
+ # vscode
+ 
+ # Office & Productivity
+ gnumeric
+ filezilla
+ 
+ # Games
+ warzone2100
