@@ -11,7 +11,7 @@
 ### Key Configurations
 1. **Shell Environment**: 
    - Minimal Zsh configuration (no Oh-My-Zsh dependency)
-   - Zsh plugins (autosuggestions, syntax-highlighting) installed via Nix packages in `dev-packages.nix`
+   - Zsh plugins (autosuggestions, syntax-highlighting) 
    - bash aliases and functions in `.bash_aliases`
 
 2. **Editor Stack**:
@@ -36,3 +36,8 @@ Solution: copy read-only Nix .desktop files to `~/.local/share/applications/` an
 sudo chown -R deck:deck /nix
 
 nvim-cmp doesn't seem to be updated since a while unfortunately
+
+
+# The dev-packages and desktop-packages.nix files are just for reference and nix profile add nixpkgs#pkgname 
+is now the preferred method. no determinism 
+There's also an updater script
