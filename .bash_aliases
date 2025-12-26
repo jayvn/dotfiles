@@ -110,4 +110,4 @@ alias t="tree"
 alias lg=lazygit
 alias zg=‘zoxide —basedir $(git rev-parse --show-toplevel)’
 
-export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
+# export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
