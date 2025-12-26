@@ -29,3 +29,7 @@ done
 
 echo "------------------------------------------"
 echo "Upgrade process complete."
+
+echo "------------------------------------------"
+echo "Cleaning up old generations and collecting garbage..."
+nix-collect-garbage --delete-older-than 14d
