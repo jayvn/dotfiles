@@ -110,6 +110,7 @@ require("lazy").setup({
 					bash = { "shfmt" },
 					sh = { "shfmt" },
 					zsh = { "shfmt" },
+					rust = { "rustfmt" },
 				},
 				formatters = {
 					styler = {
@@ -285,7 +286,13 @@ require("lazy").setup({
 					ensure_installed = { "python", "lua", "vim", "r", "bash", "yaml", "markdown", "rust", "rnoweb" },
 					highlight = {
 						enable = true,
-						additional_vim_regex_highlighting = false,
+						-- markdown parser occasionally crashes with invalid range; fall back to vim regex
+						disable = function(lang, _)
+							if lang == "markdown" then
+								return true
+							end
+						end,
+						additional_vim_regex_highlighting = { "markdown" },
 					},
 					indent = { enable = true },
 					textobjects = {
