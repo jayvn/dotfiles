@@ -2,7 +2,7 @@
 #
 # Make the Nix desktop files writable and patch them directly
 # Copy Nix desktop files to local directory
-cp ~/.nix-profile/share/applications/*.desktop ~/.local/share/applications/
+cp -f ~/.nix-profile/share/applications/*.desktop ~/.local/share/applications/
 
 # Now modify the local copies (these are writable)
 for file in ~/.local/share/applications/*.desktop; do
