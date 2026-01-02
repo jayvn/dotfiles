@@ -111,3 +111,4 @@ alias lg=lazygit
 alias zg=‘zoxide —basedir $(git rev-parse --show-toplevel)’
 
 # export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
+export NIXPKGS_ALLOW_UNFREE=1
