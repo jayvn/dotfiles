@@ -47,7 +47,9 @@ ln -sf ${loc}/config.fish $XDG_CONFIG_HOME/fish/config.fish
 # ln -s $(which bun) ~/.bun/bin/node
 # ---
 # Install bun somehow
-# bun install -g prettier @anthropic-ai/claude-code 
+# install pi
+bun install -g prettier
+# bun install -g @mariozechner/pi-coding-agent
 
 for i in ${filelocs[@]}; do
     ln -sf ${loc}/$i ~/$i
@@ -69,4 +71,4 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-sy
 # xcape -e 'Control_L=Escape'
 
 ### Within vim, i can do
-# : LspInstall r_language_server
+# :LspInstall r_language_server
