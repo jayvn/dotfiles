@@ -1,13 +1,14 @@
 #!/bin/bash
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -fsSL https://bun.sh/install | bash
+git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null || true
 uv tool install neovim radian black ruff basedpyright
 
 loc=$(pwd)
 filelocs=(
     .gitignore_global
     vim-tmux-open.zsh
-    # .muttrc
     .bash_aliases
     .tmux.conf
     .ctags
@@ -27,7 +28,7 @@ ln -sf ${loc}/init.vim ~/.vimrc
 
 # ========== NEOVIM SETUP ==========
 # Create Neovim config directory
-mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 mkdir -p $XDG_CONFIG_HOME/nvim
 
 # Link Neovim config (init.lua in config directory)
@@ -46,8 +47,6 @@ ln -sf ${loc}/config.fish $XDG_CONFIG_HOME/fish/config.fish
 # --- Sometimes you have installed stuff that just isn't picked up by other tools (neovim in these cases)
 # ln -s $(which bun) ~/.bun/bin/node
 # ---
-# Install bun somehow
-# install pi
 bun install -g prettier
 # bun install -g @mariozechner/pi-coding-agent
 
