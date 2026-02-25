@@ -66,7 +66,18 @@ require("lazy").setup({
 			cmd = "AnsiEsc",
 		},
 		{ "akinsho/git-conflict.nvim", version = "*", event = "BufReadPre", config = true },
-		{ "folke/snacks.nvim" },
+		{
+			"folke/snacks.nvim",
+			lazy = false,
+			priority = 1000, -- load early so Snacks.* is available everywhere
+			opts = {
+				terminal = { enabled = true }, -- used for lazygit
+				notifier = { enabled = true }, -- replaces noice/nvim-notify
+				input = { enabled = true }, -- replaces vim.ui.input (was handled by noice/nui)
+				statuscolumn = { enabled = true }, -- nicer sign/fold/number columns
+				words = { enabled = true }, -- highlight word under cursor (like LSP document highlight)
+			},
+		},
 		-- LSP / Mason / DAP
 		{
 			"williamboman/mason.nvim",
@@ -84,7 +95,7 @@ require("lazy").setup({
 			opts = {
 				ensure_installed = {
 					-- "pylint",
-					"r_language_server",
+					-- "r_language_server",
 					"yamlls",
 					"azure_pipelines_ls",
 					"jsonls",
@@ -105,26 +116,26 @@ require("lazy").setup({
 			opts = {
 				formatters_by_ft = {
 					python = { "ruff_format", "ruff_fix", "ruff_organize_imports" },
-					r = { "styler" },
+					-- r = { "styler" },
 					lua = { "stylua" },
 					bash = { "shfmt" },
 					sh = { "shfmt" },
 					zsh = { "shfmt" },
 				},
-				formatters = {
-					styler = {
-						inherit = false,
-						command = "R",
-						args = {
-							"-s",
-							"-e",
-							"styler::style_file(commandArgs(TRUE), style = styler::tidyverse_style, scope = I(c('indention', 'spaces', 'tokens')), indent_by = 2)",
-							"--args",
-							"$FILENAME",
-						},
-						stdin = false,
-					},
-				},
+				-- formatters = {
+				-- 	styler = {
+				-- 		inherit = false,
+				-- 		command = "R",
+				-- 		args = {
+				-- 			"-s",
+				-- 			"-e",
+				-- 			"styler::style_file(commandArgs(TRUE), style = styler::tidyverse_style, scope = I(c('indention', 'spaces', 'tokens')), indent_by = 2)",
+				-- 			"--args",
+				-- 			"$FILENAME",
+				-- 		},
+				-- 		stdin = false,
+				-- 	},
+				-- },
 			},
 			keys = {
 				{
@@ -203,26 +214,26 @@ require("lazy").setup({
 				})
 				vim.lsp.enable("jsonls")
 
-				vim.lsp.config("r_language_server", {
-					capabilities = capabilities,
-					on_attach = on_attach,
-					settings = {
-						r = {
-							lsp = {
-								debug = false,
-								log_level = "error",
-								rich_documentation = true,
-							},
-							rpath = {
-								vim.fn.expand("$PWD/packages"),
-							},
-							source = {
-								global_source = vim.fn.expand("$PWD/globals.R"),
-							},
-						},
-					},
-				})
-				vim.lsp.enable("r_language_server")
+				-- vim.lsp.config("r_language_server", {
+				-- 	capabilities = capabilities,
+				-- 	on_attach = on_attach,
+				-- 	settings = {
+				-- 		r = {
+				-- 			lsp = {
+				-- 				debug = false,
+				-- 				log_level = "error",
+				-- 				rich_documentation = true,
+				-- 			},
+				-- 			rpath = {
+				-- 				vim.fn.expand("$PWD/packages"),
+				-- 			},
+				-- 			source = {
+				-- 				global_source = vim.fn.expand("$PWD/globals.R"),
+				-- 			},
+				-- 		},
+				-- 	},
+				-- })
+				-- vim.lsp.enable("r_language_server")
 
 				vim.lsp.config("azure_pipelines_ls", {
 					capabilities = capabilities,
@@ -282,20 +293,12 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = { "python", "lua", "vim", "r", "bash", "yaml", "markdown", "rust", "rnoweb" },
+					ensure_installed = { "python", "lua", "vim", --[["r",]] "bash", "yaml", "markdown", "rust", --[["rnoweb"]] },
 					highlight = {
 						enable = true,
 						additional_vim_regex_highlighting = false,
 					},
 					indent = { enable = true },
-					textobjects = {
-						textobjects = {
-							select = {
-								lookahead = true,
-							},
-							move = {},
-						},
-					},
 				})
 			end,
 		},
@@ -336,11 +339,11 @@ require("lazy").setup({
 			event = "VeryLazy",
 			config = true,
 		},
-		{ "tpope/vim-commentary", event = "VeryLazy" },
+
 		{ "romainl/vim-cool", event = "VeryLazy" }, -- Automatically clear search highlight on cursor move
 		{ "tpope/vim-fugitive", event = "VeryLazy", cmd = "Git" },
 		{ "mhinz/vim-signify" },
-		{ "R-nvim/R.nvim", ft = { "r", "rmd", "quarto" }, lazy = false },
+		-- { "R-nvim/R.nvim", ft = { "r", "rmd", "quarto" }, lazy = false },
 		-- { "idbrii/vim-mergetool", cmd = "Mergetool" },
 		{
 			"f-person/git-blame.nvim",
@@ -451,21 +454,7 @@ require("lazy").setup({
 			event = { "BufReadPost", "BufNewFile" },
 		},
 
-		-- lazy.nvim
-		{
-			"folke/noice.nvim", -- messages UI (minimal )
-			event = "VeryLazy",
-			opts = {
-				presets = {
-					long_message_to_split = true,
-					lsp_doc_border = true,
-				},
-			},
-			dependencies = {
-				"MunifTanjim/nui.nvim",
-				-- "rcarriga/nvim-notify", -use the notification view. (cant do echo copy then)
-			},
-		},
+
 
 		{
 			"mfussenegger/nvim-lint",
@@ -473,9 +462,8 @@ require("lazy").setup({
 			config = function()
 				require("lint").linters_by_ft = {
 					python = { "pylint" }, -- 'ruff' is not good enough?
-					r = { "lintr" },
+					-- r = { "lintr" },
 					lua = { "luacheck" },
-					markdown = { "vale" },
 				}
 			end,
 		},
@@ -620,18 +608,30 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 		-- Auto load session if started without arguments
 		if vim.fn.argc() == 0 then
 			require("persistence").load()
+			-- Re-attach treesitter to all buffers restored by the session,
+			-- since BufReadPost fired before treesitter was loaded.
+			vim.schedule(function()
+				for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+					if vim.api.nvim_buf_is_loaded(buf) then
+						local ok, parser = pcall(vim.treesitter.get_parser, buf)
+						if ok and parser then
+							vim.treesitter.start(buf)
+						end
+					end
+				end
+			end)
 		end
 	end,
 })
 
 -- Set colorcolumn for R files to indicate 80 character limit
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = { "*.r", "*.R", "*.Rmd", "*.rmd" },
-	callback = function()
-		vim.opt_local.colorcolumn = "80"
-		vim.opt_local.textwidth = 80
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+-- 	pattern = { "*.r", "*.R", "*.Rmd", "*.rmd" },
+-- 	callback = function()
+-- 		vim.opt_local.colorcolumn = "80"
+-- 		vim.opt_local.textwidth = 80
+-- 	end,
+-- })
 
 -- `ctags -R --languages=python --kinds-python=cf .` only for classes and functions
 local function lsp_or_tags_definition()
