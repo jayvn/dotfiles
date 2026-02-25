@@ -394,10 +394,7 @@ require("lazy").setup({
 
 		{
 			"folke/persistence.nvim",
-			event = "VimEnter",
-			opts = {
-				autosave = { save_on_quit = true },
-			},
+			lazy = false,
 			config = true,
 		},
 		{
@@ -635,19 +632,16 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 
 -- `ctags -R --languages=python --kinds-python=cf .` only for classes and functions
 local function lsp_or_tags_definition()
-	local original_pos = vim.fn.getpos(".")
-	-- Try to go to definition with LSP. pcall prevents errors if no LSP is attached.
-	pcall(vim.lsp.buf.definition)
-
-	-- After a short delay, check if the cursor has moved.
-	vim.defer_fn(function()
-		local new_pos = vim.fn.getpos(".")
-		-- If the position is the same, it means LSP didn't find anything.
-		if vim.deep_equal(original_pos, new_pos) then
-			-- Fallback to ctags. 'tjump' is better than 'tag' as it shows a list for multiple matches.
-			vim.cmd("tjump " .. vim.fn.expand("<cword>"))
-		end
-	end, 100) -- 100ms delay, can be adjusted
+	vim.lsp.buf.definition({
+		on_list = function(opts)
+			if opts.items and #opts.items > 0 then
+				vim.fn.setqflist({}, " ", opts)
+				vim.cmd("cfirst")
+			else
+				vim.cmd("tjump " .. vim.fn.expand("<cword>"))
+			end
+		end,
+	})
 end
 
 vim.api.nvim_create_user_command("DeletePrintLines", "g/\\.show()\\|print/d", {
