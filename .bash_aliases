@@ -75,7 +75,7 @@ alias rm='rm -i'
 alias l='eza --icons'
 alias ll='eza -l --git'  # long format with git status
 alias la='eza -la --git' # long format, all files
-alias tree='eza --tree --git-ignore'
+alias tree='eza -r --tree'
 alias lfull='eza -lah --icons --git --group-directories-first --time-style=relative --sort=modified --accessed --hyperlink --color-scale'
 
 # Runs pytest, captures output, and opens it in Vi with specific settings.
@@ -110,4 +110,5 @@ alias t="tree"
 alias lg=lazygit
 alias zg=‘zoxide —basedir $(git rev-parse --show-toplevel)’
 
-export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
+# export PYTHONSTARTUP="$HOME/.config/python/startup.py" # For colorful errormsgs
+export NIXPKGS_ALLOW_UNFREE=1

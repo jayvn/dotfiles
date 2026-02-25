@@ -42,6 +42,10 @@ ln -sf ${loc}/lazygit-config.yml $XDG_CONFIG_HOME/lazygit/config.yml
 mkdir -p $XDG_CONFIG_HOME/fish
 ln -sf ${loc}/config.fish $XDG_CONFIG_HOME/fish/config.fish
 
+# Link gemini settings
+mkdir -p ~/.gemini
+ln -sf ${loc}/gemini_settings.json ~/.gemini/settings.json
+
 # curl -L https://nixos.org/nix/install | sh
 
 # --- Sometimes you have installed stuff that just isn't picked up by other tools (neovim in these cases)
