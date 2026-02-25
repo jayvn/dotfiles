@@ -2,7 +2,7 @@
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -fsSL https://bun.sh/install | bash
-git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null || true
+
 uv tool install neovim radian black ruff basedpyright
 
 loc=$(pwd)
